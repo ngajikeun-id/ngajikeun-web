@@ -224,6 +224,36 @@
     <script src="assets/js/component-loader.js"></script>
     <script src="assets/js/main.js"></script>
 
+    <!-- Article Modal Container -->
+    <div id="article-modal" class="fixed inset-0 z-[100] hidden overflow-y-auto px-4 py-6">
+        <!-- Backdrop Blur -->
+        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closeArticleModal()">
+        </div>
+
+        <!-- Modal Content -->
+        <div class="relative mx-auto max-w-4xl rounded-3xl bg-white shadow-2xl transition-all">
+            <div
+                class="sticky top-0 flex items-center justify-between border-b border-slate-100 bg-white/90 p-6 backdrop-blur-md rounded-t-3xl">
+                <h2 id="modal-title" class="text-xl font-bold text-emerald-800 uppercase tracking-wide">Detail Artikel
+                </h2>
+                <button onclick="closeArticleModal()"
+                    class="rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-8 md:p-12">
+                <!-- Tempat Markup Markdown di-render -->
+                <article id="modal-body"
+                    class="prose prose-slate lg:prose-xl max-w-none prose-headings:text-emerald-900 prose-a:text-emerald-600">
+                </article>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

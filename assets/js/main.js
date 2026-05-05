@@ -94,4 +94,62 @@
             console.error('Gagal inisialisasi halaman:', error);
         });
     });
+
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function renderArticleBody(body) {
+        const markdown = String(body ?? '').trim();
+
+        if (!markdown) {
+            return '<p>Konten artikel belum tersedia.</p>';
+        }
+
+        if (window.marked) {
+            return window.marked.parse(markdown);
+        }
+
+        return markdown
+            .split(/\n\s*\n/)
+            .map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, '<br>')}</p>`)
+            .join('');
+    }
+
+    window.openArticleModal = async function openArticleModal(slug) {
+        const modal = document.getElementById('article-modal');
+        const body = document.getElementById('modal-body');
+        const title = document.getElementById('modal-title');
+
+        if (!modal || !body || !title || !window.NgajikeunApi?.getArticleBySlug) return;
+
+        const article = await window.NgajikeunApi.getArticleBySlug(slug);
+
+        if (article) {
+            title.innerText = article.title || 'Detail Artikel';
+            body.innerHTML = renderArticleBody(article.body);
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+    };
+
+    window.closeArticleModal = function closeArticleModal() {
+        const modal = document.getElementById('article-modal');
+        if (!modal) return;
+
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    };
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            window.closeArticleModal();
+        }
+    });
 }());

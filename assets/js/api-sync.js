@@ -80,6 +80,13 @@
         return Array.isArray(collection) ? collection : [];
     }
 
+    async function getArticleBySlug(slug) {
+        const data = await loadSiteData();
+        const articles = getCollection(data, 'articles');
+
+        return articles.find((article) => article.slug === slug) || null;
+    }
+
     async function syncPrograms() {
         const container = document.getElementById('program-container');
         if (!container) return;
@@ -155,8 +162,8 @@
 
             for (const testimonial of testimonials) {
                 const imageUrl = safeUrl(
-                    testimonial.image || 'public/images/uploads/kartun-muslimah.png',
-                    'public/images/uploads/kartun-muslimah.png'
+                    testimonial.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name || 'Santri')}`,
+                    'https://ui-avatars.com/api/?name=Santri'
                 );
 
                 container.innerHTML += `
@@ -192,17 +199,20 @@
 
             for (const article of articles) {
                 const safeTitle = safeText(article.title || article.slug || 'Artikel');
+                const safeSlug = escapeHtml(JSON.stringify(article.slug || ''));
                 const articleDate = article.date ? new Date(article.date) : null;
                 const formattedDate = articleDate && !Number.isNaN(articleDate.getTime())
                     ? articleDate.toLocaleDateString('id-ID')
                     : 'Tanggal belum tersedia';
 
                 container.innerHTML += `
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-emerald-50 hover:border-emerald-200 transition-all">
-                        <h3 class="font-bold text-lg mb-2">${safeTitle}</h3>
-                        <p class="text-xs text-gray-400 mb-4">${formattedDate}</p>
-                        <a href="#" class="text-emerald-600 text-sm font-bold hover:underline">Baca Selengkapnya →</a>
-                    </div>`;
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-emerald-50 hover:border-emerald-200 transition-all">
+            <h3 class="font-bold text-lg mb-2">${safeTitle}</h3>
+            <p class="text-xs text-gray-400 mb-4">${formattedDate}</p>
+            <button type="button" onclick="openArticleModal(${safeSlug})" class="text-emerald-600 text-sm font-bold hover:underline">
+                Baca Selengkapnya →
+            </button>
+        </div>`;
             }
         } catch (error) {
             console.error('Gagal load artikel:', error);
@@ -290,6 +300,7 @@
         syncTestimonials,
         syncArticles,
         syncProducts,
-        syncQuizzes
+        syncQuizzes,
+        getArticleBySlug
     };
 }());
