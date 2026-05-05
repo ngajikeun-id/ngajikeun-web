@@ -47,6 +47,15 @@
         toggleButton();
     }
 
+    function setupAosAnimations() {
+        if (!window.AOS) return;
+
+        window.AOS.init({
+            duration: 700,
+            once: true
+        });
+    }
+
     function initializeContentSync() {
         if (!window.NgajikeunApi) return;
 
@@ -68,6 +77,7 @@
         setupMobileMenu();
         setupRevealOnScroll();
         setupBackToTopButton();
+        setupAosAnimations();
     }
 
     document.addEventListener("componentsLoaded", () => {
