@@ -155,8 +155,8 @@
 
             for (const testimonial of testimonials) {
                 const imageUrl = safeUrl(
-                    testimonial.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name || 'Santri')}`,
-                    'https://ui-avatars.com/api/?name=Santri'
+                    testimonial.image || 'public/images/uploads/kartun-muslimah.png',
+                    'public/images/uploads/kartun-muslimah.png'
                 );
 
                 container.innerHTML += `
