@@ -38,7 +38,7 @@ collections:
     label: "Program Belajar"
     folder: "content/programs"
     create: true
-    extension: "json" # Biar output filenya .json
+    extension: "json"
     format: "json"
     slug: "{{title}}"
     fields:
@@ -78,6 +78,8 @@ collections:
     label: "Artikel"
     folder: "content/articles"
     create: true
+    extension: "json"
+    format: "json"
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "datetime"}
