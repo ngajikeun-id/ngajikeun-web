@@ -98,24 +98,37 @@
 
             container.innerHTML = '';
 
-            for (const content of programs) {
-                const regLink = safeUrl(
-                    content.registration_link || `https://wa.me/6281932692047?text=Assalamu'alaikum%20Admin%20Ngajikeun.id,%20saya%20ingin%20mendaftar%20program%20*${encodeURIComponent(content.title || 'program ini')}*`,
-                    'https://wa.me/6281932692047'
-                );
+            programs.forEach(program => {
+                const imageUrl = program.image || 'https://via.placeholder.com/600x400?text=Flyer+Program';
 
                 container.innerHTML += `
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-t-emerald-500 hover:shadow-lg transition-all duration-300">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">${safeText(content.title, 'Program')}</h3>
-                        <p class="text-gray-600 text-sm mb-4">${safeText(content.description)}</p>
-                        <div class="flex justify-between items-center mt-auto pt-4 border-t">
-                            <span class="text-emerald-600 font-bold">${safeText(content.price, 'Gratis')}</span>
-                            <a href="${regLink}" target="_blank" class="bg-emerald-500 text-white text-xs px-4 py-2 rounded-full font-bold">Daftar Sekarang</a>
+                <div class="group bg-slate-50 rounded-[2rem] overflow-hidden border border-slate-100 hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500">
+                    <!-- Area Flyer -->
+                    <div class="relative overflow-hidden aspect-[4/3]">
+                        <img src="${imageUrl}" alt="${safeText(program.title)}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                            <span class="text-white text-xs font-bold tracking-widest uppercase">Lihat Detail</span>
                         </div>
-                    </div>`;
-            }
+                    </div>
+                    
+                    <!-- Area Teks -->
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-slate-800 leading-tight">${safeText(program.title)}</h3>
+                            <span class="bg-emerald-500 text-white text-[9px] font-black px-2 py-1 rounded-md shadow-lg shadow-emerald-200 uppercase">${safeText(program.price)}</span>
+                        </div>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-6">${safeText(program.description)}</p>
+                        
+                        <a href="${safeUrl(program.registration_link)}" target="_blank" 
+                           class="block w-full text-center py-4 bg-white border border-slate-200 text-slate-800 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-slate-800 hover:text-white hover:border-slate-800 transition-all active:scale-95">
+                            Daftar Sekarang ⚡
+                        </a>
+                    </div>
+                </div>
+            `;
+            });
         } catch (error) {
-            console.error('Gagal load program:', error);
+            console.error('Gagal sync program:', error);
         }
     }
 
