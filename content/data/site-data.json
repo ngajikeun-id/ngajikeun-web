@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-06T07:26:39.550Z",
+  "generated_at": "2026-05-06T09:29:42.871Z",
   "about_details": {
     "history": "NGAJIKEUN.ID lahir dari sebuah keresahan sekaligus kepedulian terhadap kebutuhan muslimah di era modern. Dalam keseharian yang sibuk, dari mengurus keluarga, kuliah hingga berkarir, banyak muslimah merasa kesulitan meluangkan waktu untuk memperbaiki hubungan mereka dengan Al-Qur'an. Padahal, Al-Qur'an bukan hanya kitab suci, melainkan pedoman hidup yang membawa ketenangan, kekuatan, dan inspirasi di setiap aspek kehidupan. \n\nTerinspirasi dari istilah “ngajikeun” yang berasal dari tradisi lokal Jawa — sebuah khataman Al-Qur'an untuk menghibur keluarga yang berduka — NGAJIKEUN.ID membawa misi yang lebih luas dan universal. Kami hadir untuk mengajak muslimah tidak hanya membaca Al-Qur'an saat duka melanda, tetapi juga menjadikannya sebagai bagian dari keseharian, selama nikmat hidup dan kesehatan masih menyertai. \n\nDengan platform belajar Al-Qur'an berbasis online, NGAJIKEUN.ID ngin menjadi partner bagi muslimah di seluruh dunia yang ingin memperbaiki bacaan, mendalami tajwid, menjaga hafalan dan merasakan keindahan berinteraksi dengan kalam Ilahi setiap hari. Dengan ciri khasnya yang memusatkan sebagian besar kegiatannya di pagi hari, NGAJIKEUN.ID tidak hanya ingin menjadi teman belajar, namun juga jembatan bagi seluruh muslimah yang mendambakan keberkahan hidup sepanjang hari. \"Ya Allah, berilah keberkahan bagi umatku di pagi harinya.\" (HR. Abu Dawud).",
     "legal": ".",
@@ -213,73 +213,85 @@
       "slug": "quiz-hafalan-al-quran-7",
       "title": "Quiz Hafalan Al-Qur'an 7",
       "link": "https://quizlet.com/my/1063399184/juz-7-flash-cards/?i=6o0sla&x=1jqt",
-      "description": "Quiz Juz 7"
+      "description": "Quiz Juz 7",
+      "category": "tahfidz"
     },
     {
       "slug": "quiz-hafalan-al-quran-juz-1-bagian-1",
       "title": "Quiz Hafalan Al-Qur'an Juz 1 - Bagian 1",
       "link": "https://wayground.com/join?gc=41423041",
-      "description": "Quiz Juz 1 - Bagian 1 (FREE Akses)"
+      "description": "Quiz Juz 1 - Bagian 1 (FREE Akses)",
+      "category": "tahfidz"
     },
     {
       "slug": "quiz-hafalan-al-quran-juz-1-bagian-2",
       "title": "Quiz Hafalan Al-Qur'an Juz 1 - Bagian 2",
       "description": "Quiz Juz 1 - Bagian 2",
-      "link": "https://quizlet.com/my/1061847987/juz-1-flash-cards/?i=6o0sla&x=1jqt"
+      "link": "https://quizlet.com/my/1061847987/juz-1-flash-cards/?i=6o0sla&x=1jqt",
+      "category": "tahfidz"
     },
     {
       "slug": "quiz-hafalan-al-quran-juz-2",
       "title": "Quiz Hafalan Al-Qur'an Juz 2",
       "link": "https://quizlet.com/my/1060530828/juz-2-flash-cards/?i=6o0sla&x=1jqt",
-      "description": "Quiz Juz 2"
+      "description": "Quiz Juz 2",
+      "category": "tahfidz"
     },
     {
       "slug": "quiz-hafalan-al-quran-juz-3",
       "title": "Quiz Hafalan Al-Qur'an Juz 3",
       "link": "https://quizlet.com/my/1060532481/juz-3-flash-cards/?i=6o0sla&x=1jqt",
-      "description": "Quiz Juz 3"
+      "description": "Quiz Juz 3",
+      "category": "tahfidz"
     },
     {
       "slug": "quiz-hafalan-al-quran-juz-30-bagian-2",
       "title": "Quiz Hafalan Al-Qur'an Juz 30 - Bagian 2",
       "link": "https://wayground.com/join?gc=03965121",
-      "description": "Quiz Juz 30 - Bagian 2\n(FREE ACCESS)"
+      "description": "Quiz Juz 30 - Bagian 2\n(FREE ACCESS)",
+      "category": "tahfidz"
     },
     {
       "slug": "quiz-hafalan-al-quran-juz-30-bagian-3",
       "title": "Quiz Hafalan Al-Qur'an Juz 30 - Bagian 3",
       "link": "https://wayground.com/join?gc=64585921",
-      "description": "Quiz Juz 30 - Bagian 3 (FREE Akses)"
+      "description": "Quiz Juz 30 - Bagian 3 (FREE Akses)",
+      "category": "tahfidz"
     },
     {
       "slug": "quiz-hafalan-al-quran-juz-30",
       "title": "Quiz Hafalan Al-Qur'an Juz 30 - Bagian 1",
       "link": "https://wayground.com/join?gc=22020289",
-      "description": "Quiz Juz 30 - Bagian 1 (FREE Akses)"
+      "description": "Quiz Juz 30 - Bagian 1 (FREE Akses)",
+      "category": "tahfidz"
     },
     {
       "slug": "quiz-hafalan-al-quran-juz-4",
       "title": "Quiz Hafalan Al-Qur'an Juz 4",
       "link": "https://quizlet.com/my/1060898667/juz-4-flash-cards/?i=6o0sla&x=1jqt",
-      "description": "Quiz Juz 4"
+      "description": "Quiz Juz 4",
+      "category": "tahfidz"
     },
     {
       "slug": "quiz-hafalan-al-quran-juz-5",
       "link": "https://quizlet.com/my/1060900130/juz-5-flash-cards/?i=6o0sla&x=1jqt",
       "title": "Quiz Hafalan Al-Qur'an Juz 5",
-      "description": "Quiz Juz 5"
+      "description": "Quiz Juz 5",
+      "category": "tahfidz"
     },
     {
       "slug": "quiz-hafalan-al-quran-juz-6",
       "title": "Quiz Hafalan Al-Qur'an Juz 6",
       "link": "https://quizlet.com/my/1063356264/juz-6-flash-cards/?i=6o0sla&x=1jqt",
-      "description": "Quiz Juz 6"
+      "description": "Quiz Juz 6",
+      "category": "tahfidz"
     },
     {
       "slug": "quiz-hafalan-al-quran-juz-8",
       "title": "Quiz Hafalan Al-Qur'an Juz 8",
       "link": "https://quizlet.com/my/1063471998/juz-8-flash-cards/?i=6o0sla&x=1jqt",
-      "description": "Quiz Juz 8"
+      "description": "Quiz Juz 8",
+      "category": "tahfidz"
     }
   ]
 }
