@@ -1,6 +1,8 @@
 ---
 title: Al-Qur’an dan Ruang Kehadirannya dalam Hidup Seorang Muslimah
 date: 2026-04-17T20:45:00.000+07:00
+thumbnail: public/images/uploads/logo-ngk.png
+description: NGAJIKEUN.ID
 ---
 Sebagian dari kita tumbuh bersama Al-Qur’an.
 Sejak kecil, huruf-hurufnya terasa akrab, lantunannya menemani pagi dan malam, ayat-ayatnya hadir di dinding rumah atau layar gawai. Ia bukan sesuatu yang asing.
