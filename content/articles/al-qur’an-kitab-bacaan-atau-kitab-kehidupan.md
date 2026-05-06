@@ -1,6 +1,8 @@
 ---
 title: "  Al-Qur’an: Kitab Bacaan atau Kitab Kehidupan?"
 date: 2026-04-17T20:47:00.000+07:00
+thumbnail: public/images/uploads/logo-ngk.png
+description: NGAJIKEUN.ID
 ---
 ### **Ketika Mushaf Ditutup, Apakah Al-Qur’an Ikut Pergi?**
 
