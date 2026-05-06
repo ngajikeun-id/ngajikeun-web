@@ -1,6 +1,6 @@
 <section id="article-section" class="py-24 bg-slate-50/50">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+    <div class="max-w-6xl mx-auto px-6 mb-10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
                 <span class="text-emerald-600 font-bold tracking-widest text-[10px] uppercase">Wawasan & Literasi</span>
                 <h2 class="text-4xl font-black text-slate-800 mt-2">Artikel Terbaru</h2>
@@ -8,23 +8,25 @@
                     makhraj.</p>
             </div>
 
-            <a href="/articles"
+            <!-- Link Lihat Semua Artikel -->
+            <a href="#all-articles"
                 class="text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors border-b-2 border-emerald-100 pb-1 whitespace-nowrap self-start md:self-auto">
                 Lihat Semua Artikel →
             </a>
         </div>
+    </div>
 
-        <div id="article-list" class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Loading State -->
-            <div class="col-span-full text-center py-20 text-slate-400 italic">
-                <div class="flex justify-center mb-4">
-                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce mx-1"></div>
-                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce mx-1 [animation-delay:-0.15s]"></div>
-                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce mx-1 [animation-delay:-0.3s]"></div>
-                </div>
-                <p class="text-xs tracking-widest uppercase font-medium">Menarik data literasi...</p>
+    <div id="article-list" class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Loading State -->
+        <div class="col-span-full text-center py-20 text-slate-400 italic">
+            <div class="flex justify-center mb-4">
+                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce mx-1"></div>
+                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce mx-1 [animation-delay:-0.15s]"></div>
+                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce mx-1 [animation-delay:-0.3s]"></div>
             </div>
+            <p class="text-xs tracking-widest uppercase font-medium">Menarik data literasi...</p>
         </div>
+    </div>
     </div>
 
     <!-- Article Modal -->

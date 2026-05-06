@@ -371,12 +371,14 @@
     async function openArticlePopup(slug) {
         const modal = document.getElementById('article-modal');
         const modalBody = document.getElementById('modal-body');
-        if (!modal || !modalBody) return;
+        const modalTitle = document.getElementById('modal-title');
 
-        modal.scrollTop = 0;
+        if (!modal || !modalBody) return;
 
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
+        modal.scrollTop = 0;
+
         modalBody.innerHTML = '<p class="text-center italic py-10">Membuka catatan hikmah...</p>';
 
         try {
@@ -385,14 +387,19 @@
             const article = articles.find(a => a.slug === slug);
 
             if (article) {
+                if (modalTitle) modalTitle.innerText = article.title;
+
                 modalBody.innerHTML = window.marked
                     ? window.marked.parse(article.body)
                     : renderSimpleMarkdown(article.body);
 
                 modal.scrollTo(0, 0);
+            } else {
+                modalBody.innerHTML = '<p class="text-center text-red-500">Artikel tidak ditemukan, bro.</p>';
             }
         } catch (err) {
-            contentArea.innerHTML = '<p class="text-red-500">Gagal muat artikel...</p>';
+            console.error('Error modal:', err);
+            modalBody.innerHTML = '<p class="text-center text-red-500">Gagal memuat isi artikel.</p>';
         }
     }
 
