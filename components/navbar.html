@@ -1,36 +1,50 @@
-<nav class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-emerald-100 shadow-sm">
+<nav class="bg-white/90 backdrop-blur-md border-b border-emerald-100 shadow-sm transition-all duration-300">
     <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="#" class="flex items-center gap-3" aria-label="Ngajikeun.id beranda">
+        <!-- Logo Section -->
+        <a href="#" class="flex items-center gap-3 group" aria-label="Ngajikeun.id beranda">
             <img src="public/images/uploads/logo-ngk.png" alt="Logo Ngajikeun.id"
-                class="h-11 w-11 rounded-full object-cover ring-2 ring-emerald-100 shadow-sm">
+                class="h-11 w-11 rounded-full object-cover ring-2 ring-emerald-100 shadow-sm group-hover:ring-emerald-300 transition-all">
             <span class="font-bold text-xl md:text-2xl text-emerald-700 tracking-tighter">NGAJIKEUN<span
                     class="text-slate-400">.ID</span></span>
         </a>
 
-        <button id="menu-btn" class="md:hidden text-emerald-700 focus:outline-none" type="button"
-            aria-label="Buka menu navigasi">
+        <!-- Mobile Menu Button -->
+        <button id="menu-btn"
+            class="md:hidden text-emerald-700 focus:outline-none p-2 hover:bg-emerald-50 rounded-lg transition-colors"
+            type="button" aria-label="Buka menu navigasi">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
             </svg>
         </button>
 
+        <!-- Navigation Links -->
         <div id="nav-menu"
             class="hidden absolute top-full left-0 w-full bg-white border-b border-emerald-100 p-6 md:static md:block md:w-auto md:bg-transparent md:border-none md:p-0">
-            <div class="flex flex-col md:flex-row gap-6 text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                <a href="#" class="hover:text-emerald-600 transition py-2 md:py-0">Home</a>
-                <a href="#program-section" class="hover:text-emerald-600 transition py-2 md:py-0">Program</a>
-                <a href="#quiz-section" class="hover:text-emerald-600 transition py-2 md:py-0">Kuiz</a>
-                <a href="#article-container" class="hover:text-emerald-600 transition py-2 md:py-0">Artikel</a>
-                <a href="#about-container" class="hover:text-emerald-600 transition py-2 md:py-0">Tentang Kami</a>
+            <div class="flex flex-col md:flex-row gap-6 text-[11px] font-bold text-slate-600 uppercase tracking-widest">
+                <a href="#"
+                    class="hover:text-emerald-600 transition-colors py-2 md:py-0 border-b-2 border-transparent hover:border-emerald-200">Home</a>
+                <a href="#program-section"
+                    class="hover:text-emerald-600 transition-colors py-2 md:py-0 border-b-2 border-transparent hover:border-emerald-200">Program</a>
+                <a href="#quiz-section"
+                    class="hover:text-emerald-600 transition-colors py-2 md:py-0 border-b-2 border-transparent hover:border-emerald-200">Kuiz</a>
+                <a href="#article-modal"
+                    class="hover:text-emerald-600 transition-colors py-2 md:py-0 border-b-2 border-transparent hover:border-emerald-200">Artikel</a>
+                <a href="#about-slides"
+                    class="hover:text-emerald-600 transition-colors py-2 md:py-0 border-b-2 border-transparent hover:border-emerald-200">Tentang
+                    Kami</a>
+
+                <!-- CTA Mobile Only -->
                 <a href="https://wa.me/6281932692047"
-                    class="md:hidden bg-emerald-600 text-white px-5 py-2 rounded-full text-center font-bold">Daftar
-                    Sekarang</a>
+                    class="md:hidden bg-emerald-600 text-white px-5 py-3 rounded-xl text-center font-bold shadow-lg shadow-emerald-200 mt-4">
+                    Daftar Sekarang
+                </a>
             </div>
         </div>
 
+        <!-- CTA Desktop Only -->
         <a href="https://wa.me/6281932692047"
-            class="hidden md:block bg-emerald-600 text-white px-5 py-2 rounded-full text-xs font-bold hover:bg-emerald-700 transition">
+            class="hidden md:block bg-emerald-600 text-white px-6 py-2.5 rounded-full text-xs font-black hover:bg-emerald-700 hover:shadow-lg hover:shadow-emerald-200 transition-all active:scale-95">
             Daftar Sekarang
         </a>
     </div>

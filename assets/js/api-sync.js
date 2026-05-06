@@ -377,18 +377,13 @@
     async function openArticlePopup(slug) {
         const modal = document.getElementById('article-modal');
         const modalBody = document.getElementById('modal-body');
-        if (!modal) {
-            console.error("Modalnya belum ada di HTML, bro!");
-            return;
-        }
+        if (!modal || !modalBody) return;
 
-        const contentArea = modal.querySelector('#modal-content');
-
-        contentArea.scrollTop = 0;
+        modal.scrollTop = 0;
 
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
-        contentArea.innerHTML = '<p class="text-center italic py-10">Membuka catatan hikmah...</p>';
+        modalBody.innerHTML = '<p class="text-center italic py-10">Membuka catatan hikmah...</p>';
 
         try {
             const data = await loadSiteData();
@@ -396,22 +391,14 @@
             const article = articles.find(a => a.slug === slug);
 
             if (article) {
-                const htmlContent = window.marked
+                modalBody.innerHTML = window.marked
                     ? window.marked.parse(article.body)
                     : renderSimpleMarkdown(article.body);
 
-                contentArea.innerHTML = `
-                <div class="prose prose-slate prose-emerald max-w-none">
-        <h2 class="text-3xl font-black text-slate-800 mb-6">${safeText(article.title)}</h2>
-        <div class="article-body">
-            ${window.marked ? window.marked.parse(article.body) : renderSimpleMarkdown(article.body)}
-        </div>
-    </div>
-`;
                 modal.scrollTo(0, 0);
             }
         } catch (err) {
-            contentArea.innerHTML = '<p class="text-red-500">Aduh, gagal muat artikelnya, bro.</p>';
+            contentArea.innerHTML = '<p class="text-red-500">Gagal muat artikel...</p>';
         }
     }
 
