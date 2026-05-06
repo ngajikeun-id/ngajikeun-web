@@ -393,7 +393,7 @@
                     ? window.marked.parse(article.body)
                     : renderSimpleMarkdown(article.body);
 
-                modal.scrollTo(0, 0);
+                modal.scrollTo({ top: 0, behavior: 'instant' });
             } else {
                 modalBody.innerHTML = '<p class="text-center text-red-500">Artikel tidak ditemukan, bro.</p>';
             }
