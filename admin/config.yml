@@ -78,14 +78,10 @@ collections:
     label: "Artikel & Literasi"
     folder: "content/articles"
     create: true
-    extension: "json"
-    format: "json"
-    slug: "{{slug}}"
     fields:
       - {label: "Judul Artikel", name: "title", widget: "string"}
       - {label: "Tanggal Publish", name: "date", widget: "datetime"}
-      - {label: "Isi Artikel", name: "body", widget: "markdown"}
-      - {label: "Ringkasan (Snippet)", name: "description", widget: "text", required: false}
+      - {label: "Body", name: "body", widget: "markdown"}
 
   - name: "products"
     label: "Produk & E-Book"
