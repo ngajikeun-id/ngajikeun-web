@@ -200,57 +200,51 @@
     }
 
     async function syncArticles() {
-        const list = document.getElementById('articles-list');
+        const list = document.getElementById('article-list');
         if (!list) return;
+
+        list.innerHTML = '<div class="col-span-full text-center py-10 italic">Memuat data literasi...</div>';
 
         try {
             const data = await loadSiteData();
-            const articles = getCollection(data, 'articles');
+            let articles = getCollection(data, 'articles');
 
-            articles.sort((a, b) => new Date(b.date) - new Date(a.date));
             const now = new Date();
             const publishedArticles = articles.filter(post => new Date(post.date) <= now);
 
-            if (!articles.length) return;
+            if (!publishedArticles.length) {
+                list.innerHTML = '<div class="col-span-full text-center py-10">Belum ada artikel nih, bro.</div>';
+                return;
+            }
+
+            publishedArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
             list.innerHTML = '';
 
-            articles.slice(0, 3).forEach(post => {
-                const imageUrl = post.thumbnail || 'https://via.placeholder.com/1280x720?text=Ngajikeun+Artikel';
-                const date = new Date(post.date).toLocaleDateString('id-ID', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-
+            publishedArticles.slice(0, 3).forEach(post => {
                 list.innerHTML += `
-                <article class="group bg-white rounded-[2.5rem] p-2 border border-slate-100 hover:border-emerald-200 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-900/5">
-                    <div class="bg-slate-100 aspect-video rounded-[2rem] mb-6 overflow-hidden relative">
-    <img src="${post.thumbnail || 'https://via.placeholder.com/1280x720?text=Ngajikeun+Artikel'}" 
-         alt="${safeText(post.title)}" 
-         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-    
-    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-60"></div>
-</div>
-                    </div>
-                    <div class="px-6 pb-8">
-                        <time class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-3">${date}</time>
-                        <h3 class="text-xl font-bold text-slate-800 leading-snug group-hover:text-emerald-600 transition-colors mb-4">
-                            ${safeText(post.title)}
-                        </h3>
-                        <p class="text-slate-500 text-xs line-clamp-2 mb-6 leading-relaxed">
-                            ${safeText(post.body.substring(0, 100))}...
-                        </p>
-                        <button onclick="openArticlePopup('${post.slug}')" class="inline-flex items-center text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-emerald-500 transition-all">
-    Baca Selengkapnya 
-    <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-</button>
-                    </div>
-                </article>
+            <article class="group cursor-pointer" onclick="openArticlePopup('${post.slug}')">
+                <div class="bg-slate-100 aspect-video rounded-[2rem] mb-6 overflow-hidden relative">
+                    <img src="${post.thumbnail || 'public/images/uploads/logo-ngk.png'}" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="px-2">
+                    <span class="text-emerald-500 text-[10px] font-bold uppercase tracking-widest">
+                        ${new Date(post.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                    </span>
+                    <h3 class="text-xl font-bold text-slate-800 mt-2 group-hover:text-emerald-600 transition-colors">
+                        ${post.title}
+                    </h3>
+                    <p class="text-slate-500 text-sm mt-3 line-clamp-2">
+                        ${post.body.replace(/[#*`]/g, '').substring(0, 100)}...
+                    </p>
+                </div>
+            </article>
             `;
             });
         } catch (err) {
-            console.error('Duh, gagal narik artikel:', err);
+            console.error('Gagal sinkronasi artikel:', err);
+            list.innerHTML = '<div class="col-span-full text-center text-red-500">Aduh, koneksi datanya putus, bro.</div>';
         }
     }
 
