@@ -4,12 +4,54 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Ngajikeun.id</title>
+    <title>Dashboard | CiwAI™ Smart Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .nc-app-container {
+            background-color: #f8fafc !important;
+        }
+
+        [class*="SidebarContainer"] {
+            background-color: #ffffff !important;
+            border-right: 1px solid #e2e8f0 !important;
+        }
+
+        [class*="LoginButton"] {
+            background-color: #0f172a !important;
+            border-radius: 0.75rem !important;
+            font-weight: 800 !important;
+        }
+    </style>
 </head>
 
 <body>
     <script src="https://unpkg.com/decap-cms@^3.11.0/dist/decap-cms.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        CMS.registerPreviewStyle("https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js");
+
+        CMS.registerPreviewTemplate("quizzes", createClass({
+            render: function () {
+                const entry = this.props.entry;
+                const title = entry.getIn(['data', 'title']);
+                const desc = entry.getIn(['data', 'description']);
+                const cat = (entry.getIn(['data', 'category']) || 'tahfidz').toLowerCase();
+                const colorClass = cat === 'tahfidz' ? 'border-emerald-400' : 'border-blue-400';
+
+                return h('div', { className: 'p-8 bg-slate-50 min-h-screen' },
+                    h('div', { className: `bg-white p-6 rounded-2xl border-l-4 ${colorClass} shadow-sm max-w-md mx-auto` },
+                        h('h3', { className: 'font-bold text-slate-800 text-lg mb-1' }, title || 'Judul Kuis'),
+                        h('p', { className: 'text-xs text-slate-500 mb-4' }, desc || 'Deskripsi kuis akan muncul di sini...'),
+                        h('div', { className: 'flex justify-between items-center' },
+                            h('span', { className: 'text-[10px] font-bold uppercase tracking-widest text-slate-400' }, 'Kategori: ' + cat),
+                            h('button', { className: 'bg-slate-800 text-white text-[10px] px-4 py-2 rounded-lg font-black' }, 'MULAI QUIZ ⚡')
+                        )
+                    )
+                );
+            }
+        }));
+
+    </script>
 </body>
 
 </html>
