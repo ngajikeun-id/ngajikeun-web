@@ -1,6 +1,8 @@
 ---
 title: Dari Bisa Membaca ke Bertanggung Jawab
 date: 2026-04-17T20:50:00.000+07:00
+thumbnail: public/images/uploads/logo-ngk.png
+description: NGAJIKEUN.ID
 ---
 ### **Perjalanan yang Tidak Pernah Benar-Benar Selesai**
 
