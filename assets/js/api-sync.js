@@ -349,4 +349,25 @@
         syncQuizzes,
         getArticleBySlug
     };
+
+    window.toggleQuizList = function (cat) {
+        const list = document.getElementById(`list-${cat}`);
+        const btn = document.getElementById(`btn-${cat}`);
+
+        if (!list || !btn) {
+            console.error("Elemen list atau button tidak ketemu, Bro!");
+            return;
+        }
+
+        if (list.classList.contains('hidden')) {
+            list.classList.remove('hidden');
+            list.classList.add('animate-in', 'fade-in', 'slide-in-from-top-2');
+            btn.innerText = `Tutup Kuis ${cat.charAt(0).toUpperCase() + cat.slice(1)}`;
+            btn.classList.replace('bg-slate-800', 'bg-red-500');
+        } else {
+            list.classList.add('hidden');
+            btn.innerText = `Buka Kuis ${cat.charAt(0).toUpperCase() + cat.slice(1)}`;
+            btn.classList.replace('bg-red-500', 'bg-slate-800');
+        }
+    };
 }());
