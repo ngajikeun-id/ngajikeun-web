@@ -272,58 +272,47 @@
 
     async function syncAbout() {
         const historyEl = document.getElementById("about-history");
-        const legalEl = document.getElementById("about-legal");
         const slidesEl = document.getElementById("about-slides");
         const visionEl = document.getElementById("about-vision");
         const missionsEl = document.getElementById("about-missions");
 
-        if (!historyEl || !legalEl) return;
+        if (!historyEl) return;
 
         try {
             const siteData = await loadSiteData();
             const data = siteData?.about_details || {};
 
-            // 1. Render Sejarah & Legalitas
+            // 1. Render Sejarah
             historyEl.innerHTML = window.marked
                 ? window.marked.parse(data.history || '')
                 : renderSimpleMarkdown(data.history || '');
-            legalEl.innerText = data.legal || "—";
 
-            // 2. Render Visi
-            if (visionEl) {
-                visionEl.innerText = data.vision ? `"${data.vision}"` : "Visi belum tersedia.";
-            }
-
-            // 3. Render Misi (Array/List)
-            if (missionsEl && data.missions && Array.isArray(data.missions)) {
+            // 2. Render Visi & Misi
+            if (visionEl) visionEl.innerText = data.vision ? `"${data.vision}"` : "";
+            if (missionsEl && data.missions) {
                 missionsEl.innerHTML = data.missions.map(misi => `
-                    <p class="text-xs md:text-sm text-slate-700">
-                        ${safeText(misi)}
+                    <p class="text-xs md:text-sm text-slate-700 font-medium">
+                        • ${safeText(misi)}
                     </p>
                 `).join('');
             }
 
-            // 4. Render Gallery Slides & Zoom
-            if (slidesEl && data.slides && Array.isArray(data.slides)) {
+            // 3. Render Gallery (Grid Full)
+            if (slidesEl && data.slides) {
                 slidesEl.innerHTML = data.slides.map(slide => {
                     const imgPath = safeUrl(slide.image);
                     return `
-                        <a href="${imgPath}" data-fancybox="about-gallery" class="cursor-zoom-in min-w-full">
-                            <img src="${imgPath}" class="h-72 w-full object-cover" loading="lazy">
+                        <a href="${imgPath}" data-fancybox="about-gallery" class="cursor-zoom-in block overflow-hidden rounded-2xl shadow-md">
+                            <img src="${imgPath}" class="h-48 md:h-64 w-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
                         </a>
                     `;
                 }).join('');
 
                 if (window.Fancybox) {
-                    window.Fancybox.bind("[data-fancybox='about-gallery']", {
-                        Images: { zoom: true }
-                    });
+                    window.Fancybox.bind("[data-fancybox='about-gallery']", { Images: { zoom: true } });
                 }
             }
-
-        } catch (err) {
-            console.error('Gagal sync About:', err);
-        }
+        } catch (err) { console.error('Gagal sync about:', err); }
     }
 
     window.NgajikeunApi = {

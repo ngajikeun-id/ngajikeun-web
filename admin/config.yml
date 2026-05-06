@@ -85,15 +85,6 @@ collections:
         name: "about_details"
         fields:
           - {label: "Sejarah", name: "history", widget: "markdown"}
-          - {label: "Legalitas", name: "legal", widget: "string"}
           - {label: "Visi", name: "vision", widget: "text"}
-          - label: "Misi"
-            name: "missions"
-            widget: "list"
-            field: {label: "Poin Misi", name: "item", widget: "string"}
-          - label: "Gallery Slides"
-            name: "slides"
-            widget: "list"
-            summary: "{{fields.image}}"
-            fields:
-              - {label: "Image", name: "image", widget: "image"}
+          - {label: "Misi", name: "missions", widget: "list", field: {label: "Poin Misi", name: "item", widget: "string"}}
+          - {label: "Gallery Slides", name: "slides", widget: "list", fields: [{label: "Image", name: "image", widget: "image"}]}
