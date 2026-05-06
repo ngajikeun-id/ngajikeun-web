@@ -8,7 +8,9 @@ public_folder: "public/images/uploads"
 collections:
   - name: "quizzes"
     label: "Koleksi Kuis"
-    folder: "content/data/quizzes"
+    folder: "content/quizzes"
+    extension: "json"
+    format: "json"
     create: true
     slug: "{{slug}}"
     fields:
