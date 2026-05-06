@@ -1,39 +1,72 @@
-<section id="quiz-section" class="py-20 bg-slate-50">
+<section id="quiz-section" class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-6">
-        <div class="grid md:grid-cols-2 gap-12">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-slate-800 tracking-tight">Asah Kemampuan Al-Qur'an</h2>
+            <p class="text-slate-500 mt-2">Pilih kategori kuis dari Quizlet untuk mulai belajar.</p>
+        </div>
 
-            <!-- KOLOM TAHFIDZ -->
-            <div class="space-y-6">
-                <div class="flex items-center gap-3 mb-8">
-                    <div class="p-2 bg-emerald-500 text-white rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+        <!-- Grid Dua Kolom -->
+        <div class="grid md:grid-cols-2 gap-8" id="quiz-selection">
+            <!-- Kartu Quiz Tahfidz -->
+            <div
+                class="group relative p-8 rounded-[2rem] border-2 border-emerald-100 bg-emerald-50/30 hover:bg-white hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="p-3 bg-emerald-500 text-white rounded-xl shadow-lg shadow-emerald-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                         </svg>
                     </div>
-                    <h2 class="text-xl font-black text-slate-800 uppercase tracking-widest">Quiz Tahfidz</h2>
+                    <h3 class="text-xl font-bold text-slate-800">Quiz Tahfidz</h3>
                 </div>
-                <!-- Tempat kuis tahfidz muncul -->
-                <div id="quizzes-tahfidz" class="space-y-4"></div>
+                <p class="text-slate-600 mb-8 text-sm leading-relaxed">Uji kelancaran hafalan surat-surat pendek dan
+                    sambung ayat melalui Quizlet.</p>
+                <button onclick="loadQuizlet('tahfidz')"
+                    class="w-full py-3 bg-slate-800 text-white font-bold rounded-xl hover:bg-emerald-600 transition-all active:scale-95 shadow-md">
+                    Buka Kuis Tahfidz
+                </button>
             </div>
 
-            <!-- KOLOM TAJWID -->
-            <div class="space-y-6">
-                <div class="flex items-center gap-3 mb-8">
-                    <div class="p-2 bg-blue-500 text-white rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+            <!-- Kartu Quiz Tajwid -->
+            <div
+                class="group relative p-8 rounded-[2rem] border-2 border-blue-100 bg-blue-50/30 hover:bg-white hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="p-3 bg-blue-500 text-white rounded-xl shadow-lg shadow-blue-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
-                    <h2 class="text-xl font-black text-slate-800 uppercase tracking-widest">Quiz Tajwid</h2>
+                    <h3 class="text-xl font-bold text-slate-800">Quiz Tajwid</h3>
                 </div>
-                <!-- Tempat kuis tajwid muncul -->
-                <div id="quizzes-tajwid" class="space-y-4"></div>
+                <p class="text-slate-600 mb-8 text-sm leading-relaxed">Asah pemahaman hukum Tajwid, makhraj, dan teori
+                    tilawah lewat Quizlet.</p>
+                <button onclick="loadQuizlet('tajwid')"
+                    class="w-full py-3 bg-slate-800 text-white font-bold rounded-xl hover:bg-blue-600 transition-all active:scale-95 shadow-md">
+                    Buka Kuis Tajwid
+                </button>
             </div>
+        </div>
 
+        <!-- Container untuk Embed Quizlet (Awalnya Tersembunyi) -->
+        <div id="quizlet-container" class="mt-12 hidden">
+            <div class="flex justify-between items-center mb-4">
+                <button onclick="closeQuizlet()"
+                    class="flex items-center gap-2 text-slate-400 hover:text-red-500 transition-colors font-medium text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Kembali Pilih Kategori
+                </button>
+                <span id="quiz-title" class="text-sm font-bold text-emerald-700 uppercase tracking-widest"></span>
+            </div>
+            <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-100 bg-white p-2">
+                <iframe id="quizlet-frame" src="" height="500" width="100%" style="border:0"></iframe>
+            </div>
         </div>
     </div>
 </section>
