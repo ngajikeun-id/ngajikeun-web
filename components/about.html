@@ -3,6 +3,7 @@
     <div class="absolute -right-20 top-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-100/30 rounded-full blur-3xl"></div>
 
     <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <!-- HEADER -->
         <div class="text-center max-w-3xl mx-auto mb-12 md:mb-14" data-aos="fade-up">
             <span
                 class="inline-block bg-emerald-100 text-emerald-700 text-[10px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.2em] mb-4">
@@ -14,7 +15,10 @@
             </h2>
         </div>
 
+        <!-- CONTENT -->
         <div class="grid lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] gap-10 lg:gap-12 items-start">
+
+            <!-- LEFT -->
             <div class="space-y-6 md:space-y-8" data-aos="fade-right">
                 <div id="history-container" class="about-story prose max-w-none">
                     <div id="about-history">Memuat sejarah...</div>
@@ -27,23 +31,30 @@
                 </div>
             </div>
 
-            <div class="bg-white p-8 md:p-10 rounded-[2rem] border border-emerald-50 shadow-2xl shadow-emerald-900/5 relative lg:sticky lg:top-28"
-                data-aos="fade-left">
-                <div class="absolute -top-4 -right-4 bg-emerald-600 text-white p-3 rounded-2xl shadow-lg rotate-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
+            <!-- RIGHT -->
+            <div class="space-y-6">
 
-                <h3 class="text-2xl font-bold text-emerald-900 mb-8 border-b border-emerald-50 pb-4">
-                    Visi & Misi
-                </h3>
-                <ul class="space-y-6">
-                    <!-- Visi -->
-                    <li class="flex gap-4">
-                        <span class="text-emerald-500 font-black text-xs mt-1">01.</span>
+                <!-- CARD VISI MISI -->
+                <div class="bg-white p-8 md:p-10 rounded-[2rem] border border-emerald-50 shadow-2xl shadow-emerald-900/5 relative lg:sticky lg:top-28"
+                    data-aos="fade-left">
+
+                    <!-- ICON -->
+                    <div class="absolute -top-4 -right-4 bg-emerald-600 text-white p-3 rounded-2xl shadow-lg rotate-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="text-2xl font-bold text-emerald-900 mb-6 border-b border-emerald-50 pb-4">
+                        Visi & Misi
+                    </h3>
+
+                    <!-- SCROLL AREA -->
+                    <div class="max-h-[320px] overflow-y-auto pr-2 space-y-6 custom-scroll">
+
+                        <!-- VISI -->
                         <div>
                             <p class="text-xs md:text-sm font-semibold text-emerald-700 mb-1">Visi</p>
                             <p class="text-xs md:text-sm italic text-slate-500">
@@ -52,11 +63,8 @@
                                 menerapkan nilai-nilai al-Qur'an dalam kehidupan sehari-hari."
                             </p>
                         </div>
-                    </li>
 
-                    <!-- Misi -->
-                    <li class="flex gap-4">
-                        <span class="text-emerald-500 font-black text-xs mt-1">02.</span>
+                        <!-- MISI -->
                         <div class="space-y-3">
                             <p class="text-xs md:text-sm font-semibold text-emerald-700">Misi</p>
 
@@ -95,21 +103,20 @@
                                 sejak pagi hari dimulai dari 10 menit saja.
                             </p>
                         </div>
-                    </li>
-                </ul>
 
-                <div class="about-slide mt-8 overflow-hidden rounded-2xl border border-emerald-100 bg-emerald-50/60">
-                    <div class="about-slide-track">
-                        <img src="public/images/uploads/slide-1.webp" alt="Program Ngajikeun slide 1"
-                            class="h-56 w-full shrink-0 object-cover object-center">
-                        <img src="public/images/uploads/slide-2.webp" alt="Program Ngajikeun slide 2"
-                            class="h-56 w-full shrink-0 object-cover object-center">
-                        <img src="public/images/uploads/slide-3.webp" alt="Program Ngajikeun slide 3"
-                            class="h-56 w-full shrink-0 object-cover object-center">
-                        <img src="public/images/uploads/slide-4.webp" alt="Program Ngajikeun slide 4"
-                            class="h-56 w-full shrink-0 object-cover object-center">
                     </div>
                 </div>
+
+                <!-- SLIDER (KELUAR DARI CARD) -->
+                <div class="overflow-hidden rounded-2xl border border-emerald-100 bg-emerald-50/60">
+                    <div class="about-slide-track">
+                        <img src="public/images/uploads/slide-1.webp" alt="Slide 1" class="h-64 w-full object-cover">
+                        <img src="public/images/uploads/slide-2.webp" alt="Slide 2" class="h-64 w-full object-cover">
+                        <img src="public/images/uploads/slide-3.webp" alt="Slide 3" class="h-64 w-full object-cover">
+                        <img src="public/images/uploads/slide-4.webp" alt="Slide 4" class="h-64 w-full object-cover">
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
