@@ -291,10 +291,11 @@
             if (visionEl) visionEl.innerText = data.vision ? `"${data.vision}"` : "";
             if (missionsEl && data.missions) {
                 missionsEl.innerHTML = data.missions.map(misi => `
-                    <p class="text-xs md:text-sm text-slate-700 font-medium">
-                        • ${safeText(misi)}
-                    </p>
-                `).join('');
+        <p class="relative pl-4">
+            <span class="absolute left-0 text-emerald-500">•</span>
+            ${safeText(misi)}
+        </p>
+    `).join('');
             }
 
             // 3. Render Gallery (Grid Full)
