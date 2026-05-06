@@ -25,4 +25,22 @@
             </div>
         </div>
     </div>
+
+    <!-- Article Modal -->
+    <div id="article-modal"
+        class="fixed inset-0 z-[100] hidden bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div
+            class="bg-white w-full max-w-3xl max-h-[85vh] rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col relative border border-emerald-100">
+            <button onclick="closeArticleModal()"
+                class="absolute top-6 right-6 z-10 p-3 bg-slate-100 hover:bg-emerald-500 hover:text-white rounded-2xl transition-all duration-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+
+            <div id="modal-content" class="overflow-y-auto p-8 md:p-14 custom-scrollbar">
+            </div>
+        </div>
+    </div>
 </section>

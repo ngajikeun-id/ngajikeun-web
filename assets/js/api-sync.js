@@ -234,10 +234,10 @@
                         <p class="text-slate-500 text-xs line-clamp-2 mb-6 leading-relaxed">
                             ${safeText(post.body.substring(0, 100))}...
                         </p>
-                        <a href="/articles/${post.slug}" class="inline-flex items-center text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-emerald-500 transition-all">
-                            Baca Selengkapnya 
-                            <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                        </a>
+                        <button onclick="openArticlePopup('${post.slug}')" class="inline-flex items-center text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-emerald-500 transition-all">
+    Baca Selengkapnya 
+    <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+</button>
                     </div>
                 </article>
             `;
@@ -366,6 +366,46 @@
             }
         } catch (err) { console.error('Gagal sync about:', err); }
     }
+
+    async function openArticlePopup(slug) {
+        let modal = document.getElementById('article-modal');
+        if (!modal) {
+            console.error("Modalnya belum ada di HTML, bro!");
+            return;
+        }
+
+        const contentArea = modal.querySelector('#modal-content');
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        contentArea.innerHTML = '<p class="text-center italic py-10">Membuka catatan hikmah...</p>';
+
+        try {
+            const data = await loadSiteData();
+            const articles = getCollection(data, 'articles');
+            const article = articles.find(a => a.slug === slug);
+
+            if (article) {
+                const htmlContent = window.marked
+                    ? window.marked.parse(article.body)
+                    : renderSimpleMarkdown(article.body);
+
+                contentArea.innerHTML = `
+                <h2 class="text-3xl font-black text-slate-800 mb-6 leading-tight">${safeText(article.title)}</h2>
+                <div class="prose prose-slate prose-emerald max-w-none">
+                    ${htmlContent}
+                </div>
+            `;
+            }
+        } catch (err) {
+            contentArea.innerHTML = '<p class="text-red-500">Aduh, gagal muat artikelnya, bro.</p>';
+        }
+    }
+
+    window.openArticlePopup = openArticlePopup;
+    window.closeArticleModal = () => {
+        document.getElementById('article-modal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    };
 
     window.NgajikeunApi = {
         syncAbout,
