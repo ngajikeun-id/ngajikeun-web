@@ -375,7 +375,8 @@
     }
 
     async function openArticlePopup(slug) {
-        let modal = document.getElementById('article-modal');
+        const modal = document.getElementById('article-modal');
+        const modalBody = document.getElementById('modal-body');
         if (!modal) {
             console.error("Modalnya belum ada di HTML, bro!");
             return;
@@ -407,6 +408,7 @@
         </div>
     </div>
 `;
+                modal.scrollTo(0, 0);
             }
         } catch (err) {
             contentArea.innerHTML = '<p class="text-red-500">Aduh, gagal muat artikelnya, bro.</p>';
