@@ -245,45 +245,51 @@
     }
 
     async function syncQuizzes() {
-        const tahfidzContainer = document.getElementById('quizzes-tahfidz');
-        const tajwidContainer = document.getElementById('quizzes-tajwid');
-
-        if (!tahfidzContainer || !tajwidContainer) return;
+        const listTahfidz = document.getElementById('list-tahfidz');
+        const listTajwid = document.getElementById('list-tajwid');
+        if (!listTahfidz || !listTajwid) return;
 
         try {
             const data = await loadSiteData();
             const quizzes = getCollection(data, 'quizzes');
-            if (!quizzes.length) return;
 
-            tahfidzContainer.innerHTML = '';
-            tajwidContainer.innerHTML = '';
+            listTahfidz.innerHTML = '';
+            listTajwid.innerHTML = '';
 
             quizzes.forEach(quiz => {
-                const quizLink = safeUrl(quiz.link);
                 const category = (quiz.category || '').toLowerCase();
-
-                const cardHtml = `
-                <div class="group bg-white p-6 rounded-2xl border-l-4 ${category === 'tahfidz' ? 'border-emerald-400' : 'border-blue-400'} shadow-sm hover:shadow-md transition-all">
-                    <h3 class="font-bold text-slate-800 mb-1">${safeText(quiz.title, 'Kuiz')}</h3>
-                    <p class="text-xs text-slate-500 mb-4">${safeText(quiz.description)}</p>
-                    <a href="${quizLink}" target="_blank" class="inline-flex items-center gap-2 ${category === 'tahfidz' ? 'text-emerald-600' : 'text-blue-600'} text-[10px] font-black uppercase tracking-widest hover:gap-3 transition-all">
-                        Mulai Belajar ⚡
+                const quizHtml = `
+                <div class="flex items-center justify-between bg-white/60 p-4 rounded-xl border border-white shadow-sm hover:bg-white transition-all">
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800">${safeText(quiz.title)}</h4>
+                        <p class="text-[10px] text-slate-500">${safeText(quiz.description)}</p>
+                    </div>
+                    <a href="${safeUrl(quiz.link)}" target="_blank" class="text-[10px] font-black uppercase tracking-widest text-emerald-600 hover:text-emerald-700">
+                        Mulai Quiz ⚡
                     </a>
-                </div>`;
+                </div>
+            `;
 
-                // Masukkan ke kontainer yang sesuai
-                if (category === 'tahfidz') {
-                    tahfidzContainer.innerHTML += cardHtml;
-                } else if (category === 'tajwid') {
-                    tajwidContainer.innerHTML += cardHtml;
-                }
+                if (category === 'tahfidz') listTahfidz.innerHTML += quizHtml;
+                else if (category === 'tajwid') listTajwid.innerHTML += quizHtml;
             });
 
-            if (tahfidzContainer.innerHTML === '') tahfidzContainer.innerHTML = '<p class="text-xs text-slate-400 italic">Belum ada kuis tahfidz.</p>';
-            if (tajwidContainer.innerHTML === '') tajwidContainer.innerHTML = '<p class="text-xs text-slate-400 italic">Belum ada kuis tajwid.</p>';
+        } catch (err) { console.error(err); }
+    }
 
-        } catch (error) {
-            console.error('Gagal load kuis:', error);
+    function toggleQuizList(cat) {
+        const list = document.getElementById(`list-${cat}`);
+        const btn = document.getElementById(`btn-${cat}`);
+
+        if (list.classList.contains('hidden')) {
+            list.classList.remove('hidden');
+            list.classList.add('animate-in', 'fade-in', 'slide-in-from-top-2');
+            btn.innerText = `Tutup Kuis ${cat.charAt(0).toUpperCase() + cat.slice(1)}`;
+            btn.classList.replace('bg-slate-800', 'bg-red-500'); // Ganti warna biar jelas kalau mau tutup
+        } else {
+            list.classList.add('hidden');
+            btn.innerText = `Buka Kuis ${cat.charAt(0).toUpperCase() + cat.slice(1)}`;
+            btn.classList.replace('bg-red-500', 'bg-slate-800');
         }
     }
 
