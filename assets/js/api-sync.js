@@ -216,6 +216,7 @@
             list.innerHTML = '';
 
             articles.slice(0, 3).forEach(post => {
+                const imageUrl = post.thumbnail || 'https://via.placeholder.com/1280x720?text=Ngajikeun+Artikel';
                 const date = new Date(post.date).toLocaleDateString('id-ID', {
                     year: 'numeric',
                     month: 'long',
@@ -225,10 +226,12 @@
                 list.innerHTML += `
                 <article class="group bg-white rounded-[2.5rem] p-2 border border-slate-100 hover:border-emerald-200 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-900/5">
                     <div class="bg-slate-100 aspect-video rounded-[2rem] mb-6 overflow-hidden relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 group-hover:scale-110 transition-transform duration-700"></div>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                             <svg class="w-12 h-12 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
-                        </div>
+    <img src="${post.thumbnail || 'https://via.placeholder.com/1280x720?text=Ngajikeun+Artikel'}" 
+         alt="${safeText(post.title)}" 
+         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+    
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-60"></div>
+</div>
                     </div>
                     <div class="px-6 pb-8">
                         <time class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-3">${date}</time>
