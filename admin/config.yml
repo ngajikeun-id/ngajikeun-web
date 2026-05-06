@@ -5,7 +5,7 @@ slug:
   sanitize_replacement: "-"
 
 brand_name: "CiwAI™ Smart Digital"
-logo_url: /images/logo/logo-ciwai.png
+logo_url: /images/logo/logo_ciwai.png
 display_url: "https://ngajikeun.ciwai.dev"
 
 backend:
