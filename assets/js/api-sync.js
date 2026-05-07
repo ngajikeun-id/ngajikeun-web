@@ -203,50 +203,72 @@
         const list = document.getElementById('article-list');
         if (!list) return;
 
-        list.innerHTML = '<div class="col-span-full text-center py-10 italic">Memuat data literasi...</div>';
-
         try {
             const data = await loadSiteData();
-            let articles = getCollection(data, 'articles');
-
-            const now = new Date();
-            const publishedArticles = articles.filter(post => new Date(post.date) <= now);
-
-            if (!publishedArticles.length) {
-                list.innerHTML = '<div class="col-span-full text-center py-10">Belum ada artikel nih, bro.</div>';
-                return;
-            }
-
-            publishedArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
+            const articles = getCollection(data, 'articles');
+            if (!articles || !articles.length) return;
 
             list.innerHTML = '';
 
-            publishedArticles.slice(0, 3).forEach(post => {
+            articles.forEach((post, index) => {
+                const date = new Date(post.date).toLocaleDateString('id-ID', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                });
+
                 list.innerHTML += `
-            <article class="group cursor-pointer" onclick="openArticlePopup('${post.slug}')">
-                <div class="bg-slate-100 aspect-video rounded-[2rem] mb-6 overflow-hidden relative">
-                    <img src="${post.thumbnail || 'public/images/uploads/logo-ngk.png'}" 
-                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                </div>
-                <div class="px-2">
-                    <span class="text-emerald-500 text-[10px] font-bold uppercase tracking-widest">
-                        ${new Date(post.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
-                    </span>
-                    <h3 class="text-xl font-bold text-slate-800 mt-2 group-hover:text-emerald-600 transition-colors">
-                        ${post.title}
-                    </h3>
-                    <p class="text-slate-500 text-sm mt-3 line-clamp-2">
-                        ${post.body.replace(/[#*`]/g, '').substring(0, 100)}...
-                    </p>
-                </div>
-            </article>
+                <article class="group bg-white rounded-[2.5rem] p-4 border border-slate-100 hover:border-emerald-200 transition-all duration-500 shadow-sm hover:shadow-xl">
+                    <div class="px-4 pb-6">
+                        <time class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-3">${date}</time>
+                        <h3 class="text-xl font-bold text-slate-800 leading-snug mb-4 group-hover:text-emerald-600 transition-colors">
+                            ${safeText(post.title)}
+                        </h3>
+                        <p class="text-slate-500 text-xs line-clamp-2 mb-6 leading-relaxed">
+                            ${safeText(post.description || post.body.substring(0, 100))}...
+                        </p>
+                        <button onclick="openArticleModal('${post.slug}')" class="text-[10px] font-black uppercase tracking-widest text-emerald-600 hover:text-slate-800 transition-all">
+                            Baca Selengkapnya →
+                        </button>
+                    </div>
+                </article>
             `;
             });
-        } catch (err) {
-            console.error('Gagal sinkronasi artikel:', err);
-            list.innerHTML = '<div class="col-span-full text-center text-red-500">Aduh, koneksi datanya putus, bro.</div>';
-        }
+        } catch (err) { console.error('Gagal narik artikel:', err); }
     }
+
+    window.openArticleModal = async function (slug) {
+        const modal = document.getElementById('article-modal');
+        const content = document.getElementById('modal-content'); // Sesuaikan dengan HTML Antum
+
+        if (!modal || !content) return;
+
+        try {
+            const data = await loadSiteData();
+            const articles = getCollection(data, 'articles');
+            const post = articles.find(a => a.slug === slug);
+
+            if (post) {
+                content.innerHTML = `
+                <div class="max-w-2xl mx-auto">
+                    <span class="text-emerald-600 font-bold tracking-widest text-[10px] uppercase block mb-4">Literasi Al-Qur'an</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-6 leading-tight">${safeText(post.title)}</h2>
+                    <div class="prose prose-emerald prose-sm max-w-none text-slate-600 leading-relaxed">
+                        ${window.marked ? window.marked.parse(post.body || '') : post.body} 
+                    </div>
+                </div>
+            `;
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        } catch (err) { console.error('Gagal buka modal:', err); }
+    };
+
+    window.closeArticleModal = function () {
+        const modal = document.getElementById('article-modal'); //
+        if (modal) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    };
 
     async function syncProducts() {
         const container = document.getElementById('products-list');
@@ -402,12 +424,6 @@
             modalBody.innerHTML = '<p class="text-center text-red-500">Gagal memuat isi artikel.</p>';
         }
     }
-
-    window.openArticlePopup = openArticlePopup;
-    window.closeArticleModal = () => {
-        document.getElementById('article-modal').classList.add('hidden');
-        document.body.style.overflow = 'auto';
-    };
 
     window.NgajikeunApi = {
         syncAbout,
