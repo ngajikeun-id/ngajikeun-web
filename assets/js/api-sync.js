@@ -239,7 +239,10 @@
         const modal = document.getElementById('article-modal');
         const content = document.getElementById('modal-content');
 
-        if (!modal || !content) return;
+        if (!modal || !content) {
+            console.error("Modal tidak tersedia");
+            return;
+        }
 
         try {
             const data = await loadSiteData();
@@ -259,11 +262,13 @@
                 modal.classList.remove('hidden');
                 document.body.style.overflow = 'hidden';
             }
-        } catch (err) { console.error('Gagal buka modal:', err); }
+        } catch (err) {
+            console.error('Gagal buka modal artikel:', err);
+        }
     };
 
     window.closeArticleModal = function () {
-        const modal = document.getElementById('article-modal'); //
+        const modal = document.getElementById('article-modal');
         if (modal) {
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
