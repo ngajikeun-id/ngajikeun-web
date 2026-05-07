@@ -277,11 +277,22 @@
         }
     }
 
-    window.openArticleModal = async function (slug) {
+    window.closeArticleModal = function () {
+        const modal = document.getElementById('article-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    };
+
+    window.getArticleBySlug = async function (slug) {
         const modal = document.getElementById('article-modal');
         const content = document.getElementById('modal-content');
 
-        if (!modal || !content) return;
+        if (!modal || !content) {
+            console.error("Waduh, elemen modal-nya nggak ketemu di HTML!");
+            return;
+        }
 
         try {
             const data = await loadSiteData();
@@ -290,30 +301,26 @@
 
             if (post) {
                 const imageHtml = post.thumbnail
-                    ? `<img src="${post.thumbnail}" class="w-full h-64 object-cover rounded-3xl mb-8 shadow-lg">`
+                    ? `<img src="${post.thumbnail}" class="w-full h-64 object-cover rounded-[2rem] mb-8 shadow-lg">`
                     : '';
 
                 content.innerHTML = `
-                <div class="max-w-2xl mx-auto">
+                <div class="max-w-2xl mx-auto text-center">
                     ${imageHtml}
                     <span class="text-emerald-600 font-bold tracking-widest text-[10px] uppercase block mb-4">Literasi Al-Qur'an</span>
                     <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-6 leading-tight">${post.title}</h2>
-                    <div class="prose prose-emerald prose-sm max-w-none text-slate-600 leading-relaxed">
+                    <div class="prose prose-emerald prose-sm max-w-none text-slate-600 leading-relaxed text-left border-t border-slate-50 pt-8">
                         ${window.marked ? marked.parse(post.body || '') : post.body} 
                     </div>
                 </div>
             `;
+
                 modal.classList.remove('hidden');
                 document.body.style.overflow = 'hidden';
+                modal.scrollTo(0, 0);
             }
-        } catch (err) { console.error('Gagal buka modal:', err); }
-    };
-
-    window.closeArticleModal = function () {
-        const modal = document.getElementById('article-modal');
-        if (modal) {
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
+        } catch (err) {
+            console.error('Gagal memuat artikel:', err);
         }
     };
 
