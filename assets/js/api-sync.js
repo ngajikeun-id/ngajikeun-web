@@ -326,6 +326,70 @@
         }
     };
 
+    window.syncArticles = async function () {
+        const list = document.getElementById('articles-list');
+        if (!list) return;
+
+        try {
+            const data = await loadSiteData();
+            const articles = getCollection(data, 'articles');
+            if (!articles || !articles.length) return;
+
+            list.innerHTML = '';
+
+            const featured = articles.slice(0, 3);
+            const others = articles.slice(3);
+
+            const createCard = (post) => {
+                const date = new Date(post.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+                return `
+                <article class="group bg-white rounded-[2.5rem] p-2 border border-slate-100 hover:border-emerald-200 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-900/5 flex flex-col h-full animate-in fade-in slide-in-from-bottom-4">
+                    <div class="bg-slate-100 aspect-video rounded-[2rem] mb-6 overflow-hidden relative">
+                        ${post.thumbnail ? `<img src="${post.thumbnail}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">` : `<div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-blue-500/20"></div>`}
+                    </div>
+                    <div class="px-6 pb-8 flex-grow flex flex-col items-center text-center">
+                        <time class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-3">${date}</time>
+                        <h3 class="text-xl font-black text-slate-800 leading-snug group-hover:text-emerald-600 transition-colors mb-4">${safeText(post.title)}</h3>
+                        <p class="text-slate-500 text-xs line-clamp-2 mb-6 leading-relaxed">${safeText(post.description || post.body.substring(0, 100))}...</p>
+                        <button onclick="getArticleBySlug('${post.slug}')" class="mt-auto inline-flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-600 hover:text-slate-900 transition-all">
+                            Baca Selengkapnya 
+                            <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </div>
+                </article>
+            `;
+            };
+
+            featured.forEach(post => { list.innerHTML += createCard(post); });
+
+            if (others.length > 0) {
+                const extraContainer = document.createElement('div');
+                extraContainer.id = 'extra-articles';
+                extraContainer.className = 'grid grid-cols-1 md:grid-cols-3 gap-8 col-span-full hidden mt-8'; // hidden by default
+                others.forEach(post => { extraContainer.innerHTML += createCard(post); });
+                list.appendChild(extraContainer);
+            }
+
+        } catch (err) { console.error('Gagal sync:', err); }
+    };
+
+    window.toggleAllArticles = function () {
+        const extra = document.getElementById('extra-articles');
+        const btn = document.getElementById('btn-show-all');
+
+        if (!extra) return;
+
+        if (extra.classList.contains('hidden')) {
+            extra.classList.remove('hidden');
+            btn.innerHTML = 'Tutup Artikel Lainnya ↑';
+            extra.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            extra.classList.add('hidden');
+            btn.innerHTML = 'Lihat Semua Artikel →';
+            document.getElementById('article-section').scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     async function syncProducts() {
         const container = document.getElementById('products-list');
         if (!container) return;
