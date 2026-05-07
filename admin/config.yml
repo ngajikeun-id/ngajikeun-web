@@ -84,7 +84,7 @@ collections:
     fields:
       - {label: "Judul Artikel", name: "title", widget: "string"}
       - {label: "Tanggal Publish", name: "date", widget: "datetime"}
-      - {label: "Thumbnail Artikel", name: "thumbnail", widget: "image", required: false} # Ini buat masukin image, bro!
+      - {label: "Thumbnail Artikel", name: "thumbnail", widget: "image", required: false}
       - {label: "Deskripsi Singkat", name: "description", widget: "text", hint: "Muncul di halaman depan (limit 100 karakter)"}
       - {label: "Body", name: "body", widget: "markdown"}
 
