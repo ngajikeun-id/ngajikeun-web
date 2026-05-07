@@ -1,47 +1,27 @@
 <section id="article-section" class="py-24 bg-slate-50/50">
-    <div class="max-w-6xl mx-auto px-6 mb-12">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-                <span class="text-emerald-600 font-bold tracking-widest text-[10px] uppercase">Wawasan & Literasi</span>
-                <h2 class="text-4xl font-black text-slate-800 mt-2">Artikel Terbaru</h2>
-                <p class="text-slate-500 text-sm mt-2">Update informasi seputar dunia Al-Qur'an dan tips belajar
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+            <div class="max-w-2xl">
+                <span class="text-emerald-600 text-[10px] font-black uppercase tracking-[0.3em] mb-3 block">Wawasan &
+                    Literasi</span>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tighter">Artikel Terbaru</h2>
+                <p class="text-slate-500 mt-2 text-sm">Update informasi seputar dunia Al-Qur'an dan tips belajar
                     makhraj.</p>
             </div>
-
-            <!-- Link Lihat Semua Artikel -->
-            <a href="#all-articles"
-                class="text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors border-b-2 border-emerald-100 pb-1 whitespace-nowrap self-start md:self-auto">
-                Lihat Semua Artikel →
-            </a>
+            <a href="/articles"
+                class="text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors border-b-2 border-emerald-100 pb-1">
+                Lihat Semua Artikel →</a>
         </div>
-    </div>
 
-    <div id="article-list" class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Loading State -->
-        <div class="col-span-full text-center py-20 text-slate-400 italic">
-            <div class="flex justify-center mb-4">
-                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce mx-1"></div>
-                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce mx-1 [animation-delay:-0.15s]"></div>
-                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce mx-1 [animation-delay:-0.3s]"></div>
-            </div>
-            <p class="text-xs tracking-widest uppercase font-medium">Menarik data literasi...</p>
-        </div>
-    </div>
-
-    <!-- Article Modal -->
-    <div id="article-modal"
-        class="fixed inset-0 z-[100] hidden bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div
-            class="bg-white w-full max-w-3xl max-h-[85vh] rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col relative border border-emerald-100">
-            <button onclick="closeArticleModal()"
-                class="absolute top-6 right-6 z-10 p-3 bg-slate-100 hover:bg-emerald-500 hover:text-white rounded-2xl transition-all duration-300">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12">
-                    </path>
-                </svg>
-            </button>
-
-            <div id="modal-content" class="overflow-y-auto p-8 md:p-14 custom-scrollbar">
+        <div id="articles-list" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Loading State -->
+            <div class="col-span-full text-center py-20 text-slate-400 italic">
+                <div class="flex justify-center mb-4">
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce mx-1"></div>
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce mx-1 [animation-delay:-0.15s]"></div>
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce mx-1 [animation-delay:-0.3s]"></div>
+                </div>
+                <p class="text-xs tracking-widest uppercase font-medium">Menarik data literasi...</p>
             </div>
         </div>
     </div>

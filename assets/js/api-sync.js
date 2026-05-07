@@ -200,39 +200,51 @@
     }
 
     async function syncArticles() {
-        const list = document.getElementById('article-list');
+        const list = document.getElementById('articles-list');
         if (!list) return;
 
         try {
             const data = await loadSiteData();
             const articles = getCollection(data, 'articles');
-            if (!articles || !articles.length) return;
+            if (!articles.length) return;
 
             list.innerHTML = '';
 
-            articles.forEach((post, index) => {
+            articles.slice(0, 3).forEach(post => { // Kita ambil 3 artikel terbaru saja
                 const date = new Date(post.date).toLocaleDateString('id-ID', {
-                    year: 'numeric', month: 'long', day: 'numeric'
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
                 });
 
                 list.innerHTML += `
-                <article class="group bg-white rounded-[2.5rem] p-4 border border-slate-100 hover:border-emerald-200 transition-all duration-500 shadow-sm hover:shadow-xl">
-                    <div class="px-4 pb-6">
+                <article class="group bg-white rounded-[2.5rem] p-2 border border-slate-100 hover:border-emerald-200 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-900/5">
+                    <div class="bg-slate-100 aspect-video rounded-[2rem] mb-6 overflow-hidden relative">
+                        <!-- Kalau ada thumbnail bisa ditaruh sini, kalau gak ada kita kasih placeholder estetik -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 group-hover:scale-110 transition-transform duration-700"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                             <svg class="w-12 h-12 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-8">
                         <time class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-3">${date}</time>
-                        <h3 class="text-xl font-bold text-slate-800 leading-snug mb-4 group-hover:text-emerald-600 transition-colors">
+                        <h3 class="text-xl font-bold text-slate-800 leading-snug group-hover:text-emerald-600 transition-colors mb-4">
                             ${safeText(post.title)}
                         </h3>
                         <p class="text-slate-500 text-xs line-clamp-2 mb-6 leading-relaxed">
-                            ${safeText(post.description || post.body.substring(0, 100))}...
+                            ${safeText(post.body.substring(0, 100))}...
                         </p>
-                        <button onclick="openArticleModal('${post.slug}')" class="text-[10px] font-black uppercase tracking-widest text-emerald-600 hover:text-slate-800 transition-all">
-                            Baca Selengkapnya →
-                        </button>
+                        <a href="/articles/${post.slug}" class="inline-flex items-center text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-emerald-500 transition-all">
+                            Baca Selengkapnya 
+                            <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
                     </div>
                 </article>
             `;
             });
-        } catch (err) { console.error('Gagal narik artikel:', err); }
+        } catch (err) {
+            console.error('Duh, gagal narik artikel:', err);
+        }
     }
 
     window.openArticleModal = async function (slug) {
