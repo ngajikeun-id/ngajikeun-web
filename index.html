@@ -179,45 +179,6 @@
     <script src="assets/js/component-loader.js"></script>
     <script src="assets/js/main.js"></script>
 
-    <!-- Article Modal Container -->
-    <div id="article-modal" class="fixed inset-0 z-[100] hidden overflow-y-auto px-4 py-6 transition-all duration-300">
-        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closeArticleModal()">
-        </div>
-
-        <div
-            class="relative mx-auto max-w-4xl rounded-[2rem] bg-white shadow-2xl transition-all animate-in fade-in zoom-in duration-300">
-            <div
-                class="sticky top-0 z-20 flex items-center justify-between border-b border-emerald-50 bg-white/90 p-6 backdrop-blur-md rounded-t-[2rem]">
-                <h2 id="modal-title"
-                    class="text-lg md:text-xl font-bold text-emerald-800 uppercase tracking-widest px-2">
-                    Detail Artikel
-                </h2>
-                <button onclick="closeArticleModal()"
-                    class="rounded-full p-2 text-slate-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all active:scale-95">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-
-            <div class="p-8 md:p-12">
-                <article id="modal-body" class="prose prose-emerald lg:prose-xl max-w-none 
-                       prose-headings:text-emerald-900 prose-headings:font-bold 
-                       prose-p:text-slate-700 prose-p:leading-relaxed 
-                       prose-strong:text-emerald-700 prose-img:rounded-2xl">
-                </article>
-            </div>
-
-            <div class="p-6 border-t border-slate-50 text-center">
-                <button onclick="closeArticleModal()"
-                    class="text-sm font-bold text-slate-400 hover:text-emerald-600 transition-colors">
-                    Tutup Bacaan
-                </button>
-            </div>
-        </div>
-    </div>
 </body>
 
 </html>

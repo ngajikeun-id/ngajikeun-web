@@ -237,9 +237,12 @@
 
     window.openArticleModal = async function (slug) {
         const modal = document.getElementById('article-modal');
-        const content = document.getElementById('modal-content'); // Sesuaikan dengan HTML Antum
+        const content = document.getElementById('modal-content');
 
-        if (!modal || !content) return;
+        if (!modal || !content) {
+            console.error("Modal atau Container konten tidak ditemukan");
+            return;
+        }
 
         try {
             const data = await loadSiteData();
