@@ -239,10 +239,7 @@
         const modal = document.getElementById('article-modal');
         const content = document.getElementById('modal-content');
 
-        if (!modal || !content) {
-            console.error("Modal atau Container konten tidak ditemukan");
-            return;
-        }
+        if (!modal || !content) return;
 
         try {
             const data = await loadSiteData();
@@ -253,9 +250,9 @@
                 content.innerHTML = `
                 <div class="max-w-2xl mx-auto">
                     <span class="text-emerald-600 font-bold tracking-widest text-[10px] uppercase block mb-4">Literasi Al-Qur'an</span>
-                    <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-6 leading-tight">${safeText(post.title)}</h2>
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-6 leading-tight">${post.title}</h2>
                     <div class="prose prose-emerald prose-sm max-w-none text-slate-600 leading-relaxed">
-                        ${window.marked ? window.marked.parse(post.body || '') : post.body} 
+                        ${window.marked ? marked.parse(post.body || '') : post.body} 
                     </div>
                 </div>
             `;
