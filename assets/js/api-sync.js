@@ -403,31 +403,38 @@
 
             for (const product of products) {
                 container.innerHTML += `
-        <div class="group relative bg-white p-2 rounded-[2rem] border border-emerald-50 shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-900/5">
-            <div class="absolute top-4 right-4 z-10">
-                <span class="bg-emerald-500 text-white text-[8px] font-black px-2 py-1 rounded-lg uppercase tracking-tighter">New Release</span>
-            </div>
-
-            <div class="bg-emerald-50/50 rounded-[1.8rem] p-8 transition-colors duration-500 group-hover:bg-emerald-50/80">
-                <div class="w-16 h-16 bg-white rounded-2xl mb-6 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-500">
-                    <span class="text-2xl">📚</span>
+        <div class="group bg-white rounded-[2.5rem] border border-emerald-50 shadow-sm hover:shadow-xl hover:shadow-emerald-900/5 transition-all duration-500 overflow-hidden col-span-full">
+            <div class="flex flex-col md:flex-row items-center p-4 md:p-6 gap-8">
+                
+                <div class="w-full md:w-48 h-48 bg-emerald-50 rounded-[2rem] flex-shrink-0 flex items-center justify-center group-hover:bg-emerald-100 transition-colors duration-500">
+                    <span class="text-5xl group-hover:scale-110 transition-transform duration-500">📖</span>
                 </div>
 
-                <h3 class="text-lg font-black text-emerald-900 leading-tight mb-2">${safeText(product.title, 'Produk')}</h3>
-                <p class="text-xs text-emerald-800/50 leading-relaxed mb-6 line-clamp-2">${safeText(product.description)}</p>
-                
-                <div class="flex items-center justify-between pt-4 border-t border-emerald-100/50">
-                    <div>
-                        <p class="text-[9px] uppercase font-bold text-emerald-400 tracking-widest">Harga</p>
-                        <p class="text-lg font-black text-emerald-700">${safeText(product.price, 'Gratis')}</p>
+                <div class="flex-grow text-center md:text-left">
+                    <div class="flex flex-col md:flex-row md:items-center gap-2 mb-3">
+                        <h3 class="text-xl font-black text-emerald-900">${safeText(product.title, 'Produk')}</h3>
+                        <span class="hidden md:block w-1 h-1 rounded-full bg-emerald-200"></span>
+                        <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-[0.2em]">E-Book Series</span>
                     </div>
+                    <p class="text-[13px] leading-relaxed text-emerald-800/60 mb-4 max-w-2xl">${safeText(product.description)}</p>
+                    
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <div class="flex items-center gap-1 text-emerald-500">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                            <span class="text-[11px] font-bold">Akses Selamanya</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-auto md:min-w-[180px] p-6 bg-emerald-50/50 rounded-[2rem] flex flex-col items-center justify-center border border-emerald-100/50">
+                    <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1 text-center">Investasi</span>
+                    <span class="text-2xl font-black text-emerald-700 mb-4">${safeText(product.price, 'Gratis')}</span>
                     <a href="${safeText(product.link, 'https://wa.me/6281932692047')}" target="_blank"
-                       class="bg-emerald-600 p-3 rounded-xl text-white shadow-lg shadow-emerald-500/20 hover:bg-emerald-700 transition-all active:scale-95">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
+                       class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] px-6 py-3 rounded-xl font-black uppercase tracking-widest shadow-lg shadow-emerald-500/20 transition-all active:scale-95 text-center">
+                        Beli Sekarang
                     </a>
                 </div>
+
             </div>
         </div>`;
             }
