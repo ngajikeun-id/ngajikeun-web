@@ -28,49 +28,51 @@
     <script src="https://unpkg.com/decap-cms@^3.11.0/dist/decap-cms.js"></script>
 
     <script>
-        const tailwindCDN = "https://cdn.tailwindcss.com";
+        window.onload = () => {
+            const tailwindCDN = "https://cdn.tailwindcss.com";
 
-        CMS.registerPreviewTemplate("main_dashboard", createClass({
-            render: function () {
-                const entry = this.props.entry;
-                const welcomeMsg = entry.getIn(['data', 'welcome_msg']) || 'Selamat Datang Admin Ngajikeun.id';
-                const statsLink = entry.getIn(['data', 'stats_link']) || 'https://cloud.umami.is/share/wwTd9VfrO2Xe8A77';
+            CMS.registerPreviewTemplate("main_dashboard", createClass({
+                render: function () {
+                    const entry = this.props.entry;
+                    const welcomeMsg = entry.getIn(['data', 'welcome_msg']) || 'Selamat Datang Admin Ngajikeun.id';
+                    const statsLink = entry.getIn(['data', 'stats_link']) || 'https://cloud.umami.is/share/wwTd9VfrO2Xe8A77';
 
-                return h('div', { className: 'p-8 bg-slate-50 min-h-screen' },
-                    h('script', { src: tailwindCDN }),
-                    h('div', { className: 'max-w-4xl mx-auto space-y-6' },
-                        h('div', { className: 'bg-emerald-600 p-8 rounded-3xl text-white shadow-lg' },
-                            h('h1', { className: 'text-2xl font-black mb-2' }, welcomeMsg),
-                            h('p', { className: 'text-emerald-100 text-sm' }, 'Monitor Statistik & performa')
-                        ),
-                        h('div', { className: 'bg-white p-2 rounded-3xl shadow-sm border border-slate-200 overflow-hidden' },
-                            h('iframe', {
-                                src: statsLink,
-                                className: 'w-full h-[600px] rounded-2xl',
-                                frameBorder: '0'
-                            })
+                    return h('div', { className: 'p-8 bg-slate-50 min-h-screen font-sans' },
+                        h('script', { src: tailwindCDN }),
+                        h('div', { className: 'max-w-4xl mx-auto space-y-6' },
+                            h('div', { className: 'bg-emerald-600 p-8 rounded-3xl text-white shadow-lg' },
+                                h('h1', { className: 'text-2xl font-black mb-2' }, welcomeMsg),
+                                h('p', { className: 'text-emerald-100 text-sm' }, 'CiwAI™ Smart Digital Dashboard')
+                            ),
+                            h('div', { className: 'bg-white p-2 rounded-3xl shadow-sm border border-slate-200 overflow-hidden' },
+                                h('iframe', {
+                                    src: statsLink,
+                                    className: 'w-full h-[500px] rounded-2xl',
+                                    frameBorder: '0'
+                                })
+                            )
                         )
-                    )
-                );
-            }
-        }));
+                    );
+                }
+            }));
 
-        CMS.registerPreviewTemplate("quizzes", createClass({
-            render: function () {
-                const entry = this.props.entry;
-                const title = entry.getIn(['data', 'title']) || 'Judul Kuis';
-                const cat = (entry.getIn(['data', 'category']) || 'tahfidz').toLowerCase();
-                const colorClass = cat === 'tahfidz' ? 'border-emerald-400' : 'border-blue-400';
+            CMS.registerPreviewTemplate("quizzes", createClass({
+                render: function () {
+                    const entry = this.props.entry;
+                    const title = entry.getIn(['data', 'title']) || 'Judul Kuis';
+                    const cat = (entry.getIn(['data', 'category']) || 'tahfidz').toLowerCase();
+                    const colorClass = cat === 'tahfidz' ? 'border-emerald-400' : 'border-blue-400';
 
-                return h('div', { className: 'p-8 bg-slate-50 min-h-screen' },
-                    h('script', { src: tailwindCDN }),
-                    h('div', { className: `bg-white p-6 rounded-2xl border-l-4 ${colorClass} shadow-sm max-w-md mx-auto` },
-                        h('h3', { className: 'font-bold text-slate-800 text-lg mb-1' }, title),
-                        h('button', { className: 'mt-4 bg-slate-800 text-white text-[10px] px-4 py-2 rounded-lg font-black w-full' }, 'MULAI QUIZ ⚡')
-                    )
-                );
-            }
-        }));
+                    return h('div', { className: 'p-8 bg-slate-50 min-h-screen' },
+                        h('script', { src: tailwindCDN }),
+                        h('div', { className: `bg-white p-6 rounded-2xl border-l-4 ${colorClass} shadow-sm max-w-md mx-auto` },
+                            h('h3', { className: 'font-bold text-slate-800 text-lg mb-1' }, title),
+                            h('button', { className: 'mt-4 bg-slate-800 text-white text-[10px] px-4 py-2 rounded-lg font-black w-full' }, 'MULAI QUIZ ⚡')
+                        )
+                    );
+                }
+            }));
+        };
     </script>
 </body>
 
