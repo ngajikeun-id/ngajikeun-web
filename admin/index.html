@@ -42,22 +42,13 @@
                             h('h1', { style: { margin: '0', fontSize: '24px', fontWeight: '900' } }, welcomeMsg),
                             h('p', { style: { opacity: '0.9', fontSize: '14px', marginTop: '5px' } }, 'CiwAI™ Smart Digital Dashboard')
                         ),
-                        h('div', { style: { background: 'white', padding: '40px', borderRadius: '24px', border: '2px dashed #e2e8f0', textAlign: 'center' } },
-                            h('h3', { style: { color: '#1e293b', marginBottom: '20px' } }, 'Dashboard Statistik Ngajikeun.ID'),
-                            h('a', {
-                                href: statsLink,
-                                target: '_blank',
-                                style: {
-                                    display: 'inline-block',
-                                    background: '#0f172a',
-                                    color: 'white',
-                                    padding: '15px 30px',
-                                    borderRadius: '12px',
-                                    textDecoration: 'none',
-                                    fontWeight: '800',
-                                    fontSize: '14px'
-                                }
-                            }, 'BUKA STATISTIK NGAJIKEUN.ID 🚀')
+                        h('div', { style: { background: 'white', padding: '15px', borderRadius: '24px', border: '1px solid #e2e8f0', minHeight: '650px' } },
+                            h('iframe', {
+                                src: statsLink.replace('/analytics/us', ''),
+                                style: { width: '100%', height: '650px', border: 'none', borderRadius: '15px' },
+                                title: 'CiwAI Analytics Live',
+                                sandbox: 'allow-scripts allow-same-origin allow-forms allow-popups'
+                            })
                         )
                     );
                 }
