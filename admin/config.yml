@@ -12,15 +12,115 @@ backend:
   name: git-gateway
   branch: main
 
-links:
-  - { label: "📈 Statistik Pengunjung", url: "https://cloud.umami.is/share/wwTd9VfrO2Xe8A77", target: "_blank" }
-
 media_folder: "public/images/uploads"
 public_folder: "public/images/uploads"
 
 collections:
+  # --- 0. DASHBOARD & MONITORING ---
+  - name: "statistik"
+    label: "📊 Statistik Pengunjung"
+    external_link: "https://cloud.umami.is/share/wwTd9VfrO2Xe8A77"
+
+  - name: "dashboard_info"
+    label: "🏠 Dashboard Utama"
+    files:
+      - file: "content/dashboard.json"
+        label: "Welcome & Pusat Bantuan"
+        name: "main_dashboard"
+        fields:
+          - {label: "Pesan Selamat Datang", name: "welcome_msg", widget: "string", default: "Selamat Datang di Panel Kendali CiwAI™"}
+          - {label: "Email Admin", name: "admin_email", widget: "string", hint: "Email login aktif"}
+          - {label: "Instruksi Cepat", name: "instructions", widget: "markdown", default: "Gunakan menu di samping untuk memperbarui konten website Ngajikeun.id secara real-time."}
+          - {label: "Pusat Bantuan CiwAI™", name: "help_center", widget: "markdown", default: "Butuh bantuan teknis? Hubungi tim pengembang [CiwAI™ Smart Digital](https://wa.me/6281932692047)"}
+
+  # --- 1. PROFIL & INFORMASI (About) ---
+  - name: "about"
+    label: "🏢 Tentang Kami"
+    files:
+      - file: "content/about.json"
+        label: "Informasi Detail Yayasan"
+        name: "about_details"
+        fields:
+          - {label: "Sejarah", name: "history", widget: "markdown"}
+          - {label: "Visi", name: "vision", widget: "text"}
+          - {label: "Misi", name: "missions", widget: "list", field: {label: "Poin Misi", name: "item", widget: "string"}}
+          - {label: "Gallery Slides", name: "slides", widget: "list", fields: [{label: "Image", name: "image", widget: "image"}]}
+
+  # --- 2. PROGRAM BELAJAR ---
+  - name: "programs"
+    label: "📖 Program Belajar"
+    folder: "content/programs"
+    create: true
+    extension: "json"
+    format: "json"
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    fields:
+      - {label: "Judul Program", name: "title", widget: "string"}
+      - {label: "Deskripsi Singkat", name: "description", widget: "text"}
+      - {label: "Harga/Infaq", name: "price", widget: "string", default: "Gratis"}
+      - {label: "Gambar (Optional)", name: "image", widget: "image", required: false}
+      - {label: "Link G-Form", name: "registration_link", widget: "string", required: false}
+
+  # --- 3. TIM MENTOR ---
+  - name: "mentors"
+    label: "🎓 Tim Mentor"
+    folder: "content/mentors"
+    create: true
+    extension: "json"
+    format: "json"
+    slug: "{{name}}"
+    fields:
+      - {label: "Nama Lengkap", name: "name", widget: "string"}
+      - {label: "Gelar/Spesialisasi", name: "specialty", widget: "string"}
+      - {label: "Sanad & Pengalaman", name: "bio", widget: "text"}
+      - {label: "Foto Profil", name: "image", widget: "image"}
+
+  # --- 4. TESTIMONI ---
+  - name: "testimonials"
+    label: "💬 Testimoni Santri"
+    folder: "content/testimonials"
+    create: true
+    extension: "json"
+    format: "json"
+    slug: "{{year}}-{{month}}-{{day}}-{{name}}"
+    fields:
+      - {label: "Nama Santri", name: "name", widget: "string"}
+      - {label: "Pekerjaan/Status", name: "status", widget: "string"}
+      - {label: "Isi Testimoni", name: "content", widget: "text"}
+      - {label: "Foto (Optional)", name: "image", widget: "image", required: false}
+
+  # --- 5. LITERASI & BERITA ---
+  - name: "articles"
+    label: "📰 Artikel & Literasi"
+    folder: "content/articles"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Judul Artikel", name: "title", widget: "string"}
+      - {label: "Tanggal Publish", name: "date", widget: "datetime"}
+      - {label: "Thumbnail Artikel", name: "thumbnail", widget: "image", required: false}
+      - {label: "Deskripsi Singkat", name: "description", widget: "text", hint: "Muncul di depan (limit 100 karakter)"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  # --- 6. ETALASE PRODUK ---
+  - name: "products"
+    label: "🛍️ Produk & E-Book"
+    folder: "content/products"
+    create: true
+    extension: "json"
+    format: "json"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Price", name: "price", widget: "string"}
+      - {label: "Link Checkout/WA", name: "link", widget: "string", default: "https://wa.me/6281932692047"}
+      - {label: "Image Cover", name: "image", widget: "image", required: false}
+
+  # --- 7. EVALUASI (Quiz) ---
   - name: "quizzes"
-    label: "Koleksi Kuis"
+    label: "✍️ Koleksi Kuis"
     folder: "content/quizzes"
     extension: "json"
     format: "json"
@@ -36,82 +136,3 @@ collections:
         options:
           - { label: "Tahfidz", value: "tahfidz" }
           - { label: "Tajwid", value: "tajwid" }
-
-  - name: "programs"
-    label: "Program Belajar"
-    folder: "content/programs"
-    create: true
-    extension: "json"
-    format: "json"
-    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
-    fields:
-      - {label: "Judul Program", name: "title", widget: "string"}
-      - {label: "Deskripsi Singkat", name: "description", widget: "text"}
-      - {label: "Harga/Infaq", name: "price", widget: "string", default: "Gratis"}
-      - {label: "Gambar (Optional)", name: "image", widget: "image", required: false}
-      - {label: "Link G-Form", name: "registration_link", widget: "string", required: false}
-
-  - name: "mentors"
-    label: "Tim Mentor"
-    folder: "content/mentors"
-    create: true
-    extension: "json"
-    format: "json"
-    slug: "{{name}}"
-    fields:
-      - {label: "Nama Lengkap", name: "name", widget: "string"}
-      - {label: "Gelar/Spesialisasi", name: "specialty", widget: "string"}
-      - {label: "Sanad & Pengalaman", name: "bio", widget: "text"}
-      - {label: "Foto Profil", name: "image", widget: "image"}
-    
-  - name: "testimonials"
-    label: "Testimoni Santri"
-    folder: "content/testimonials"
-    create: true
-    extension: "json"
-    format: "json"
-    slug: "{{year}}-{{month}}-{{day}}-{{name}}"
-    fields:
-      - {label: "Nama Santri", name: "name", widget: "string"}
-      - {label: "Pekerjaan/Status", name: "status", widget: "string"}
-      - {label: "Isi Testimoni", name: "content", widget: "text"}
-      - {label: "Foto (Optional)", name: "image", widget: "image", required: false}
-
-  - name: "articles"
-    label: "Artikel & Literasi"
-    folder: "content/articles"
-    create: true
-    extension: "md"
-    format: "frontmatter"
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - {label: "Judul Artikel", name: "title", widget: "string"}
-      - {label: "Tanggal Publish", name: "date", widget: "datetime"}
-      - {label: "Thumbnail Artikel", name: "thumbnail", widget: "image", required: false}
-      - {label: "Deskripsi Singkat", name: "description", widget: "text", hint: "Muncul di halaman depan (limit 100 karakter)"}
-      - {label: "Body", name: "body", widget: "markdown"}
-
-  - name: "products"
-    label: "Produk & E-Book"
-    folder: "content/products"
-    create: true
-    extension: "json"
-    format: "json"
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Price", name: "price", widget: "string"}
-      - {label: "Link Checkout/WA", name: "link", widget: "string", default: "https://wa.me/6281932692047"}
-      - {label: "Image Cover", name: "image", widget: "image", required: false}
-      
-  - name: "about"
-    label: "Tentang Kami (Detail)"
-    files:
-      - file: "content/about.json"
-        label: "Informasi Detail"
-        name: "about_details"
-        fields:
-          - {label: "Sejarah", name: "history", widget: "markdown"}
-          - {label: "Visi", name: "vision", widget: "text"}
-          - {label: "Misi", name: "missions", widget: "list", field: {label: "Poin Misi", name: "item", widget: "string"}}
-          - {label: "Gallery Slides", name: "slides", widget: "list", fields: [{label: "Image", name: "image", widget: "image"}]}
