@@ -39,13 +39,14 @@
                     const cleanLink = rawLink.replace('/analytics/us', '');
 
                     return h('div', { style: { padding: '20px', background: '#f1f5f9', minHeight: '100vh', fontFamily: 'sans-serif' } },
+
                         h('div', { style: { background: '#059669', padding: '30px', borderRadius: '24px', color: 'white', marginBottom: '20px', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' } },
                             h('h1', { style: { margin: '0', fontSize: '26px', fontWeight: '900' } }, welcomeMsg),
                             h('p', { style: { opacity: '0.8', fontSize: '14px' } }, 'CiwAI™ Realtime Monitor Dashboard Statistik')
                         ),
 
-                        // Frame Container
-                        h('div', { style: { position: 'relative', background: 'white', padding: '10px', borderRadius: '24px', border: '1px solid #e2e8f0', minHeight: '600px', overflow: 'hidden' } },
+                        // --- FRAME CONTAINER (UMAMI) ---
+                        h('div', { style: { position: 'relative', background: 'white', padding: '10px', borderRadius: '24px', border: '1px solid #e2e8f0', minHeight: '600px', overflow: 'hidden', marginBottom: '20px' } },
                             h('a', {
                                 href: cleanLink,
                                 target: '_blank',
@@ -63,7 +64,16 @@
                             })
                         ),
 
-                        h('p', { style: { textAlign: 'center', color: '#94a3b8', fontSize: '11px', marginTop: '15px' } },
+                        // --- PUSAT BANTUAN ---
+                        h('div', { style: { background: '#fff', padding: '25px', borderRadius: '24px', border: '1px solid #e2e8f0' } },
+                            h('h3', { style: { color: '#1e293b', marginBottom: '10px', fontWeight: '900', display: 'flex', alignItems: 'center' } }, '🆘 PUSAT BANTUAN'),
+                            h('div', { style: { color: '#475569', lineHeight: '1.6' } },
+                                this.props.widgetFor('help_center')
+                            )
+                        ),
+
+                        // --- FOOTER NOTE ---
+                        h('p', { style: { textAlign: 'center', color: '#94a3b8', fontSize: '11px', marginTop: '20px' } },
                             'Note: Jika dashboard kosong, klik tombol Buka Full Screen. Umami Cloud membatasi akses iframe di beberapa browser.')
                     );
                 }
