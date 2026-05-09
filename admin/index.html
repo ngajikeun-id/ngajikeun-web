@@ -34,27 +34,19 @@
             CMS.registerPreviewTemplate("main_dashboard", createClass({
                 render: function () {
                     const entry = this.props.entry;
-                    const welcomeMsg = entry.getIn(['data', 'welcome_msg']) || 'Selamat Datang Admin Ngajikeun.id';
+                    const welcomeMsg = entry.getIn(['data', 'welcome_msg']) || 'Selamat Datang Admin';
                     const statsLink = entry.getIn(['data', 'stats_link']) || 'https://cloud.umami.is/share/wwTd9VfrO2Xe8A77';
 
-                    console.log("Stats Link Detected:", statsLink);
-
-                    return h('div', { className: 'p-8 bg-slate-50 min-h-screen font-sans' },
-                        h('script', { src: "https://cdn.tailwindcss.com" }),
-                        h('div', { className: 'max-w-4xl mx-auto space-y-6' },
-                            h('div', { className: 'bg-emerald-600 p-8 rounded-3xl text-white shadow-lg' },
-                                h('h1', { className: 'text-2xl font-black mb-2' }, welcomeMsg),
-                                h('p', { className: 'text-emerald-100 text-sm' }, 'CiwAI™ Smart Digital Dashboard')
-                            ),
-                            // Iframe sakti
-                            h('div', { className: 'bg-white p-2 rounded-3xl shadow-sm border border-slate-200 overflow-hidden' },
-                                h('iframe', {
-                                    src: statsLink,
-                                    className: 'w-full h-[600px] rounded-2xl',
-                                    frameBorder: '0',
-                                    key: statsLink
-                                })
-                            )
+                    return h('div', { style: { padding: '20px', background: '#f0f4f8', minHeight: '100vh', fontFamily: 'sans-serif' } },
+                        h('div', { style: { background: '#059669', padding: '30px', borderRadius: '20px', color: 'white', marginBottom: '20px' } },
+                            h('h1', { style: { margin: '0', fontSize: '24px' } }, welcomeMsg),
+                            h('p', { style: { opacity: '0.8' } }, 'CiwAI™ Smart Digital Dashboard')
+                        ),
+                        h('div', { style: { background: 'white', padding: '10px', borderRadius: '20px', border: '1px solid #ddd' } },
+                            h('iframe', {
+                                src: statsLink,
+                                style: { width: '100%', height: '600px', border: 'none', borderRadius: '15px' }
+                            })
                         )
                     );
                 }
