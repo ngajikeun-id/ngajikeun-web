@@ -35,22 +35,29 @@
                 render: function () {
                     const entry = this.props.entry;
                     const welcomeMsg = entry.getIn(['data', 'welcome_msg']) || 'Selamat Datang Admin';
-                    // Kita pake link default ente kalo datanya belom sinkron, Bro
                     const statsLink = entry.getIn(['data', 'stats_link']) || 'https://cloud.umami.is/share/wwTd9VfrO2Xe8A77';
 
                     return h('div', { style: { padding: '20px', background: '#f8fafc', minHeight: '100vh', fontFamily: 'sans-serif' } },
-                        // Header Hijau Emerald khas CiwAI™
                         h('div', { style: { background: '#059669', padding: '30px', borderRadius: '24px', color: 'white', marginBottom: '24px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' } },
                             h('h1', { style: { margin: '0', fontSize: '24px', fontWeight: '900' } }, welcomeMsg),
                             h('p', { style: { opacity: '0.9', fontSize: '14px', marginTop: '5px' } }, 'CiwAI™ Smart Digital Dashboard')
                         ),
-                        // Area Iframe dengan Border biar keliatan batasnya, Bro
-                        h('div', { style: { background: 'white', padding: '15px', borderRadius: '24px', border: '2px dashed #e2e8f0', minHeight: '600px' } },
-                            h('iframe', {
-                                src: statsLink,
-                                style: { width: '100%', height: '600px', border: 'none', borderRadius: '15px' },
-                                title: 'Umami Analytics'
-                            })
+                        h('div', { style: { background: 'white', padding: '40px', borderRadius: '24px', border: '2px dashed #e2e8f0', textAlign: 'center' } },
+                            h('h3', { style: { color: '#1e293b', marginBottom: '20px' } }, 'Dashboard Statistik Ngajikeun.ID'),
+                            h('a', {
+                                href: statsLink,
+                                target: '_blank',
+                                style: {
+                                    display: 'inline-block',
+                                    background: '#0f172a',
+                                    color: 'white',
+                                    padding: '15px 30px',
+                                    borderRadius: '12px',
+                                    textDecoration: 'none',
+                                    fontWeight: '800',
+                                    fontSize: '14px'
+                                }
+                            }, 'BUKA STATISTIK NGAJIKEUN.ID 🚀')
                         )
                     );
                 }
