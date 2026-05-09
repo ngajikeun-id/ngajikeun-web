@@ -112,3 +112,6 @@ collections:
           - {label: "Visi", name: "vision", widget: "text"}
           - {label: "Misi", name: "missions", widget: "list", field: {label: "Poin Misi", name: "item", widget: "string"}}
           - {label: "Gallery Slides", name: "slides", widget: "list", fields: [{label: "Image", name: "image", widget: "image"}]}
+
+links:
+  - { label: "📈 Statistik Pengunjung", url: "URL_SHARE_UMAMI_ANTUM", target: "_blank" }

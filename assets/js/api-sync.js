@@ -434,10 +434,12 @@
                 <div class="w-full md:w-auto md:min-w-[180px] p-6 bg-emerald-50/50 rounded-[2rem] flex flex-col items-center justify-center border border-emerald-100/50">
                     <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1 text-center">Investasi</span>
                     <span class="text-2xl font-black text-emerald-700 mb-4">${safeText(product.price, 'Gratis')}</span>
-                    <a href="${safeText(product.link, 'https://wa.me/6281932692047')}" target="_blank"
-                       class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] px-6 py-3 rounded-xl font-black uppercase tracking-widest shadow-lg shadow-emerald-500/20 transition-all active:scale-95 text-center">
-                        Beli Sekarang
-                    </a>
+                    <a href="${safeText(product.link, 'https://wa.me/6281932692047')}" 
+               target="_blank"
+               data-umami-event="Beli ${safeText(product.title)}"
+               class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] px-6 py-3 rounded-xl font-black uppercase tracking-widest shadow-lg shadow-emerald-500/20 transition-all active:scale-95 text-center">
+                Beli Sekarang
+            </a>
                 </div>
 
             </div>
