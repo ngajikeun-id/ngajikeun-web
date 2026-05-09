@@ -64,13 +64,8 @@
                             })
                         ),
 
-                        // --- FOOTER NOTE ---
-                        h('p', { style: { textAlign: 'center', color: '#94a3b8', fontSize: '11px', marginTop: '20px' } },
-                            'Note: Jika dashboard kosong, klik tombol Buka Full Screen. Umami Cloud membatasi akses iframe di beberapa browser.')
-                    ),
-
-                        // --- PUSAT BANTUAN ESTETIK ---
-                        h('div', { style: { background: '#ffffff', padding: '30px', borderRadius: '24px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' } },
+                        // --- PUSAT BANTUAN ---
+                        h('div', { style: { background: '#ffffff', padding: '30px', borderRadius: '24px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', marginBottom: '20px' } },
                             h('div', { style: { display: 'flex', alignItems: 'center', marginBottom: '15px' } },
                                 h('span', { style: { fontSize: '24px', marginRight: '10px' } }, '🛡️'),
                                 h('h3', { style: { color: '#0f172a', margin: '0', fontSize: '18px', fontWeight: '900', letterSpacing: '-0.5px' } }, 'PUSAT BANTUAN CIWAI™')
@@ -89,11 +84,15 @@
                                     borderRadius: '14px',
                                     textDecoration: 'none',
                                     fontWeight: 'bold',
-                                    fontSize: '14px',
-                                    transition: 'transform 0.2s'
+                                    fontSize: '14px'
                                 }
                             }, 'Chat via WhatsApp ↗')
-                        );
+                        ),
+
+                        // --- FOOTER NOTE ---
+                        h('p', { style: { textAlign: 'center', color: '#94a3b8', fontSize: '11px', marginTop: '20px' } },
+                            'Note: Jika dashboard kosong, klik tombol Buka Full Screen. Umami Cloud membatasi akses iframe di beberapa browser.')
+                    );
                 }
             }));
 
