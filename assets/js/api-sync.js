@@ -402,12 +402,17 @@
             container.innerHTML = '';
 
             for (const product of products) {
+
+                const productImage = product.image
+                    ? `<img src="${product.image}" class="w-full h-full object-cover rounded-[2rem] shadow-sm" alt="${safeText(product.title)}">`
+                    : `<span class="text-5xl group-hover:scale-110 transition-transform duration-500">📖</span>`;
+
                 container.innerHTML += `
         <div class="group bg-white rounded-[2.5rem] border border-emerald-50 shadow-sm hover:shadow-xl hover:shadow-emerald-900/5 transition-all duration-500 overflow-hidden col-span-full">
             <div class="flex flex-col md:flex-row items-center p-4 md:p-6 gap-8">
                 
-                <div class="w-full md:w-48 h-48 bg-emerald-50 rounded-[2rem] flex-shrink-0 flex items-center justify-center group-hover:bg-emerald-100 transition-colors duration-500">
-                    <span class="text-5xl group-hover:scale-110 transition-transform duration-500">📖</span>
+                <div class="w-full md:w-48 h-48 bg-emerald-50 rounded-[2rem] flex-shrink-0 flex items-center justify-center overflow-hidden group-hover:bg-emerald-100 transition-colors duration-500">
+                    ${productImage}
                 </div>
 
                 <div class="flex-grow text-center md:text-left">
