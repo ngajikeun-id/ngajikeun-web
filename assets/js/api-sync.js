@@ -85,29 +85,37 @@
         const content = document.getElementById('modal-content');
 
         if (!modal || !content) {
-            console.error("Bro, Modal atau Container konten nggak ketemu!");
+            console.error('Elemen modal artikel tidak ditemukan.');
             return;
         }
 
         try {
             const data = await loadSiteData();
             const articles = getCollection(data, 'articles');
-            const post = articles.find(a => a.slug === slug);
+            const post = articles.find((article) => article.slug === slug);
 
-            if (post) {
-                content.innerHTML = `
-                <div class="max-w-2xl mx-auto text-center"> ${post.thumbnail ? `<img src="${post.thumbnail}" class="w-full h-64 object-cover rounded-3xl mb-8 shadow-lg">` : ''}
-                    <span class="text-emerald-600 font-bold tracking-widest text-[10px] uppercase block mb-4">Wawasan & Literasi</span>
-                    <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-6 leading-tight">${post.title}</h2>
-                    <div class="prose prose-emerald prose-sm max-w-none text-slate-600 leading-relaxed text-left"> ${window.marked ? marked.parse(post.body || '') : post.body} 
+            if (!post) return;
+
+            const imageHtml = post.thumbnail
+                ? `<img src="${safeUrl(post.thumbnail)}" alt="${safeText(post.title)}" class="w-full h-64 object-cover rounded-[2rem] mb-8 shadow-lg">`
+                : '';
+
+            content.innerHTML = `
+                <div class="max-w-2xl mx-auto text-center">
+                    ${imageHtml}
+                    <span class="text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-4">Literasi Al-Qur'an</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-100 mb-6 leading-tight">${safeText(post.title)}</h2>
+                    <div class="prose prose-invert prose-emerald prose-sm max-w-none text-slate-300 leading-relaxed text-left border-t border-slate-800 pt-8">
+                        ${window.marked ? window.marked.parse(post.body || '') : renderSimpleMarkdown(post.body)}
                     </div>
                 </div>
             `;
-                modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-        } catch (err) {
-            console.error('Gagal buka modal:', err);
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            modal.scrollTo(0, 0);
+        } catch (error) {
+            console.error('Gagal memuat artikel:', error);
         }
     }
 
@@ -126,7 +134,7 @@
                 const imageUrl = program.image || 'https://via.placeholder.com/600x400?text=Flyer+Program';
 
                 container.innerHTML += `
-                <div class="group bg-slate-50 rounded-[2rem] overflow-hidden border border-slate-100 hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500">
+                <div class="group bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-800 hover:shadow-2xl hover:shadow-emerald-950/30 transition-all duration-500">
                     <!-- Area Flyer -->
                     <div class="relative overflow-hidden aspect-[4/3]">
                         <img src="${imageUrl}" alt="${safeText(program.title)}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
@@ -138,13 +146,13 @@
                     <!-- Area Teks -->
                     <div class="p-8">
                         <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold text-slate-800 leading-tight">${safeText(program.title)}</h3>
-                            <span class="bg-emerald-500 text-white text-[9px] font-black px-2 py-1 rounded-md shadow-lg shadow-emerald-200 uppercase">${safeText(program.price)}</span>
+                            <h3 class="text-xl font-bold text-slate-100 leading-tight">${safeText(program.title)}</h3>
+                            <span class="bg-emerald-500 text-white text-[9px] font-black px-2 py-1 rounded-md shadow-lg shadow-emerald-950/30 uppercase">${safeText(program.price)}</span>
                         </div>
-                        <p class="text-slate-500 text-xs leading-relaxed mb-6">${safeText(program.description)}</p>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">${safeText(program.description)}</p>
                         
                         <a href="${safeUrl(program.registration_link)}" target="_blank" 
-                           class="block w-full text-center py-4 bg-white border border-slate-200 text-slate-800 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-slate-800 hover:text-white hover:border-slate-800 transition-all active:scale-95">
+                           class="block w-full text-center py-4 bg-slate-950 border border-slate-800 text-slate-100 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-all active:scale-95">
                             Daftar Sekarang ⚡
                         </a>
                     </div>
@@ -174,10 +182,10 @@
                     <div class="text-center group">
                         <div class="relative inline-block">
                             <img src="${imageUrl}"
-                                class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-emerald-100 group-hover:border-emerald-500 transition-all duration-300 shadow-md">
+                                class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-slate-800 group-hover:border-emerald-500 transition-all duration-300 shadow-md">
                         </div>
-                        <h3 class="mt-4 text-lg font-bold text-gray-800">${safeText(mentor.name, 'Mentor')}</h3>
-                        <p class="text-emerald-600 text-sm font-medium mb-2">${safeText(mentor.specialty, 'Mentor Al-Qur\'an')}</p>
+                        <h3 class="mt-4 text-lg font-bold text-gray-200">${safeText(mentor.name, 'Mentor')}</h3>
+                        <p class="text-emerald-400 text-sm font-medium mb-2">${safeText(mentor.specialty, 'Mentor Al-Qur\'an')}</p>
                     </div>
                 `;
             }
@@ -204,14 +212,14 @@
                 );
 
                 container.innerHTML += `
-                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-emerald-100 italic text-gray-700 relative">
-                        <span class="text-6xl text-emerald-200 absolute top-2 left-2 font-serif">“</span>
+                    <div class="bg-slate-900 p-8 rounded-2xl shadow-sm border border-slate-800 italic text-gray-300 relative">
+                        <span class="text-6xl text-emerald-500/30 absolute top-2 left-2 font-serif">“</span>
                         <p class="relative z-10 mb-6">${safeText(testimonial.content)}</p>
-                        <div class="flex items-center gap-4 border-t pt-4">
+                        <div class="flex items-center gap-4 border-t border-slate-800 pt-4">
                             <img src="${imageUrl}" class="w-12 h-12 rounded-full border-2 border-emerald-500">
                             <div>
-                                <h4 class="font-bold text-gray-800 not-italic">${safeText(testimonial.name, 'Santri')}</h4>
-                                <p class="text-xs text-emerald-600 not-italic">${safeText(testimonial.status)}</p>
+                                <h4 class="font-bold text-gray-200 not-italic">${safeText(testimonial.name, 'Santri')}</h4>
+                                <p class="text-xs text-emerald-400 not-italic">${safeText(testimonial.status)}</p>
                             </div>
                         </div>
                     </div>
@@ -249,8 +257,8 @@
                    </div>`;
 
                 list.innerHTML += `
-    <article class="group bg-white rounded-[2.5rem] p-2 border border-slate-100 hover:border-emerald-200 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-900/5 flex flex-col h-full">
-        <div class="bg-slate-100 aspect-video rounded-[2rem] mb-6 overflow-hidden relative">
+    <article class="group bg-slate-900 rounded-[2.5rem] p-2 border border-slate-800 hover:border-emerald-700 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-950/20 flex flex-col h-full">
+        <div class="bg-slate-800 aspect-video rounded-[2rem] mb-6 overflow-hidden relative">
             ${post.thumbnail
                         ? `<img src="${post.thumbnail}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">`
                         : `<div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 group-hover:scale-110 transition-transform duration-700"></div>`
@@ -258,15 +266,15 @@
         </div>
         
         <div class="px-6 pb-8 flex-grow flex flex-col items-center text-center"> 
-            <time class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-3">${date}</time>
-            <h3 class="text-xl font-black text-slate-800 leading-snug group-hover:text-emerald-600 transition-colors mb-4">
+            <time class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-3">${date}</time>
+            <h3 class="text-xl font-black text-slate-100 leading-snug group-hover:text-emerald-400 transition-colors mb-4">
                 ${safeText(post.title)}
             </h3>
-            <p class="text-slate-500 text-xs line-clamp-2 mb-6 leading-relaxed">
+            <p class="text-slate-400 text-xs line-clamp-2 mb-6 leading-relaxed">
                 ${safeText(post.description || post.body.substring(0, 100))}...
             </p>
             
-            <button onclick="getArticleBySlug('${post.slug}')" class="mt-auto inline-flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-600 hover:text-slate-900 transition-all">
+            <button onclick="getArticleBySlug('${post.slug}')" class="mt-auto inline-flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-400 hover:text-emerald-300 transition-all">
                 Baca Selengkapnya 
                 <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </button>
@@ -287,44 +295,7 @@
         }
     };
 
-    window.getArticleBySlug = async function (slug) {
-        const modal = document.getElementById('article-modal');
-        const content = document.getElementById('modal-content');
-
-        if (!modal || !content) {
-            console.error("Waduh, elemen modal-nya nggak ketemu di HTML!");
-            return;
-        }
-
-        try {
-            const data = await loadSiteData();
-            const articles = getCollection(data, 'articles');
-            const post = articles.find(a => a.slug === slug);
-
-            if (post) {
-                const imageHtml = post.thumbnail
-                    ? `<img src="${post.thumbnail}" class="w-full h-64 object-cover rounded-[2rem] mb-8 shadow-lg">`
-                    : '';
-
-                content.innerHTML = `
-                <div class="max-w-2xl mx-auto text-center">
-                    ${imageHtml}
-                    <span class="text-emerald-600 font-bold tracking-widest text-[10px] uppercase block mb-4">Literasi Al-Qur'an</span>
-                    <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-6 leading-tight">${post.title}</h2>
-                    <div class="prose prose-emerald prose-sm max-w-none text-slate-600 leading-relaxed text-left border-t border-slate-50 pt-8">
-                        ${window.marked ? marked.parse(post.body || '') : post.body} 
-                    </div>
-                </div>
-            `;
-
-                modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-                modal.scrollTo(0, 0);
-            }
-        } catch (err) {
-            console.error('Gagal memuat artikel:', err);
-        }
-    };
+    window.getArticleBySlug = getArticleBySlug;
 
     window.syncArticles = async function () {
         const list = document.getElementById('articles-list');
@@ -343,15 +314,15 @@
             const createCard = (post) => {
                 const date = new Date(post.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
                 return `
-                <article class="group bg-white rounded-[2.5rem] p-2 border border-slate-100 hover:border-emerald-200 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-900/5 flex flex-col h-full animate-in fade-in slide-in-from-bottom-4">
-                    <div class="bg-slate-100 aspect-video rounded-[2rem] mb-6 overflow-hidden relative">
+                <article class="group bg-slate-900 rounded-[2.5rem] p-2 border border-slate-800 hover:border-emerald-700 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-950/20 flex flex-col h-full animate-in fade-in slide-in-from-bottom-4">
+                    <div class="bg-slate-800 aspect-video rounded-[2rem] mb-6 overflow-hidden relative">
                         ${post.thumbnail ? `<img src="${post.thumbnail}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">` : `<div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-blue-500/20"></div>`}
                     </div>
                     <div class="px-6 pb-8 flex-grow flex flex-col items-center text-center">
-                        <time class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-3">${date}</time>
-                        <h3 class="text-xl font-black text-slate-800 leading-snug group-hover:text-emerald-600 transition-colors mb-4">${safeText(post.title)}</h3>
-                        <p class="text-slate-500 text-xs line-clamp-2 mb-6 leading-relaxed">${safeText(post.description || post.body.substring(0, 100))}...</p>
-                        <button onclick="getArticleBySlug('${post.slug}')" class="mt-auto inline-flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-600 hover:text-slate-900 transition-all">
+                        <time class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-3">${date}</time>
+                        <h3 class="text-xl font-black text-slate-100 leading-snug group-hover:text-emerald-400 transition-colors mb-4">${safeText(post.title)}</h3>
+                        <p class="text-slate-400 text-xs line-clamp-2 mb-6 leading-relaxed">${safeText(post.description || post.body.substring(0, 100))}...</p>
+                        <button onclick="getArticleBySlug('${post.slug}')" class="mt-auto inline-flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-400 hover:text-emerald-300 transition-all">
                             Baca Selengkapnya 
                             <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </button>
@@ -408,20 +379,20 @@
                     : `<span class="text-5xl group-hover:scale-110 transition-transform duration-500">📖</span>`;
 
                 container.innerHTML += `
-        <div class="group bg-white rounded-[2.5rem] border border-emerald-50 shadow-sm hover:shadow-xl hover:shadow-emerald-900/5 transition-all duration-500 overflow-hidden col-span-full">
+        <div class="group bg-slate-900 rounded-[2.5rem] border border-slate-800 shadow-sm hover:shadow-xl hover:shadow-emerald-950/20 transition-all duration-500 overflow-hidden col-span-full">
             <div class="flex flex-col md:flex-row items-center p-4 md:p-6 gap-8">
                 
-                <div class="w-full md:w-48 h-48 bg-emerald-50 rounded-[2rem] flex-shrink-0 flex items-center justify-center overflow-hidden group-hover:bg-emerald-100 transition-colors duration-500">
+                <div class="w-full md:w-48 h-48 bg-slate-800/50 rounded-[2rem] flex-shrink-0 flex items-center justify-center overflow-hidden group-hover:bg-slate-800 transition-colors duration-500">
                     ${productImage}
                 </div>
 
                 <div class="flex-grow text-center md:text-left">
                     <div class="flex flex-col md:flex-row md:items-center gap-2 mb-3">
-                        <h3 class="text-xl font-black text-emerald-900">${safeText(product.title, 'Produk')}</h3>
-                        <span class="hidden md:block w-1 h-1 rounded-full bg-emerald-200"></span>
+                        <h3 class="text-xl font-black text-slate-100">${safeText(product.title, 'Produk')}</h3>
+                        <span class="hidden md:block w-1 h-1 rounded-full bg-emerald-500"></span>
                         <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-[0.2em]">E-Book Series</span>
                     </div>
-                    <p class="text-[13px] leading-relaxed text-emerald-800/60 mb-4 max-w-2xl">${safeText(product.description)}</p>
+                    <p class="text-[13px] leading-relaxed text-slate-400 mb-4 max-w-2xl">${safeText(product.description)}</p>
                     
                     <div class="flex items-center justify-center md:justify-start gap-4">
                         <div class="flex items-center gap-1 text-emerald-500">
@@ -431,9 +402,9 @@
                     </div>
                 </div>
 
-                <div class="w-full md:w-auto md:min-w-[180px] p-6 bg-emerald-50/50 rounded-[2rem] flex flex-col items-center justify-center border border-emerald-100/50">
+                <div class="w-full md:w-auto md:min-w-[180px] p-6 bg-slate-800/50 rounded-[2rem] flex flex-col items-center justify-center border border-slate-700">
                     <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1 text-center">Investasi</span>
-                    <span class="text-2xl font-black text-emerald-700 mb-4">${safeText(product.price, 'Gratis')}</span>
+                    <span class="text-2xl font-black text-emerald-400 mb-4">${safeText(product.price, 'Gratis')}</span>
                     <a href="${safeText(product.link, 'https://wa.me/6281932692047')}" 
                target="_blank"
                data-umami-event="Beli ${safeText(product.title)}"
@@ -465,12 +436,12 @@
             quizzes.forEach(quiz => {
                 const category = (quiz.category || '').toLowerCase();
                 const quizHtml = `
-                <div class="flex items-center justify-between bg-white/60 p-4 rounded-xl border border-white shadow-sm hover:bg-white transition-all">
+                <div class="flex items-center justify-between bg-slate-900/70 p-4 rounded-xl border border-slate-800 shadow-sm hover:bg-slate-900 transition-all">
                     <div>
-                        <h4 class="text-sm font-bold text-slate-800">${safeText(quiz.title)}</h4>
-                        <p class="text-[10px] text-slate-500">${safeText(quiz.description)}</p>
+                        <h4 class="text-sm font-bold text-slate-100">${safeText(quiz.title)}</h4>
+                        <p class="text-[10px] text-slate-400">${safeText(quiz.description)}</p>
                     </div>
-                    <a href="${safeUrl(quiz.link)}" target="_blank" class="text-[10px] font-black uppercase tracking-widest text-emerald-600 hover:text-emerald-700">
+                    <a href="${safeUrl(quiz.link)}" target="_blank" class="text-[10px] font-black uppercase tracking-widest text-emerald-400 hover:text-emerald-300">
                         Mulai Quiz ⚡
                     </a>
                 </div>

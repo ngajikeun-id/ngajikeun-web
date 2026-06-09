@@ -95,48 +95,12 @@
         });
     });
 
-    function escapeHtml(value) {
-        return String(value ?? '')
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
-    }
-
-    function renderArticleBody(body) {
-        const markdown = String(body ?? '').trim();
-
-        if (!markdown) {
-            return '<p>Konten artikel belum tersedia.</p>';
+    window.openArticleModal = function openArticleModal(slug) {
+        if (typeof window.getArticleBySlug === 'function') {
+            return window.getArticleBySlug(slug);
         }
 
-        if (window.marked) {
-            return window.marked.parse(markdown);
-        }
-
-        return markdown
-            .split(/\n\s*\n/)
-            .map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, '<br>')}</p>`)
-            .join('');
-    }
-
-    window.openArticleModal = async function openArticleModal(slug) {
-        const modal = document.getElementById('article-modal');
-        const body = document.getElementById('modal-body');
-        const title = document.getElementById('modal-title');
-
-        if (!modal || !body || !title || !window.NgajikeunApi?.getArticleBySlug) return;
-
-        const article = await window.NgajikeunApi.getArticleBySlug(slug);
-
-        if (article) {
-            title.innerText = article.title || 'Detail Artikel';
-            body.innerHTML = renderArticleBody(article.body);
-
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
+        return window.NgajikeunApi?.getArticleBySlug?.(slug);
     };
 
     window.closeArticleModal = function closeArticleModal() {
