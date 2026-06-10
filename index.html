@@ -31,6 +31,7 @@
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <link rel="manifest" href="/manifest.json">
     <link rel="icon" type="image/png" href="/images/logo/logo-ngk.ico">
     <link rel="apple-touch-icon" href="/images/logo/logo-ngk.ico">
 
@@ -156,26 +157,30 @@
 
 <body class="bg-slate-950 text-slate-100 font-sans">
 
+    <div class="fixed inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay z-0"
+        style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='%2310b981' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E&quot;); background-size: 60px 60px;">
+    </div>
+
     <div data-component="navbar" data-component-src="components/navbar.html" class="sticky top-0 z-50">
         <div class="px-6 py-4 text-sm text-slate-400">Memuat navigasi...</div>
     </div>
 
-    <div data-component="hero" data-component-src="components/hero.html">
+    <div data-component="hero" data-component-src="components/hero.html" class="relative z-10">
         <div class="bg-emerald-700 text-white py-16 px-6 text-center">
             <p class="text-sm uppercase tracking-[0.2em] text-emerald-200">Memuat halaman...</p>
         </div>
     </div>
 
-    <div data-component="about" data-component-src="components/about.html"></div>
-    <div data-component="programs" data-component-src="components/programs.html"></div>
-    <div data-component="mentors" data-component-src="components/mentors.html"></div>
-    <div data-component="testimonials" data-component-src="components/testimonials.html"></div>
-    <div data-component="articles" data-component-src="components/articles.html"></div>
-    <div data-component="products" data-component-src="components/products.html"></div>
-    <div data-component="quiz" data-component-src="components/quiz.html"></div>
+    <div data-component="about" data-component-src="components/about.html" class="relative z-10"></div>
+    <div data-component="programs" data-component-src="components/programs.html" class="relative z-10"></div>
+    <div data-component="mentors" data-component-src="components/mentors.html" class="relative z-10"></div>
+    <div data-component="testimonials" data-component-src="components/testimonials.html" class="relative z-10"></div>
+    <div data-component="articles" data-component-src="components/articles.html" class="relative z-10"></div>
+    <div data-component="products" data-component-src="components/products.html" class="relative z-10"></div>
+    <div data-component="quiz" data-component-src="components/quiz.html" class="relative z-10"></div>
 
-    <div data-component="footer" data-component-src="components/footer.html"></div>
-    <div data-component="floating-actions" data-component-src="components/floating-actions.html"></div>
+    <div data-component="footer" data-component-src="components/footer.html" class="relative z-10"></div>
+    <div data-component="floating-actions" data-component-src="components/floating-actions.html" class="relative z-50"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="assets/js/api-sync.js"></script>
@@ -197,6 +202,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch((error) => {
+                    console.error('Gagal registrasi service worker:', error);
+                });
+            });
+        }
+    </script>
 
 </body>
 

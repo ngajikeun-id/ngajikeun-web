@@ -1,5 +1,5 @@
 (function () {
-    const CDN_SITE_DATA_URL = 'https://cdn.jsdelivr.net/gh/Ciwai-lab/ngajikeun-web@main/content/data/site-data.json';
+    const CDN_SITE_DATA_URL = 'https://cdn.jsdelivr.net/gh/ngajikeun-id/ngajikeun-web@main/content/data/site-data.json';
     let siteDataPromise = null;
 
     function escapeHtml(value) {
