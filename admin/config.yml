@@ -4,9 +4,9 @@ slug:
   clean_accents: true
   sanitize_replacement: "-"
 
-brand_name: "CiwAI™ Smart Digital"
-logo_url: /images/logo/logo_ciwai.png
-display_url: "https://ngajikeun.ciwai.dev"
+brand_name: "Ngajikeun.id"
+logo_url: /images/logo/logo-ngk.png
+display_url: "https://ngajikeun.id"
 
 backend:
   name: git-gateway

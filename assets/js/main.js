@@ -59,7 +59,7 @@
     function initializeContentSync() {
         if (!window.NgajikeunApi) return;
 
-        console.log('CiwAI Engine: Starting Synchronization...');
+        console.log('Ngajikeun.id: Starting content synchronization...');
         window.NgajikeunApi.syncAbout();
         window.NgajikeunApi.syncPrograms();
         window.NgajikeunApi.syncMentors();

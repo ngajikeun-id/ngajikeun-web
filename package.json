@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "generate:data": "node scripts/generate-content-data.js",
+    "serve": "python3 -m http.server 5500"
+  },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19"
   }

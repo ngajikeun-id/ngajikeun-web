@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ngajikeun-pwa-v1';
+const CACHE_NAME = 'ngajikeun-pwa-v2';
 
 const CORE_ASSETS = [
   '/',
@@ -6,6 +6,17 @@ const CORE_ASSETS = [
   '/assets/js/api-sync.js',
   '/assets/js/component-loader.js',
   '/assets/js/main.js',
+  '/components/navbar.html',
+  '/components/hero.html',
+  '/components/about.html',
+  '/components/programs.html',
+  '/components/mentors.html',
+  '/components/testimonials.html',
+  '/components/articles.html',
+  '/components/products.html',
+  '/components/quiz.html',
+  '/components/footer.html',
+  '/components/floating-actions.html',
   '/images/logo/logo-ngk.png'
 ];
 

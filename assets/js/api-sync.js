@@ -231,62 +231,6 @@
         }
     }
 
-    async function syncArticles() {
-        const list = document.getElementById('articles-list');
-        if (!list) return;
-
-        try {
-            const data = await loadSiteData();
-            const articles = getCollection(data, 'articles');
-            if (!articles || !articles.length) return;
-
-            list.innerHTML = '';
-
-            articles.slice(0, 3).forEach(post => {
-                const date = new Date(post.date).toLocaleDateString('id-ID', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-
-                const visualMedia = post.thumbnail
-                    ? `<img src="${post.thumbnail}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">`
-                    : `<div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 group-hover:scale-110 transition-transform duration-700"></div>
-                   <div class="absolute inset-0 flex items-center justify-center">
-                        <svg class="w-12 h-12 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
-                   </div>`;
-
-                list.innerHTML += `
-    <article class="group bg-slate-900 rounded-[2.5rem] p-2 border border-slate-800 hover:border-emerald-700 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-950/20 flex flex-col h-full">
-        <div class="bg-slate-800 aspect-video rounded-[2rem] mb-6 overflow-hidden relative">
-            ${post.thumbnail
-                        ? `<img src="${post.thumbnail}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">`
-                        : `<div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 group-hover:scale-110 transition-transform duration-700"></div>`
-                    }
-        </div>
-        
-        <div class="px-6 pb-8 flex-grow flex flex-col items-center text-center"> 
-            <time class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-3">${date}</time>
-            <h3 class="text-xl font-black text-slate-100 leading-snug group-hover:text-emerald-400 transition-colors mb-4">
-                ${safeText(post.title)}
-            </h3>
-            <p class="text-slate-400 text-xs line-clamp-2 mb-6 leading-relaxed">
-                ${safeText(post.description || post.body.substring(0, 100))}...
-            </p>
-            
-            <button onclick="getArticleBySlug('${post.slug}')" class="mt-auto inline-flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-400 hover:text-emerald-300 transition-all">
-                Baca Selengkapnya 
-                <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-            </button>
-        </div>
-    </article>
-`;
-            });
-        } catch (err) {
-            console.error('Duh, gagal narik artikel:', err);
-        }
-    }
-
     window.closeArticleModal = function () {
         const modal = document.getElementById('article-modal');
         if (modal) {
@@ -297,7 +241,7 @@
 
     window.getArticleBySlug = getArticleBySlug;
 
-    window.syncArticles = async function () {
+    async function syncArticles() {
         const list = document.getElementById('articles-list');
         if (!list) return;
 
@@ -341,8 +285,10 @@
                 list.appendChild(extraContainer);
             }
 
-        } catch (err) { console.error('Gagal sync:', err); }
-    };
+        } catch (err) { console.error('Gagal sync artikel:', err); }
+    }
+
+    window.syncArticles = syncArticles;
 
     window.toggleAllArticles = function () {
         const extra = document.getElementById('extra-articles');
@@ -452,22 +398,6 @@
             });
 
         } catch (err) { console.error(err); }
-    }
-
-    function toggleQuizList(cat) {
-        const list = document.getElementById(`list-${cat}`);
-        const btn = document.getElementById(`btn-${cat}`);
-
-        if (list.classList.contains('hidden')) {
-            list.classList.remove('hidden');
-            list.classList.add('animate-in', 'fade-in', 'slide-in-from-top-2');
-            btn.innerText = `Tutup Kuis ${cat.charAt(0).toUpperCase() + cat.slice(1)}`;
-            btn.classList.replace('bg-slate-800', 'bg-red-500'); // Ganti warna biar jelas kalau mau tutup
-        } else {
-            list.classList.add('hidden');
-            btn.innerText = `Buka Kuis ${cat.charAt(0).toUpperCase() + cat.slice(1)}`;
-            btn.classList.replace('bg-red-500', 'bg-slate-800');
-        }
     }
 
     async function syncAbout() {
