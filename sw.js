@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ngajikeun-pwa-v2';
+const CACHE_NAME = 'ngajikeun-pwa-v3';
 
 const CORE_ASSETS = [
   '/',
