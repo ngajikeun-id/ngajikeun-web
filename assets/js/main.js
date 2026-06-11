@@ -105,9 +105,12 @@
 
     window.closeArticleModal = function closeArticleModal() {
         const modal = document.getElementById('article-modal');
+        const content = document.getElementById('modal-content');
         if (!modal) return;
 
         modal.classList.add('hidden');
+        modal.scrollTop = 0;
+        if (content) content.scrollTop = 0;
         document.body.style.overflow = '';
     };
 

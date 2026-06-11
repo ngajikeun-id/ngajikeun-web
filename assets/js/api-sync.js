@@ -104,6 +104,14 @@
         return Array.isArray(collection) ? collection : [];
     }
 
+    function resetModalScroll() {
+        const modal = document.getElementById('article-modal');
+        const content = document.getElementById('modal-content');
+
+        if (modal) modal.scrollTop = 0;
+        if (content) content.scrollTop = 0;
+    }
+
     async function getProgramDetails(slug, fallbackProgram) {
         if (!/^[a-z0-9-]+$/.test(slug)) {
             return fallbackProgram;
@@ -155,7 +163,7 @@
 
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
-            modal.scrollTo(0, 0);
+            resetModalScroll();
         } catch (error) {
             console.error('Gagal memuat artikel:', error);
         }
@@ -204,7 +212,7 @@
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
             styleMarkdownTables(content.querySelector('#program-markdown-content'));
-            modal.scrollTo(0, 0);
+            resetModalScroll();
         } catch (error) {
             console.error('Gagal memuat detail program:', error);
         }
@@ -331,6 +339,7 @@
         if (modal) {
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
+            resetModalScroll();
         }
     };
 
