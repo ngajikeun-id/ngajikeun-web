@@ -51,6 +51,30 @@
             .join('');
     }
 
+    function styleMarkdownTables(scope) {
+        if (!scope) return;
+
+        scope.querySelectorAll('table').forEach((table) => {
+            table.classList.add('w-full', 'min-w-[640px]', 'border-collapse', 'overflow-hidden', 'rounded-xl', 'border', 'border-slate-700', 'text-xs');
+        });
+
+        scope.querySelectorAll('thead').forEach((thead) => {
+            thead.classList.add('bg-emerald-950/60');
+        });
+
+        scope.querySelectorAll('tbody tr').forEach((row) => {
+            row.classList.add('border-t', 'border-slate-800');
+        });
+
+        scope.querySelectorAll('th').forEach((cell) => {
+            cell.classList.add('px-4', 'py-3', 'text-left', 'font-black', 'uppercase', 'tracking-widest', 'text-emerald-300', 'border', 'border-slate-700', 'align-top');
+        });
+
+        scope.querySelectorAll('td').forEach((cell) => {
+            cell.classList.add('px-4', 'py-3', 'text-slate-300', 'border', 'border-slate-800', 'align-top');
+        });
+    }
+
     async function fetchJson(url) {
         const response = await fetch(url, { cache: 'no-store' });
         if (!response.ok) {
@@ -145,7 +169,7 @@
                     <span class="text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-4">Detail Program Belajar</span>
                     <h2 class="text-3xl md:text-4xl font-black text-slate-100 mb-6 leading-tight">${safeText(program.title)}</h2>
 
-                    <div class="prose prose-invert prose-emerald prose-sm max-w-none text-slate-300 leading-relaxed text-left border-t border-slate-800 pt-8 mb-8">
+                    <div id="program-markdown-content" class="prose prose-invert prose-emerald prose-sm max-w-none overflow-x-auto text-slate-300 leading-relaxed text-left border-t border-slate-800 pt-8 mb-8">
                         ${window.marked ? window.marked.parse(program.body || '') : renderSimpleMarkdown(program.body)}
                     </div>
 
@@ -158,6 +182,7 @@
 
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
+            styleMarkdownTables(content.querySelector('#program-markdown-content'));
             modal.scrollTo(0, 0);
         } catch (error) {
             console.error('Gagal memuat detail program:', error);
