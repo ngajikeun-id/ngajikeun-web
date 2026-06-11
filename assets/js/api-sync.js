@@ -362,15 +362,15 @@
             const createCard = (post) => {
                 const date = new Date(post.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
                 return `
-                <article class="group bg-slate-900 rounded-[2.5rem] p-2 border border-slate-800 hover:border-emerald-700 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-950/20 flex flex-col h-full animate-in fade-in slide-in-from-bottom-4">
-                    <div class="bg-slate-800 aspect-video rounded-[2rem] mb-6 overflow-hidden relative">
+                <article class="group bg-slate-900 rounded-3xl p-1.5 border border-slate-800 hover:border-emerald-700 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-950/20 flex flex-col h-full animate-in fade-in slide-in-from-bottom-4">
+                    <div class="bg-slate-800 aspect-video rounded-[1.35rem] mb-4 overflow-hidden relative">
                         ${post.thumbnail ? `<img src="${post.thumbnail}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">` : `<div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-blue-500/20"></div>`}
                     </div>
-                    <div class="px-6 pb-8 flex-grow flex flex-col items-center text-center">
-                        <time class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-3">${date}</time>
-                        <h3 class="text-xl font-black text-slate-100 leading-snug group-hover:text-emerald-400 transition-colors mb-4">${safeText(post.title)}</h3>
-                        <p class="text-slate-400 text-xs line-clamp-2 mb-6 leading-relaxed">${safeText(post.description || post.body.substring(0, 100))}...</p>
-                        <button onclick="getArticleBySlug('${post.slug}')" class="mt-auto inline-flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-400 hover:text-emerald-300 transition-all">
+                    <div class="p-5 flex-grow flex flex-col items-center text-center">
+                        <time class="text-[9px] font-bold text-emerald-400 uppercase tracking-widest block mb-2">${date}</time>
+                        <h3 class="text-lg font-bold text-slate-100 leading-snug group-hover:text-emerald-400 transition-colors mb-3">${safeText(post.title)}</h3>
+                        <p class="text-slate-400 text-xs line-clamp-2 mb-5 leading-relaxed">${safeText(post.description || post.body.substring(0, 100))}...</p>
+                        <button type="button" onclick="getArticleBySlug('${post.slug}')" class="mt-auto inline-flex w-full items-center justify-center py-3 px-4 bg-slate-950 border border-slate-800 text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-all active:scale-95">
                             Baca Selengkapnya 
                             <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </button>
