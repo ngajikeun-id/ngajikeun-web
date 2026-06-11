@@ -1,5 +1,6 @@
 (function () {
-    const CDN_SITE_DATA_URL = 'https://cdn.jsdelivr.net/gh/ngajikeun-id/ngajikeun-web@main/content/data/site-data.json?t=' + new Date().getTime(); let siteDataPromise = null;
+    const CDN_SITE_DATA_URL = 'https://cdn.jsdelivr.net/gh/ngajikeun-id/ngajikeun-web@main/content/data/site-data.json';
+    let siteDataPromise = null;
 
     function escapeHtml(value) {
         return String(value ?? '')
