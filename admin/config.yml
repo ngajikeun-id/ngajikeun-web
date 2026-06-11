@@ -12,7 +12,6 @@ backend:
   name: github
   repo: ngajikeun-id/ngajikeun-web
   branch: main
-  auth_type: "implicit"
 
 links:
   - { label: "📈 Statistik Pengunjung", url: "https://cloud.umami.is/share/wwTd9VfrO2Xe8A77", target: "_blank" }
