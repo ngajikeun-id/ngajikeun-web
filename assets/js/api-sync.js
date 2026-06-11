@@ -384,7 +384,7 @@
             if (others.length > 0) {
                 const extraContainer = document.createElement('div');
                 extraContainer.id = 'extra-articles';
-                extraContainer.className = 'grid grid-cols-1 md:grid-cols-3 gap-8 col-span-full hidden mt-8'; // hidden by default
+                extraContainer.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 col-span-full hidden mt-8'; // hidden by default
                 others.forEach(post => { extraContainer.innerHTML += createCard(post); });
                 list.appendChild(extraContainer);
             }
