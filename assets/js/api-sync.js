@@ -119,6 +119,51 @@
         }
     }
 
+    async function getProgramBySlug(slug) {
+        const modal = document.getElementById('article-modal');
+        const content = document.getElementById('modal-content');
+
+        if (!modal || !content) {
+            console.error('Elemen modal tidak ditemukan, Antum!');
+            return;
+        }
+
+        try {
+            const data = await loadSiteData();
+            const programs = getCollection(data, 'programs');
+            const program = programs.find((p) => p.slug === slug);
+
+            if (!program) return;
+
+            const imageHtml = program.image
+                ? `<img src="${safeUrl(program.image)}" alt="${safeText(program.title)}" class="w-full h-64 object-cover rounded-[2rem] mb-8 shadow-lg">`
+                : '';
+
+            content.innerHTML = `
+                <div class="max-w-2xl mx-auto text-center">
+                    ${imageHtml}
+                    <span class="text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-4">Detail Program Belajar</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-100 mb-6 leading-tight">${safeText(program.title)}</h2>
+
+                    <div class="prose prose-invert prose-emerald prose-sm max-w-none text-slate-300 leading-relaxed text-left border-t border-slate-800 pt-8 mb-8">
+                        ${window.marked ? window.marked.parse(program.body || '') : renderSimpleMarkdown(program.body)}
+                    </div>
+
+                    <a href="${safeUrl(program.registration_link)}" target="_blank" rel="noopener noreferrer"
+                       class="inline-block w-full sm:w-auto px-8 py-4 bg-emerald-600 border border-emerald-500 text-white text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-700 transition-all active:scale-95 shadow-lg shadow-emerald-950/50">
+                        Daftar Sekarang Lewat WA ⚡
+                    </a>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            modal.scrollTo(0, 0);
+        } catch (error) {
+            console.error('Gagal memuat detail program:', error);
+        }
+    }
+
     async function syncPrograms() {
         const container = document.getElementById('program-container');
         if (!container) return;
@@ -131,11 +176,11 @@
             container.innerHTML = '';
 
             programs.forEach(program => {
-                const imageUrl = program.image || 'https://via.placeholder.com/600x400?text=Flyer+Program';
+                const imageUrl = safeUrl(program.image, 'https://via.placeholder.com/600x400?text=Flyer+Program');
+                const slug = program.slug || program.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
                 container.innerHTML += `
                 <div class="group bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-800 hover:shadow-2xl hover:shadow-emerald-950/30 transition-all duration-500">
-                    <!-- Area Flyer -->
                     <div class="relative overflow-hidden aspect-[4/3]">
                         <img src="${imageUrl}" alt="${safeText(program.title)}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
@@ -143,7 +188,6 @@
                         </div>
                     </div>
                     
-                    <!-- Area Teks -->
                     <div class="p-8">
                         <div class="flex justify-between items-start mb-4">
                             <h3 class="text-xl font-bold text-slate-100 leading-tight">${safeText(program.title)}</h3>
@@ -151,13 +195,19 @@
                         </div>
                         <p class="text-slate-400 text-xs leading-relaxed mb-6">${safeText(program.description)}</p>
                         
-                        <a href="${safeUrl(program.registration_link)}" target="_blank" 
+                        <button type="button" data-program-slug="${safeText(slug)}"
                            class="block w-full text-center py-4 bg-slate-950 border border-slate-800 text-slate-100 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-all active:scale-95">
-                            Daftar Sekarang ⚡
-                        </a>
+                            Detail Program 📖
+                        </button>
                     </div>
                 </div>
             `;
+            });
+
+            container.querySelectorAll('[data-program-slug]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    window.NgajikeunApi.getProgramBySlug(button.dataset.programSlug);
+                });
             });
         } catch (error) {
             console.error('Gagal sync program:', error);
@@ -449,6 +499,7 @@
     window.NgajikeunApi = {
         syncAbout,
         syncPrograms,
+        getProgramBySlug,
         syncMentors,
         syncTestimonials,
         syncArticles,
