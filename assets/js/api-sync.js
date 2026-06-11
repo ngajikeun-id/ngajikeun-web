@@ -104,6 +104,24 @@
         return Array.isArray(collection) ? collection : [];
     }
 
+    async function getProgramDetails(slug, fallbackProgram) {
+        if (!/^[a-z0-9-]+$/.test(slug)) {
+            return fallbackProgram;
+        }
+
+        try {
+            const details = await fetchJson(`content/programs/${slug}.json`);
+            return {
+                ...fallbackProgram,
+                ...details,
+                slug
+            };
+        } catch (error) {
+            console.warn('Gagal load detail program langsung, memakai data aggregate.', error);
+            return fallbackProgram;
+        }
+    }
+
     async function getArticleBySlug(slug) {
         const modal = document.getElementById('article-modal');
         const content = document.getElementById('modal-content');
@@ -155,13 +173,16 @@
         try {
             const data = await loadSiteData();
             const programs = getCollection(data, 'programs');
-            const program = programs.find((p) => p.slug === slug);
+            const programSummary = programs.find((p) => p.slug === slug);
 
-            if (!program) return;
+            if (!programSummary) return;
+
+            const program = await getProgramDetails(slug, programSummary);
 
             const imageHtml = program.image
                 ? `<img src="${safeUrl(program.image)}" alt="${safeText(program.title)}" class="w-full h-64 object-cover rounded-[2rem] mb-8 shadow-lg">`
                 : '';
+            const programBody = String(program.body || program.description || '').trim();
 
             content.innerHTML = `
                 <div class="max-w-2xl mx-auto text-center">
@@ -170,7 +191,7 @@
                     <h2 class="text-3xl md:text-4xl font-black text-slate-100 mb-6 leading-tight">${safeText(program.title)}</h2>
 
                     <div id="program-markdown-content" class="prose prose-invert prose-emerald prose-sm max-w-none overflow-x-auto text-slate-300 leading-relaxed text-left border-t border-slate-800 pt-8 mb-8">
-                        ${window.marked ? window.marked.parse(program.body || '') : renderSimpleMarkdown(program.body)}
+                        ${programBody && window.marked ? window.marked.parse(programBody) : renderSimpleMarkdown(programBody)}
                     </div>
 
                     <a href="${safeUrl(program.registration_link)}" target="_blank" rel="noopener noreferrer"
@@ -214,9 +235,8 @@
                     </div>
                     
                     <div class="p-8">
-                        <div class="flex justify-between items-start mb-4">
+                        <div class="mb-4">
                             <h3 class="text-xl font-bold text-slate-100 leading-tight">${safeText(program.title)}</h3>
-                            <span class="bg-emerald-500 text-white text-[9px] font-black px-2 py-1 rounded-md shadow-lg shadow-emerald-950/30 uppercase">${safeText(program.price)}</span>
                         </div>
                         <p class="text-slate-400 text-xs leading-relaxed mb-6">${safeText(program.description)}</p>
                         

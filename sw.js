@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ngajikeun-pwa-v3';
+const CACHE_NAME = 'ngajikeun-pwa-v4';
 
 const CORE_ASSETS = [
   '/',
@@ -42,6 +42,12 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+
+  const requestUrl = new URL(event.request.url);
+  if (requestUrl.origin === self.location.origin && requestUrl.pathname.startsWith('/content/')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
 
   event.respondWith(
     caches.match(event.request)
