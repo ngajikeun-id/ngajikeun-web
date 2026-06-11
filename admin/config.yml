@@ -9,7 +9,8 @@ logo_url: /images/logo/logo-ngk.png
 display_url: "https://ngajikeun.id"
 
 backend:
-  name: git-gateway
+  name: github
+  repo: ngajikeun-id/ngajikeun-web
   branch: main
 
 links:
