@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 
 <head>
     <meta charset="utf-8" />
@@ -7,19 +7,193 @@
     <title>Dashboard | Ngajikeun.id</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .nc-app-container {
-            background-color: #f8fafc !important;
+        /* Override Decap CMS dengan Tema Slate-950 & Emerald-500 */
+        body {
+            background-color: #020617 !important;
+            color: #cbd5e1 !important;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
         }
 
-        [class*="SidebarContainer"] {
-            background-color: #ffffff !important;
-            border-right: 1px solid #e2e8f0 !important;
+        /* App Wrapper */
+        .nc-app-container, [class*="AppContainer"] {
+            background-color: #020617 !important;
+            color: #cbd5e1 !important;
+        }
+
+        /* Top Navigation Bar */
+        header, [class*="AppHeader"] {
+            background-color: #090d16 !important;
+            border-bottom: 1px solid #1e293b !important;
+            color: #f1f5f9 !important;
+        }
+        
+        [class*="AppHeader"] button, [class*="AppHeader"] a {
+            color: #cbd5e1 !important;
+        }
+
+        [class*="AppHeader"] button:hover {
+            color: #34d399 !important;
+        }
+
+        /* Sidebar Container */
+        aside, [class*="SidebarContainer"], [class*="Sidebar"] {
+            background-color: #090d16 !important;
+            border-right: 1px solid #1e293b !important;
+        }
+
+        /* Sidebar Links */
+        [class*="SidebarLink"] {
+            color: #94a3b8 !important;
+            border-left: 3px solid transparent !important;
+            background-color: transparent !important;
+            font-size: 0.875rem !important;
+        }
+        
+        [class*="SidebarLinkActive"] {
+            color: #34d399 !important;
+            background-color: #020617 !important;
+            border-left: 3px solid #10b981 !important;
+            font-weight: 800 !important;
+        }
+
+        [class*="SidebarLink"]:hover {
+            color: #f1f5f9 !important;
+            background-color: rgba(2, 6, 23, 0.5) !important;
+        }
+
+        /* Collection Card & Lists */
+        [class*="Card"] {
+            background-color: #0f172a !important;
+            border: 1px solid #1e293b !important;
+            border-radius: 1.25rem !important;
+            color: #f1f5f9 !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
+            transition: all 0.2s ease-in-out !important;
+        }
+
+        [class*="Card"] h2, [class*="Card"] p, [class*="Card"] span {
+            color: #e2e8f0 !important;
+        }
+
+        [class*="Card"]:hover {
+            border-color: #10b981 !important;
+            transform: translateY(-2px) !important;
+        }
+
+        /* Editor Layout & Inputs */
+        [class*="EditorContainer"], [class*="EditorLayout"] {
+            background-color: #020617 !important;
+        }
+
+        [class*="EditorPane"] {
+            background-color: #090d16 !important;
+            border: 1px solid #1e293b !important;
+            border-radius: 1.5rem !important;
+            padding: 2rem !important;
+        }
+
+        /* Form Controls Wrapper */
+        [class*="ControlContainer"] {
+            background-color: #0f172a !important;
+            border: 1px solid #1e293b !important;
+            border-radius: 1.25rem !important;
+            padding: 1.5rem !important;
+            margin-bottom: 1.5rem !important;
+        }
+
+        [class*="ControlContainer"] label {
+            color: #34d399 !important;
+            font-weight: 800 !important;
+            text-transform: uppercase !important;
+            font-size: 0.75rem !important;
+            letter-spacing: 0.05em !important;
+            margin-bottom: 0.75rem !important;
+        }
+
+        /* Text Input, Textarea, Select */
+        input, textarea, select, [class*="ControlPane"] {
+            background-color: #020617 !important;
+            color: #f1f5f9 !important;
+            border: 1px solid #1e293b !important;
+            border-radius: 0.75rem !important;
+            padding: 0.75rem !important;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: #10b981 !important;
+            outline: none !important;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
+        }
+
+        /* Markdown Editor Toolbar */
+        [class*="Toolbar"] {
+            background-color: #0f172a !important;
+            border-color: #1e293b !important;
+            color: #cbd5e1 !important;
+        }
+
+        [class*="Toolbar"] button {
+            color: #cbd5e1 !important;
+        }
+
+        [class*="Toolbar"] button:hover {
+            background-color: #1e293b !important;
+            color: #34d399 !important;
+        }
+
+        /* Login Screen */
+        [class*="LoginContainer"] {
+            background-color: #020617 !important;
+        }
+
+        [class*="LoginCard"] {
+            background-color: #0f172a !important;
+            border: 1px solid #1e293b !important;
+            border-radius: 2rem !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
         }
 
         [class*="LoginButton"] {
-            background-color: #0f172a !important;
+            background-color: #10b981 !important;
+            color: #020617 !important;
             border-radius: 0.75rem !important;
-            font-weight: 800 !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.05em !important;
+            text-transform: uppercase !important;
+            transition: all 0.2s !important;
+            border: none !important;
+            padding: 0.75rem 1.5rem !important;
+        }
+
+        [class*="LoginButton"]:hover {
+            background-color: #34d399 !important;
+            transform: scale(1.02) !important;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+        }
+
+        /* Bottom Editor Action Toolbar */
+        [class*="EditorToolbar"], [class*="ToolbarContainer"] {
+            background-color: #090d16 !important;
+            border-top: 1px solid #1e293b !important;
+        }
+
+        /* Publish / Save Buttons */
+        [class*="PublishButton"], [class*="SaveButton"] {
+            background-color: #10b981 !important;
+            color: #020617 !important;
+            border-radius: 0.75rem !important;
+            font-weight: bold !important;
+            border: none !important;
+        }
+
+        [class*="PublishButton"]:hover, [class*="SaveButton"]:hover {
+            background-color: #34d399 !important;
+        }
+
+        /* Preview Pane Wrapper */
+        [class*="PreviewPane"] {
+            background-color: #020617 !important;
+            border-left: 1px solid #1e293b !important;
         }
     </style>
 </head>
@@ -28,9 +202,14 @@
     <script src="https://unpkg.com/decap-cms@^3.11.0/dist/decap-cms.js"></script>
 
     <script>
-        window.onload = () => {
-            const tailwindCDN = "https://cdn.tailwindcss.com";
+        // Daftarkan Stylesheet Preview IFrame agar mendukung Tailwind & Google Font
+        CMS.registerPreviewStyle("https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css");
+        CMS.registerPreviewStyle("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap");
 
+        window.onload = () => {
+            // ----------------------------------------
+            // 0. TEMPLATE PREVIEW: DASHBOARD UTAMA
+            // ----------------------------------------
             CMS.registerPreviewTemplate("main_dashboard", createClass({
                 render: function () {
                     const entry = this.props.entry;
@@ -38,73 +217,328 @@
                     const rawLink = entry.getIn(['data', 'stats_link']) || '';
                     const cleanLink = rawLink.replace('/analytics/us', '');
 
-                    return h('div', { style: { padding: '20px', background: '#f1f5f9', minHeight: '100vh', fontFamily: 'sans-serif' } },
-
-                        h('div', { style: { background: '#059669', padding: '30px', borderRadius: '24px', color: 'white', marginBottom: '20px', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' } },
-                            h('h1', { style: { margin: '0', fontSize: '26px', fontWeight: '900' } }, welcomeMsg),
-                            h('p', { style: { opacity: '0.8', fontSize: '14px' } }, 'Ngajikeun.id Realtime Monitor Dashboard Statistik')
-                        ),
-
-                        h('div', { style: { position: 'relative', background: 'white', padding: '10px', borderRadius: '24px', border: '1px solid #e2e8f0', minHeight: '600px', overflow: 'hidden', marginBottom: '20px' } },
-                            h('a', {
-                                href: cleanLink,
-                                target: '_blank',
-                                style: {
-                                    position: 'absolute', top: '20px', right: '20px', zIndex: '10',
-                                    background: '#0f172a', color: 'white', padding: '10px 20px',
-                                    borderRadius: '12px', textDecoration: 'none', fontSize: '12px', fontWeight: 'bold'
-                                }
-                            }, 'Buka Full Screen ↗'),
-
-                            h('iframe', {
-                                src: cleanLink,
-                                style: { width: '100%', height: '600px', border: 'none', borderRadius: '15px' },
-                                sandbox: 'allow-scripts allow-same-origin allow-forms allow-popups'
-                            })
-                        ),
-
-                        h('div', { style: { background: '#ffffff', padding: '30px', borderRadius: '24px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', marginBottom: '20px' } },
-                            h('div', { style: { display: 'flex', alignItems: 'center', marginBottom: '15px' } },
-                                h('span', { style: { fontSize: '24px', marginRight: '10px' } }, '🛡️'),
-                                h('h3', { style: { color: '#0f172a', margin: '0', fontSize: '18px', fontWeight: '900', letterSpacing: '-0.5px' } }, 'PUSAT BANTUAN NGAJIKEUN.ID')
+                    return h('div', { className: 'p-8 bg-slate-950 min-h-screen text-slate-100 font-sans' },
+                        h('div', { className: 'relative max-w-4xl mx-auto space-y-8' },
+                            // Welcome Banner
+                            h('div', { className: 'relative overflow-hidden bg-emerald-950/40 border border-emerald-500/20 p-8 rounded-[2rem] shadow-xl shadow-emerald-950/30' },
+                                h('div', { className: 'absolute -top-12 -left-12 w-48 h-48 bg-emerald-500/10 rounded-full blur-2xl' }),
+                                h('h1', { className: 'relative z-10 text-3xl font-black text-slate-100 mb-2' }, welcomeMsg),
+                                h('p', { className: 'relative z-10 text-emerald-400 text-xs font-bold uppercase tracking-wider' }, 'Ngajikeun.id Realtime Monitor Dashboard Statistik')
                             ),
-                            h('p', { style: { color: '#64748b', fontSize: '14px', marginBottom: '20px' } }, 'Untuk bantuan teknis, kustomisasi atau kendala, Tim support kami siap membantu.'),
+                            
+                            // Analytics IFrame
+                            h('div', { className: 'relative bg-slate-900 border border-slate-800 p-3 rounded-[2.5rem] shadow-2xl overflow-hidden' },
+                                h('div', { className: 'flex justify-between items-center px-4 py-2 border-b border-slate-800/80 mb-4' },
+                                    h('span', { className: 'text-xs font-bold text-slate-400 uppercase tracking-widest' }, 'Statistik Pengunjung (Umami)'),
+                                    h('a', {
+                                        href: cleanLink,
+                                        target: '_blank',
+                                        className: 'px-4 py-2 bg-slate-950 border border-slate-800 text-emerald-400 hover:text-emerald-300 hover:bg-slate-800 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all'
+                                    }, 'Buka Full Screen ↗')
+                                ),
+                                h('iframe', {
+                                    src: cleanLink,
+                                    className: 'w-full h-[500px] border-none rounded-2xl bg-slate-950',
+                                    sandbox: 'allow-scripts allow-same-origin allow-forms allow-popups'
+                                })
+                            ),
 
-                            h('a', {
-                                href: 'https://wa.me/6285121380541',
-                                target: '_blank',
-                                style: {
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    background: '#25D366',
-                                    color: 'white',
-                                    padding: '12px 24px',
-                                    borderRadius: '14px',
-                                    textDecoration: 'none',
-                                    fontWeight: 'bold',
-                                    fontSize: '14px'
-                                }
-                            }, 'Chat via WhatsApp ↗')
-                        ),
-
-                        h('p', { style: { textAlign: 'center', color: '#94a3b8', fontSize: '11px', marginTop: '20px' } },
-                            'Note: Jika dashboard kosong, klik tombol Buka Full Screen. Umami Cloud membatasi akses iframe di beberapa browser.')
+                            // Help Box
+                            h('div', { className: 'bg-slate-900 border border-slate-800 p-8 rounded-[2.5rem] shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6' },
+                                h('div', {},
+                                    h('div', { className: 'flex items-center gap-3 mb-2' },
+                                        h('span', { className: 'text-xl' }, '🛡️'),
+                                        h('h3', { className: 'text-lg font-black text-slate-100 uppercase tracking-tight' }, 'Pusat Bantuan Ngajikeun.id')
+                                    ),
+                                    h('p', { className: 'text-slate-400 text-xs leading-relaxed max-w-lg' }, 'Untuk bantuan teknis, kustomisasi atau kendala, Tim support kami siap membantu antum.')
+                                ),
+                                h('a', {
+                                    href: 'https://wa.me/6285121380541',
+                                    target: '_blank',
+                                    className: 'w-full md:w-auto px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-black uppercase tracking-widest rounded-xl text-center shadow-lg shadow-emerald-500/20 transition-all'
+                                }, 'Chat WhatsApp ↗')
+                            )
+                        )
                     );
                 }
             }));
 
+            // ----------------------------------------
+            // 1. TEMPLATE PREVIEW: TENTANG KAMI
+            // ----------------------------------------
+            CMS.registerPreviewTemplate("about", createClass({
+                render: function () {
+                    const entry = this.props.entry;
+                    const history = entry.getIn(['data', 'history']) || '';
+                    const vision = entry.getIn(['data', 'vision']) || '';
+                    const missions = entry.getIn(['data', 'missions']) || [];
+
+                    return h('div', { className: 'p-8 bg-slate-950 min-h-screen text-slate-100 font-sans' },
+                        h('section', { className: 'max-w-4xl mx-auto space-y-12' },
+                            h('div', { className: 'text-center' },
+                                h('span', { className: 'inline-block bg-emerald-500/10 text-emerald-300 text-[10px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.2em] mb-4 border border-emerald-500/20' }, 'Tentang Kami'),
+                                h('h2', { className: 'text-3xl font-black text-slate-100 tracking-tight' }, 'Menghidupkan Al-Qur\'an Sebelum Kematian Menghampiri')
+                            ),
+                            h('div', { className: 'grid md:grid-cols-2 gap-12' },
+                                // Sejarah
+                                h('div', { className: 'relative pl-8 border-l-4 border-emerald-500/20' },
+                                    h('span', { className: 'absolute -left-[10px] top-0 bg-emerald-500 text-white text-[8px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-tighter' }, 'Latar Belakang'),
+                                    h('div', { className: 'pt-8 text-slate-300 text-sm leading-relaxed space-y-4' },
+                                        history.split('\n\n').map((p, idx) => h('p', { key: idx }, p))
+                                    )
+                                ),
+                                // Visi & Misi
+                                h('div', { className: 'relative pl-8 border-l-4 border-emerald-500/20' },
+                                    h('span', { className: 'absolute -left-[10px] top-0 bg-emerald-500 text-white text-[8px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-tighter' }, 'Visi & Misi'),
+                                    h('div', { className: 'pt-8 space-y-6' },
+                                        h('div', {},
+                                            h('p', { className: 'text-xs font-bold text-emerald-400 uppercase tracking-widest mb-2' }, 'Visi'),
+                                            h('p', { className: 'text-sm italic text-slate-300 leading-relaxed' }, vision ? `"${vision}"` : "")
+                                        ),
+                                        h('div', { className: 'space-y-3' },
+                                            h('p', { className: 'text-xs font-bold text-emerald-400 uppercase tracking-widest' }, 'Misi'),
+                                            h('div', { className: 'space-y-3 text-sm text-slate-300' },
+                                                missions.map((misi, idx) => h('p', { key: idx, className: 'relative pl-4' },
+                                                    h('span', { className: 'absolute left-0 text-emerald-500' }, '•'),
+                                                    misi
+                                                ))
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    );
+                }
+            }));
+
+            // ----------------------------------------
+            // 2. TEMPLATE PREVIEW: PROGRAM BELAJAR
+            // ----------------------------------------
+            CMS.registerPreviewTemplate("programs", createClass({
+                render: function () {
+                    const entry = this.props.entry;
+                    const title = entry.getIn(['data', 'title']) || 'Nama Program';
+                    const description = entry.getIn(['data', 'description']) || 'Deskripsi program...';
+                    const registrationLink = entry.getIn(['data', 'registration_link']) || '#';
+                    const image = entry.getIn(['data', 'image']) || 'images/logo/logo-ngk.png';
+                    const body = entry.getIn(['data', 'body']) || '';
+
+                    const imgUrl = image.startsWith('/') ? image : '/' + image;
+
+                    return h('div', { className: 'p-8 bg-slate-950 min-h-screen text-slate-100 font-sans' },
+                        h('div', { className: 'max-w-xl mx-auto space-y-12' },
+                            h('div', { className: 'text-center border-b border-slate-800 pb-4' },
+                                h('span', { className: 'inline-block bg-emerald-500/10 text-emerald-300 text-[10px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.2em] mb-4 border border-emerald-500/20' }, 'PROGRAM BELAJAR'),
+                                h('h2', { className: 'text-2xl font-black' }, 'Preview Kartu & Detail')
+                            ),
+                            
+                            // Card View (Front-end style)
+                            h('div', { className: 'bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-800 max-w-sm mx-auto shadow-2xl' },
+                                h('div', { className: 'relative overflow-hidden aspect-[4/3] bg-slate-800' },
+                                    h('img', { src: imgUrl, className: 'w-full h-full object-cover' })
+                                ),
+                                h('div', { className: 'p-8' },
+                                    h('h3', { className: 'text-xl font-bold text-slate-100 leading-tight mb-2' }, title),
+                                    h('p', { className: 'text-slate-400 text-xs leading-relaxed mb-6' }, description),
+                                    h('button', { className: 'block w-full text-center py-4 bg-slate-950 border border-slate-800 text-slate-100 text-[10px] font-black uppercase tracking-widest rounded-xl' }, 'Detail Program 📖')
+                                )
+                            ),
+                            
+                            // Detail View (Modal style)
+                            h('div', { className: 'border-t border-slate-800 pt-8 mt-12 text-center' },
+                                h('p', { className: 'text-xs text-slate-500 mb-6 font-bold uppercase tracking-widest' }, '--- DETAIL DI DALAM MODAL ---'),
+                                imgUrl ? h('img', { src: imgUrl, className: 'w-full h-64 object-cover rounded-[2rem] mb-8 shadow-lg' }) : null,
+                                h('span', { className: 'text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-4' }, 'Detail Program Belajar'),
+                                h('h2', { className: 'text-3xl font-black text-slate-100 mb-6 leading-tight' }, title),
+                                h('div', { className: 'text-left border-t border-slate-800 pt-8 mb-8 text-slate-300 text-sm leading-relaxed space-y-4' },
+                                    body.split('\n\n').map((p, idx) => h('p', { key: idx }, p))
+                                ),
+                                h('a', { href: registrationLink, target: '_blank', className: 'inline-block px-8 py-4 bg-emerald-600 border border-emerald-500 text-white text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-700 shadow-lg' }, 'Daftar Sekarang Lewat WA ⚡')
+                            )
+                        )
+                    );
+                }
+            }));
+
+            // ----------------------------------------
+            // 3. TEMPLATE PREVIEW: TIM MENTOR
+            // ----------------------------------------
+            CMS.registerPreviewTemplate("mentors", createClass({
+                render: function () {
+                    const entry = this.props.entry;
+                    const name = entry.getIn(['data', 'name']) || 'Nama Mentor';
+                    const specialty = entry.getIn(['data', 'specialty']) || 'Spesialisasi Pengajaran';
+                    const image = entry.getIn(['data', 'image']) || 'https://via.placeholder.com/150';
+
+                    const imgUrl = image.startsWith('/') ? image : '/' + image;
+
+                    return h('div', { className: 'p-8 bg-slate-950 min-h-screen text-slate-100 flex items-center justify-center font-sans' },
+                        h('div', { className: 'text-center group max-w-xs' },
+                            h('div', { className: 'relative inline-block' },
+                                h('img', { src: imgUrl, className: 'w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-slate-800 hover:border-emerald-500 transition-all duration-300 shadow-md' })
+                            ),
+                            h('h3', { className: 'mt-4 text-lg font-bold text-slate-200' }, name),
+                            h('p', { className: 'text-emerald-400 text-sm font-medium mb-2' }, specialty)
+                        )
+                    );
+                }
+            }));
+
+            // ----------------------------------------
+            // 4. TEMPLATE PREVIEW: TESTIMONI
+            // ----------------------------------------
+            CMS.registerPreviewTemplate("testimonials", createClass({
+                render: function () {
+                    const entry = this.props.entry;
+                    const name = entry.getIn(['data', 'name']) || 'Nama Santri';
+                    const content = entry.getIn(['data', 'content']) || 'Tulis ulasan santri di sini...';
+                    const status = entry.getIn(['data', 'status']) || 'Santri Ngajikeun.id';
+                    const avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=047857&color=fff`;
+
+                    return h('div', { className: 'p-8 bg-slate-950 min-h-screen text-slate-100 flex items-center justify-center font-sans' },
+                        h('div', { className: 'bg-slate-900 p-8 rounded-2xl shadow-sm border border-slate-800 italic text-slate-300 relative max-w-md shadow-2xl' },
+                            h('span', { className: 'text-6xl text-emerald-500/30 absolute top-2 left-2 font-serif' }, '“'),
+                            h('p', { className: 'relative z-10 mb-6 text-sm leading-relaxed' }, content),
+                            h('div', { className: 'flex items-center gap-4 border-t border-slate-800 pt-4' },
+                                h('img', { src: avatar, className: 'w-12 h-12 rounded-full border-2 border-emerald-500' }),
+                                h('div', {},
+                                    h('h4', { className: 'font-bold text-slate-200 not-italic' }, name),
+                                    h('p', { className: 'text-xs text-emerald-400 not-italic' }, status)
+                                )
+                            )
+                        )
+                    );
+                }
+            }));
+
+            // ----------------------------------------
+            // 5. TEMPLATE PREVIEW: ARTIKEL LITERASI
+            // ----------------------------------------
+            CMS.registerPreviewTemplate("articles", createClass({
+                render: function () {
+                    const entry = this.props.entry;
+                    const title = entry.getIn(['data', 'title']) || 'Judul Artikel';
+                    const body = entry.getIn(['data', 'body']) || '';
+                    const thumbnail = entry.getIn(['data', 'thumbnail']) || '';
+                    const date = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                    const imgUrl = thumbnail.startsWith('/') ? thumbnail : '/' + thumbnail;
+
+                    return h('div', { className: 'p-8 bg-slate-950 min-h-screen text-slate-100 font-sans' },
+                        h('div', { className: 'max-w-2xl mx-auto space-y-12' },
+                            h('div', { className: 'text-center border-b border-slate-800 pb-4' },
+                                h('span', { className: 'inline-block bg-emerald-500/10 text-emerald-300 text-[10px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.2em] mb-4 border border-emerald-500/20' }, 'LITERASI AL-QUR\'AN'),
+                                h('h2', { className: 'text-2xl font-black' }, 'Preview Kartu & Halaman Baca')
+                            ),
+                            
+                            // Card View
+                            h('div', { className: 'bg-slate-900 rounded-3xl p-1.5 border border-slate-800 max-w-sm mx-auto shadow-xl' },
+                                h('div', { className: 'bg-slate-800 aspect-video rounded-[1.35rem] mb-4 overflow-hidden relative flex items-center justify-center' },
+                                    thumbnail ? h('img', { src: imgUrl, className: 'w-full h-full object-cover' }) : h('div', { className: 'absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-blue-500/20' })
+                                ),
+                                h('div', { className: 'p-5 text-center' },
+                                    h('time', { className: 'text-[9px] font-bold text-emerald-400 uppercase tracking-widest block mb-2' }, date),
+                                    h('h3', { className: 'text-lg font-bold text-slate-100 leading-snug mb-3' }, title),
+                                    h('p', { className: 'text-slate-400 text-xs line-clamp-2 mb-5 leading-relaxed' }, body ? body.substring(0, 120) + '...' : 'Tulis konten artikel di sidebar...'),
+                                    h('button', { className: 'inline-flex w-full items-center justify-center py-3 px-4 bg-slate-950 border border-slate-800 text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-xl' }, 'Baca Selengkapnya')
+                                )
+                            ),
+                            
+                            // Modal Reader View
+                            h('div', { className: 'border-t border-slate-800 pt-8 mt-12 text-center' },
+                                h('p', { className: 'text-xs text-slate-500 mb-6 font-bold uppercase tracking-widest' }, '--- DETAIL DI DALAM MODAL BACA ---'),
+                                thumbnail ? h('img', { src: imgUrl, className: 'w-full h-64 object-cover rounded-[2rem] mb-8 shadow-lg' }) : null,
+                                h('span', { className: 'text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-4' }, 'Literasi Al-Qur\'an'),
+                                h('h2', { className: 'text-3xl font-black text-slate-100 mb-6 leading-tight' }, title),
+                                h('div', { className: 'text-left border-t border-slate-800 pt-8 text-slate-300 text-sm leading-relaxed space-y-4' },
+                                    body.split('\n\n').map((p, idx) => h('p', { key: idx }, p))
+                                )
+                            )
+                        )
+                    );
+                }
+            }));
+
+            // ----------------------------------------
+            // 6. TEMPLATE PREVIEW: PRODUK & E-BOOK
+            // ----------------------------------------
+            CMS.registerPreviewTemplate("products", createClass({
+                render: function () {
+                    const entry = this.props.entry;
+                    const title = entry.getIn(['data', 'title']) || 'Nama E-Book';
+                    const description = entry.getIn(['data', 'description']) || 'Deskripsi e-book...';
+                    const price = entry.getIn(['data', 'price']) || 'Gratis';
+                    const link = entry.getIn(['data', 'link']) || '#';
+                    const image = entry.getIn(['data', 'image']) || '';
+
+                    const imgUrl = image.startsWith('/') ? image : '/' + image;
+
+                    return h('div', { className: 'p-8 bg-slate-950 min-h-screen text-slate-100 flex items-center justify-center font-sans' },
+                        h('div', { className: 'group bg-slate-900 rounded-[2.5rem] border border-slate-800 shadow-2xl overflow-hidden max-w-3xl w-full p-4 md:p-6 shadow-emerald-950/20' },
+                            h('div', { className: 'flex flex-col md:flex-row items-center gap-8' },
+                                h('div', { className: 'w-full md:w-48 h-48 bg-slate-800/50 rounded-[2rem] flex-shrink-0 flex items-center justify-center overflow-hidden' },
+                                    image ? h('img', { src: imgUrl, className: 'w-full h-full object-cover rounded-[2rem]' }) : h('span', { className: 'text-5xl' }, '📖')
+                                ),
+                                h('div', { className: 'flex-grow text-center md:text-left' },
+                                    h('div', { className: 'flex flex-col md:flex-row md:items-center gap-2 mb-3' },
+                                        h('h3', { className: 'text-xl font-black text-slate-100' }, title),
+                                        h('span', { className: 'hidden md:block w-1 h-1 rounded-full bg-emerald-500' }),
+                                        h('span', { className: 'text-[10px] font-bold text-emerald-400 uppercase tracking-[0.2em]' }, 'E-Book Series')
+                                    ),
+                                    h('p', { className: 'text-[13px] leading-relaxed text-slate-400 mb-4 max-w-2xl' }, description),
+                                    h('div', { className: 'flex items-center justify-center md:justify-start gap-4' },
+                                        h('div', { className: 'flex items-center gap-1 text-emerald-500' },
+                                            h('svg', { className: 'w-4 h-4', fill: 'currentColor', viewBox: '0 0 20 20' }, h('path', { d: 'M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z' })),
+                                            h('span', { className: 'text-[11px] font-bold' }, 'Akses Selamanya')
+                                        )
+                                    )
+                                ),
+                                h('div', { className: 'w-full md:w-auto md:min-w-[180px] p-6 bg-slate-800/80 rounded-[2rem] flex flex-col items-center justify-center border border-slate-700' },
+                                    h('span', { className: 'text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1' }, 'Investasi'),
+                                    h('span', { className: 'text-2xl font-black text-emerald-400 mb-4' }, price),
+                                    h('a', { href: link, className: 'w-full bg-emerald-600 text-white text-[11px] px-6 py-3 rounded-xl font-black uppercase tracking-widest text-center shadow-lg transition-all active:scale-95' }, 'Beli Sekarang')
+                                )
+                            )
+                        )
+                    );
+                }
+            }));
+
+            // ----------------------------------------
+            // 7. TEMPLATE PREVIEW: KOLEKSI KUIS
+            // ----------------------------------------
             CMS.registerPreviewTemplate("quizzes", createClass({
                 render: function () {
                     const entry = this.props.entry;
                     const title = entry.getIn(['data', 'title']) || 'Judul Kuis';
                     const cat = (entry.getIn(['data', 'category']) || 'tahfidz').toLowerCase();
-                    const colorClass = cat === 'tahfidz' ? 'border-emerald-400' : 'border-blue-400';
+                    
+                    const colorClass = cat === 'tahfidz' ? 'border-emerald-500/20 bg-emerald-950/10' : 'border-blue-500/20 bg-blue-950/10';
+                    const badgeColor = cat === 'tahfidz' ? 'bg-emerald-500 text-white' : 'bg-blue-500 text-white';
+                    const linkColor = cat === 'tahfidz' ? 'text-emerald-400 hover:text-emerald-300' : 'text-blue-400 hover:text-blue-300';
+                    const iconSvgPath = cat === 'tahfidz' 
+                        ? 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
+                        : 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z';
 
-                    return h('div', { className: 'p-8 bg-slate-50 min-h-screen' },
-                        h('script', { src: tailwindCDN }),
-                        h('div', { className: `bg-white p-6 rounded-2xl border-l-4 ${colorClass} shadow-sm max-w-md mx-auto` },
-                            h('h3', { className: 'font-bold text-slate-800 text-lg mb-1' }, title),
-                            h('button', { className: 'mt-4 bg-slate-800 text-white text-[10px] px-4 py-2 rounded-lg font-black w-full' }, 'MULAI QUIZ ⚡')
+                    return h('div', { className: 'p-8 bg-slate-950 min-h-screen text-slate-100 flex items-center justify-center font-sans' },
+                        h('div', { className: `p-8 rounded-[2rem] border-2 ${colorClass} bg-slate-900 max-w-md w-full shadow-2xl` },
+                            h('div', { className: 'flex items-center gap-4 mb-6' },
+                                h('div', { className: `p-3 ${badgeColor} rounded-xl shadow-lg` },
+                                    h('svg', { className: 'h-6 w-6', fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor' },
+                                        h('path', { strokeLinecap: 'round', strokeLinejoin: 'round', strokeWidth: '2', d: iconSvgPath })
+                                    )
+                                ),
+                                h('h3', { className: 'text-xl font-bold text-slate-100' }, cat === 'tahfidz' ? 'Quiz Tahfidz' : 'Quiz Tajwid')
+                            ),
+                            h('p', { className: 'text-slate-400 mb-8 text-sm' }, 'Uji pemahaman antum lewat kuis interaktif.'),
+                            h('div', { className: 'flex items-center justify-between bg-slate-950/70 p-4 rounded-xl border border-slate-800 shadow-sm' },
+                                h('div', {},
+                                    h('h4', { className: 'text-sm font-bold text-slate-100' }, title),
+                                    h('p', { className: 'text-[10px] text-slate-400' }, 'Kuis pilihan ganda online.')
+                                ),
+                                h('span', { className: `text-[10px] font-black uppercase tracking-widest ${linkColor}` }, 'Mulai Quiz ⚡')
+                            )
                         )
                     );
                 }

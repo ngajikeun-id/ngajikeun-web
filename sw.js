@@ -45,7 +45,25 @@ self.addEventListener('fetch', (event) => {
 
   const requestUrl = new URL(event.request.url);
   if (requestUrl.origin === self.location.origin && requestUrl.pathname.startsWith('/content/')) {
-    event.respondWith(fetch(event.request));
+    event.respondWith(
+      caches.open(CACHE_NAME).then((cache) => {
+        return cache.match(event.request).then((cachedResponse) => {
+          const fetchPromise = fetch(event.request).then((networkResponse) => {
+            if (networkResponse && networkResponse.status === 200) {
+              cache.put(event.request, networkResponse.clone());
+            }
+            return networkResponse;
+          });
+
+          if (cachedResponse) {
+            event.waitUntil(fetchPromise);
+            return cachedResponse;
+          }
+
+          return fetchPromise;
+        });
+      })
+    );
     return;
   }
 
