@@ -53,7 +53,6 @@ collections:
     fields:
       - {label: "Judul", name: "title", widget: "string"}
       - {label: "Deskripsi", name: "description", widget: "text"}
-      - {label: "Price", name: "price", widget: "string"}
       - {label: "Link Pendaftaran (WA/Form)", name: "registration_link", widget: "string"}
       - {label: "Image", name: "image", widget: "image", required: false}
       - {label: "Detail / Overview Program", name: "body", widget: "markdown", required: false}
