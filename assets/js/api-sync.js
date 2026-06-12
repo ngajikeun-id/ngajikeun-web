@@ -147,7 +147,7 @@
             if (!post) return;
 
             const imageHtml = post.thumbnail
-                ? `<img src="${safeUrl(post.thumbnail)}" alt="${safeText(post.title)}" class="w-full h-64 object-cover rounded-[2rem] mb-8 shadow-lg">`
+                ? `<img src="${safeUrl(post.thumbnail)}" alt="${safeText(post.title)}" onclick="zoomImage(this.src)" class="w-full max-h-[60vh] object-contain rounded-[2rem] mb-8 shadow-lg cursor-zoom-in transition-transform duration-300 hover:scale-[1.01]">`
                 : '';
 
             content.innerHTML = `
@@ -188,7 +188,7 @@
             const program = await getProgramDetails(slug, programSummary);
 
             const imageHtml = program.image
-                ? `<img src="${safeUrl(program.image)}" alt="${safeText(program.title)}" class="w-full h-64 object-cover rounded-[2rem] mb-8 shadow-lg">`
+                ? `<img src="${safeUrl(program.image)}" alt="${safeText(program.title)}" onclick="zoomImage(this.src)" class="w-full max-h-[60vh] object-contain rounded-[2rem] mb-8 shadow-lg cursor-zoom-in transition-transform duration-300 hover:scale-[1.01]">`
                 : '';
             const programBody = String(program.body || program.description || '').trim();
 
@@ -234,27 +234,27 @@
                 const slug = program.slug || program.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
                 container.innerHTML += `
-                <div class="group bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-800 hover:shadow-2xl hover:shadow-emerald-950/30 transition-all duration-500">
-                    <div class="relative overflow-hidden aspect-[4/3]">
-                        <img src="${imageUrl}" alt="${safeText(program.title)}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                            <span class="text-white text-xs font-bold tracking-widest uppercase">Lihat Detail</span>
-                        </div>
-                    </div>
-                    
-                    <div class="p-8">
-                        <div class="mb-4">
-                            <h3 class="text-xl font-bold text-slate-100 leading-tight">${safeText(program.title)}</h3>
-                        </div>
-                        <p class="text-slate-400 text-xs leading-relaxed mb-6">${safeText(program.description)}</p>
-                        
-                        <button type="button" data-program-slug="${safeText(slug)}"
-                           class="block w-full text-center py-4 bg-slate-950 border border-slate-800 text-slate-100 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-all active:scale-95">
-                            Detail Program 📖
-                        </button>
-                    </div>
-                </div>
-            `;
+    <div class="group bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-800 hover:shadow-2xl hover:shadow-emerald-950/30 transition-all duration-500">
+        <div class="relative overflow-hidden aspect-[4/3] cursor-pointer" onclick="window.NgajikeunApi.getProgramBySlug('${safeText(slug)}')">
+            <img src="${imageUrl}" alt="${safeText(program.title)}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                <span class="text-white text-xs font-bold tracking-widest uppercase">Lihat Detail Program 📖</span>
+            </div>
+        </div>
+        
+        <div class="p-8">
+            <div class="mb-4">
+                <h3 class="text-xl font-bold text-slate-100 leading-tight">${safeText(program.title)}</h3>
+            </div>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">${safeText(program.description)}</p>
+            
+            <button type="button" data-program-slug="${safeText(slug)}"
+               class="block w-full text-center py-4 bg-slate-950 border border-slate-800 text-slate-100 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-all active:scale-95">
+                Detail Program 📖
+            </button>
+        </div>
+    </div>
+`;
             });
 
             container.querySelectorAll('[data-program-slug]').forEach((button) => {
@@ -549,6 +549,50 @@
             }
         } catch (err) { console.error('Gagal sync about:', err); }
     }
+
+    window.zoomImage = function (src) {
+        const overlay = document.createElement('div');
+        overlay.className = 'fixed inset-0 z-[200] bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out opacity-0 transition-opacity duration-300';
+
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'max-h-[90vh] max-w-full object-contain rounded-2xl shadow-2xl transform scale-90 transition-transform duration-300';
+
+        overlay.appendChild(img);
+        document.body.appendChild(overlay);
+
+        document.body.style.overflow = 'hidden';
+
+        setTimeout(() => {
+            overlay.classList.remove('opacity-0');
+            img.classList.remove('scale-90');
+            img.classList.add('scale-100');
+        }, 10);
+
+        const closeLightbox = () => {
+            overlay.classList.add('opacity-0');
+            img.classList.remove('scale-100');
+            img.classList.add('scale-90');
+
+            setTimeout(() => {
+                overlay.remove();
+                const articleModal = document.getElementById('article-modal');
+                if (articleModal && articleModal.classList.contains('hidden')) {
+                    document.body.style.overflow = 'auto';
+                }
+            }, 300);
+        };
+
+        overlay.addEventListener('click', closeLightbox);
+
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+    };
 
     window.NgajikeunApi = {
         syncAbout,

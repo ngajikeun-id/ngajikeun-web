@@ -7,7 +7,6 @@
     <title>Dashboard | Ngajikeun.id</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Override Decap CMS dengan Tema Slate-950 & Emerald-500 */
         body {
             background-color: #020617 !important;
             color: #cbd5e1 !important;
@@ -15,19 +14,22 @@
         }
 
         /* App Wrapper */
-        .nc-app-container, [class*="AppContainer"] {
+        .nc-app-container,
+        [class*="AppContainer"] {
             background-color: #020617 !important;
             color: #cbd5e1 !important;
         }
 
         /* Top Navigation Bar */
-        header, [class*="AppHeader"] {
+        header,
+        [class*="AppHeader"] {
             background-color: #090d16 !important;
             border-bottom: 1px solid #1e293b !important;
             color: #f1f5f9 !important;
         }
-        
-        [class*="AppHeader"] button, [class*="AppHeader"] a {
+
+        [class*="AppHeader"] button,
+        [class*="AppHeader"] a {
             color: #cbd5e1 !important;
         }
 
@@ -36,7 +38,9 @@
         }
 
         /* Sidebar Container */
-        aside, [class*="SidebarContainer"], [class*="Sidebar"] {
+        aside,
+        [class*="SidebarContainer"],
+        [class*="Sidebar"] {
             background-color: #090d16 !important;
             border-right: 1px solid #1e293b !important;
         }
@@ -48,7 +52,7 @@
             background-color: transparent !important;
             font-size: 0.875rem !important;
         }
-        
+
         [class*="SidebarLinkActive"] {
             color: #34d399 !important;
             background-color: #020617 !important;
@@ -71,7 +75,9 @@
             transition: all 0.2s ease-in-out !important;
         }
 
-        [class*="Card"] h2, [class*="Card"] p, [class*="Card"] span {
+        [class*="Card"] h2,
+        [class*="Card"] p,
+        [class*="Card"] span {
             color: #e2e8f0 !important;
         }
 
@@ -81,7 +87,8 @@
         }
 
         /* Editor Layout & Inputs */
-        [class*="EditorContainer"], [class*="EditorLayout"] {
+        [class*="EditorContainer"],
+        [class*="EditorLayout"] {
             background-color: #020617 !important;
         }
 
@@ -111,7 +118,10 @@
         }
 
         /* Text Input, Textarea, Select */
-        input, textarea, select, [class*="ControlPane"] {
+        input,
+        textarea,
+        select,
+        [class*="ControlPane"] {
             background-color: #020617 !important;
             color: #f1f5f9 !important;
             border: 1px solid #1e293b !important;
@@ -119,7 +129,9 @@
             padding: 0.75rem !important;
         }
 
-        input:focus, textarea:focus, select:focus {
+        input:focus,
+        textarea:focus,
+        select:focus {
             border-color: #10b981 !important;
             outline: none !important;
             box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
@@ -172,13 +184,15 @@
         }
 
         /* Bottom Editor Action Toolbar */
-        [class*="EditorToolbar"], [class*="ToolbarContainer"] {
+        [class*="EditorToolbar"],
+        [class*="ToolbarContainer"] {
             background-color: #090d16 !important;
             border-top: 1px solid #1e293b !important;
         }
 
         /* Publish / Save Buttons */
-        [class*="PublishButton"], [class*="SaveButton"] {
+        [class*="PublishButton"],
+        [class*="SaveButton"] {
             background-color: #10b981 !important;
             color: #020617 !important;
             border-radius: 0.75rem !important;
@@ -186,7 +200,8 @@
             border: none !important;
         }
 
-        [class*="PublishButton"]:hover, [class*="SaveButton"]:hover {
+        [class*="PublishButton"]:hover,
+        [class*="SaveButton"]:hover {
             background-color: #34d399 !important;
         }
 
@@ -202,7 +217,6 @@
     <script src="https://unpkg.com/decap-cms@^3.11.0/dist/decap-cms.js"></script>
 
     <script>
-        // Daftarkan Stylesheet Preview IFrame agar mendukung Tailwind & Google Font
         CMS.registerPreviewStyle("https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css");
         CMS.registerPreviewStyle("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap");
 
@@ -225,7 +239,7 @@
                                 h('h1', { className: 'relative z-10 text-3xl font-black text-slate-100 mb-2' }, welcomeMsg),
                                 h('p', { className: 'relative z-10 text-emerald-400 text-xs font-bold uppercase tracking-wider' }, 'Ngajikeun.id Realtime Monitor Dashboard Statistik')
                             ),
-                            
+
                             // Analytics IFrame
                             h('div', { className: 'relative bg-slate-900 border border-slate-800 p-3 rounded-[2.5rem] shadow-2xl overflow-hidden' },
                                 h('div', { className: 'flex justify-between items-center px-4 py-2 border-b border-slate-800/80 mb-4' },
@@ -332,7 +346,7 @@
                                 h('span', { className: 'inline-block bg-emerald-500/10 text-emerald-300 text-[10px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.2em] mb-4 border border-emerald-500/20' }, 'PROGRAM BELAJAR'),
                                 h('h2', { className: 'text-2xl font-black' }, 'Preview Kartu & Detail')
                             ),
-                            
+
                             // Card View (Front-end style)
                             h('div', { className: 'bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-800 max-w-sm mx-auto shadow-2xl' },
                                 h('div', { className: 'relative overflow-hidden aspect-[4/3] bg-slate-800' },
@@ -344,11 +358,14 @@
                                     h('button', { className: 'block w-full text-center py-4 bg-slate-950 border border-slate-800 text-slate-100 text-[10px] font-black uppercase tracking-widest rounded-xl' }, 'Detail Program 📖')
                                 )
                             ),
-                            
+
                             // Detail View (Modal style)
                             h('div', { className: 'border-t border-slate-800 pt-8 mt-12 text-center' },
                                 h('p', { className: 'text-xs text-slate-500 mb-6 font-bold uppercase tracking-widest' }, '--- DETAIL DI DALAM MODAL ---'),
-                                imgUrl ? h('img', { src: imgUrl, className: 'w-full h-64 object-cover rounded-[2rem] mb-8 shadow-lg' }) : null,
+                                imgUrl ? h('img', {
+                                    src: imgUrl,
+                                    className: 'w-full max-h-[60vh] object-contain rounded-[2rem] mb-8 shadow-lg cursor-zoom-in'
+                                }) : null,
                                 h('span', { className: 'text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-4' }, 'Detail Program Belajar'),
                                 h('h2', { className: 'text-3xl font-black text-slate-100 mb-6 leading-tight' }, title),
                                 h('div', { className: 'text-left border-t border-slate-800 pt-8 mb-8 text-slate-300 text-sm leading-relaxed space-y-4' },
@@ -431,7 +448,7 @@
                                 h('span', { className: 'inline-block bg-emerald-500/10 text-emerald-300 text-[10px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.2em] mb-4 border border-emerald-500/20' }, 'LITERASI AL-QUR\'AN'),
                                 h('h2', { className: 'text-2xl font-black' }, 'Preview Kartu & Halaman Baca')
                             ),
-                            
+
                             // Card View
                             h('div', { className: 'bg-slate-900 rounded-3xl p-1.5 border border-slate-800 max-w-sm mx-auto shadow-xl' },
                                 h('div', { className: 'bg-slate-800 aspect-video rounded-[1.35rem] mb-4 overflow-hidden relative flex items-center justify-center' },
@@ -444,11 +461,14 @@
                                     h('button', { className: 'inline-flex w-full items-center justify-center py-3 px-4 bg-slate-950 border border-slate-800 text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-xl' }, 'Baca Selengkapnya')
                                 )
                             ),
-                            
+
                             // Modal Reader View
                             h('div', { className: 'border-t border-slate-800 pt-8 mt-12 text-center' },
                                 h('p', { className: 'text-xs text-slate-500 mb-6 font-bold uppercase tracking-widest' }, '--- DETAIL DI DALAM MODAL BACA ---'),
-                                thumbnail ? h('img', { src: imgUrl, className: 'w-full h-64 object-cover rounded-[2rem] mb-8 shadow-lg' }) : null,
+                                thumbnail ? h('img', {
+                                    src: imgUrl,
+                                    className: 'w-full max-h-[60vh] object-contain rounded-[2rem] mb-8 shadow-lg'
+                                }) : null,
                                 h('span', { className: 'text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-4' }, 'Literasi Al-Qur\'an'),
                                 h('h2', { className: 'text-3xl font-black text-slate-100 mb-6 leading-tight' }, title),
                                 h('div', { className: 'text-left border-t border-slate-800 pt-8 text-slate-300 text-sm leading-relaxed space-y-4' },
@@ -513,11 +533,11 @@
                     const entry = this.props.entry;
                     const title = entry.getIn(['data', 'title']) || 'Judul Kuis';
                     const cat = (entry.getIn(['data', 'category']) || 'tahfidz').toLowerCase();
-                    
+
                     const colorClass = cat === 'tahfidz' ? 'border-emerald-500/20 bg-emerald-950/10' : 'border-blue-500/20 bg-blue-950/10';
                     const badgeColor = cat === 'tahfidz' ? 'bg-emerald-500 text-white' : 'bg-blue-500 text-white';
                     const linkColor = cat === 'tahfidz' ? 'text-emerald-400 hover:text-emerald-300' : 'text-blue-400 hover:text-blue-300';
-                    const iconSvgPath = cat === 'tahfidz' 
+                    const iconSvgPath = cat === 'tahfidz'
                         ? 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
                         : 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z';
 
