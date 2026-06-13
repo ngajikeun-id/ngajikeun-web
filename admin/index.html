@@ -121,9 +121,9 @@
         input,
         textarea,
         select,
-        [class*="ControlPane"] {
+        [class*="ControlPane"] div[role="textbox"] {
             background-color: #020617 !important;
-            color: #f1f5f9 !important;
+            color: #ffffff !important;
             border: 1px solid #1e293b !important;
             border-radius: 0.75rem !important;
             padding: 0.75rem !important;
@@ -131,10 +131,10 @@
 
         input:focus,
         textarea:focus,
-        select:focus {
+        select:focus div[role="textbox"]:focus {
+            color: #ffffff !important;
+            background-color: #090d16 !important;
             border-color: #10b981 !important;
-            outline: none !important;
-            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
         }
 
         /* Markdown Editor Toolbar */
@@ -209,6 +209,10 @@
         [class*="PreviewPane"] {
             background-color: #020617 !important;
             border-left: 1px solid #1e293b !important;
+        }
+
+        iframe {
+            color: #f1f5f9 !important;
         }
     </style>
 </head>
