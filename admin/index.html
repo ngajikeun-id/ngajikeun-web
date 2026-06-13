@@ -121,7 +121,13 @@
         input,
         textarea,
         select,
-        [class*="ControlPane"] div[role="textbox"] {
+        [class*="ControlPane"],
+        div[role="textbox"],
+        div[class*="ControlPane"] input,
+        div[class*="ControlPane"] textarea,
+        div[class*="ControlPane"] div[role="textbox"],
+        [id^="nc-root"] input,
+        [id^="nc-root"] textarea {
             background-color: #020617 !important;
             color: #ffffff !important;
             border: 1px solid #1e293b !important;
@@ -131,7 +137,9 @@
 
         input:focus,
         textarea:focus,
-        select:focus div[role="textbox"]:focus {
+        div[role="textbox"]:focus,
+        div[class*="ControlPane"] input:focus,
+        div[class*="ControlPane"] textarea:focus {
             color: #ffffff !important;
             background-color: #090d16 !important;
             border-color: #10b981 !important;
@@ -373,7 +381,7 @@
                                 h('span', { className: 'text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-4' }, 'Detail Program Belajar'),
                                 h('h2', { className: 'text-3xl font-black text-slate-100 mb-6 leading-tight' }, title),
                                 h('div', { className: 'text-left border-t border-slate-800 pt-8 mb-8 text-slate-300 text-sm leading-relaxed space-y-4' },
-                                    body.split('\n\n').map((p, idx) => h('p', { key: idx }, p))
+                                    body.split('\n\n').map((p, idx) => h('p', { key: idx, className: 'text-slate-200 mb-4' }, p))
                                 ),
                                 h('a', { href: registrationLink, target: '_blank', className: 'inline-block px-8 py-4 bg-emerald-600 border border-emerald-500 text-white text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-700 shadow-lg' }, 'Daftar Sekarang Lewat WA ⚡')
                             )
