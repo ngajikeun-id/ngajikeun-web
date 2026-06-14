@@ -7,149 +7,103 @@
     <title>Dashboard | Ngajikeun.id</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* --------------------------------------------------
-           1. ARSITEKTUR UTAMA & BACKGROUND (EMERALD DARK)
-           -------------------------------------------------- */
-        body {
-            background-color: #022c22 !important;
+        body,
+        #nc-root {
+            background: #022c22 !important;
             color: #f8fafc !important;
-            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            font-family: ui-sans-serif, system-ui, sans-serif !important;
         }
 
-        .nc-app-container,
-        [class*="AppContainer"],
-        [class*="AppLayout"],
-        [class*="EditorContainer"],
-        [class*="EditorLayout"],
-        [class*="EditorPane"] {
-            background-color: #022c22 !important;
-            color: #f8fafc !important;
-        }
-
-        /* Topbar & Sidebar */
-        header,
-        [class*="AppHeader"] {
-            background-color: #064e3b !important;
+        header {
+            background: #064e3b !important;
             border-bottom: 2px solid #10b981 !important;
         }
 
-        [class*="AppHeader"] button,
-        [class*="AppHeader"] a,
-        [class*="AppHeader"] span {
+        header button,
+        header a,
+        header span {
             color: #ffffff !important;
-            font-weight: bold !important;
         }
 
-        aside,
-        [class*="SidebarContainer"],
-        [class*="Sidebar"] {
-            background-color: #043e2f !important;
-            border-right: 2px solid #064e3b !important;
+        aside {
+            background: #043e2f !important;
+            border-right: 1px solid #065f46 !important;
         }
 
-        [class*="SidebarLink"] {
-            color: #a7f3d0 !important;
-            font-weight: 600 !important;
-        }
-
-        [class*="SidebarLinkActive"] {
-            color: #ffffff !important;
-            background-color: #022c22 !important;
-            border-left: 4px solid #10b981 !important;
-        }
-
-        /* --------------------------------------------------
-           2. SISI KIRI: INPUT FORM (BACKGROUND PUTIH, TEKS HITAM)
-           -------------------------------------------------- */
-        [class*="ControlContainer"] {
-            background-color: #064e3b !important;
-            border: 2px solid #0f766e !important;
-            border-radius: 1.25rem !important;
-            padding: 1.5rem !important;
-        }
-
-        [class*="ControlContainer"] label[class*="ControlLabel"] {
-            color: #34d399 !important;
-            font-weight: 900 !important;
-            text-transform: uppercase !important;
-            font-size: 0.85rem !important;
-            letter-spacing: 0.05em !important;
-            background: transparent !important;
-            padding: 0 !important;
-        }
-
-        input,
-        textarea,
-        select,
-        div[role="textbox"],
-        [class*="ControlPane"],
-        [id^="nc-root"] input,
-        [id^="nc-root"] textarea {
-            background-color: #ffffff !important;
+        #nc-root input,
+        #nc-root textarea,
+        #nc-root select {
+            background: #ffffff !important;
             color: #0f172a !important;
-            border: 2px solid #cbd5e1 !important;
-            border-radius: 0.75rem !important;
-            font-size: 1rem !important;
-            font-weight: 500 !important;
+            border: 1px solid #cbd5e1 !important;
+            border-radius: 12px !important;
         }
 
-        div[role="textbox"] *,
-        [class*="ControlPane"] * {
+
+        #nc-root [role="textbox"] {
+            background: #ffffff !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
+            border-radius: 12px !important;
+            padding: 12px !important;
+        }
+
+        #nc-root [role="textbox"] p,
+        #nc-root [role="textbox"] span,
+        #nc-root [role="textbox"] div,
+        #nc-root [role="textbox"] li,
+        #nc-root [role="textbox"] h1,
+        #nc-root [role="textbox"] h2,
+        #nc-root [role="textbox"] h3,
+        #nc-root [role="textbox"] h4 {
             color: #0f172a !important;
         }
 
-        [class*="Toolbar"] {
-            background-color: #f1f5f9 !important;
-            border-bottom: 2px solid #cbd5e1 !important;
+        #nc-root img {
+            opacity: 1 !important;
+            filter: none !important;
         }
 
-        [class*="Toolbar"] button {
+        #nc-root button {
+            opacity: 1 !important;
+        }
+
+        #nc-root [role="toolbar"] {
+            background: #f8fafc !important;
+            border-bottom: 1px solid #cbd5e1 !important;
+        }
+
+        #nc-root [role="toolbar"] button {
             color: #334155 !important;
         }
 
-        /* --------------------------------------------------
-           3. SISI KANAN: PREVIEW PANEL (MUTLAK ANTI-GAIB)
-           -------------------------------------------------- */
-        [class*="PreviewPane"],
-        div[class*="PreviewPane"] {
-            background-color: #0f172a !important;
-            border-left: 2px solid #1e293b !important;
+        iframe {
+            background: #0f172a !important;
         }
 
-        div[class*="PreviewPane"] *,
-        [class*="PreviewPane"] p,
-        [class*="PreviewPane"] span,
-        [class*="PreviewPane"] div,
-        [class*="PreviewPane"] li,
-        [class*="PreviewPane"] h1,
-        [class*="PreviewPane"] h2,
-        [class*="PreviewPane"] h3,
-        [class*="PreviewPane"] h4 {
-            color: #f1f5f9 !important;
+        button[class*="Button"],
+        button[class*="StyledButton"] {
+            border-radius: 12px !important;
         }
 
-        div[class*="PreviewPane"] a,
-        div[class*="PreviewPane"] a * {
-            color: #34d399 !important;
-            font-weight: bold !important;
-        }
 
-        /* --------------------------------------------------
-           4. TOMBOL ACTION BAR DI BAWAH
-           -------------------------------------------------- */
-        [class*="EditorToolbar"],
-        [class*="ToolbarContainer"] {
-            background-color: #064e3b !important;
-            border-top: 2px solid #10b981 !important;
-        }
-
-        [class*="PublishButton"],
-        [class*="SaveButton"],
-        button[class*="Button-Grid-StyledButton"] {
-            background-color: #10b981 !important;
+        button[class*="publish"],
+        button[class*="Publish"] {
+            background: #10b981 !important;
             color: #ffffff !important;
-            font-weight: bold !important;
-            border-radius: 0.75rem !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 999px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #022c22;
         }
     </style>
 </head>
@@ -162,9 +116,7 @@
         CMS.registerPreviewStyle("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap");
 
         window.onload = () => {
-            // ----------------------------------------
-            // 0. TEMPLATE PREVIEW: DASHBOARD UTAMA
-            // ----------------------------------------
+
             CMS.registerPreviewTemplate("main_dashboard", createClass({
                 render: function () {
                     const entry = this.props.entry;
@@ -174,14 +126,12 @@
 
                     return h('div', { className: 'p-8 bg-slate-950 min-h-screen text-slate-100 font-sans' },
                         h('div', { className: 'relative max-w-4xl mx-auto space-y-8' },
-                            // Welcome Banner
                             h('div', { className: 'relative overflow-hidden bg-emerald-950/40 border border-emerald-500/20 p-8 rounded-[2rem] shadow-xl shadow-emerald-950/30' },
                                 h('div', { className: 'absolute -top-12 -left-12 w-48 h-48 bg-emerald-500/10 rounded-full blur-2xl' }),
                                 h('h1', { className: 'relative z-10 text-3xl font-black text-slate-100 mb-2' }, welcomeMsg),
                                 h('p', { className: 'relative z-10 text-emerald-400 text-xs font-bold uppercase tracking-wider' }, 'Ngajikeun.id Realtime Monitor Dashboard Statistik')
                             ),
 
-                            // Analytics IFrame
                             h('div', { className: 'relative bg-slate-900 border border-slate-800 p-3 rounded-[2.5rem] shadow-2xl overflow-hidden' },
                                 h('div', { className: 'flex justify-between items-center px-4 py-2 border-b border-slate-800/80 mb-4' },
                                     h('span', { className: 'text-xs font-bold text-slate-400 uppercase tracking-widest' }, 'Statistik Pengunjung (Umami)'),
@@ -198,7 +148,6 @@
                                 })
                             ),
 
-                            // Help Box
                             h('div', { className: 'bg-slate-900 border border-slate-800 p-8 rounded-[2.5rem] shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6' },
                                 h('div', {},
                                     h('div', { className: 'flex items-center gap-3 mb-2' },
@@ -218,9 +167,6 @@
                 }
             }));
 
-            // ----------------------------------------
-            // 1. TEMPLATE PREVIEW: TENTANG KAMI
-            // ----------------------------------------
             CMS.registerPreviewTemplate("about", createClass({
                 render: function () {
                     const entry = this.props.entry;
@@ -235,14 +181,13 @@
                                 h('h2', { className: 'text-3xl font-black text-slate-100 tracking-tight' }, 'Menghidupkan Al-Qur\'an Sebelum Kematian Menghampiri')
                             ),
                             h('div', { className: 'grid md:grid-cols-2 gap-12' },
-                                // Sejarah
                                 h('div', { className: 'relative pl-8 border-l-4 border-emerald-500/20' },
                                     h('span', { className: 'absolute -left-[10px] top-0 bg-emerald-500 text-white text-[8px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-tighter' }, 'Latar Belakang'),
                                     h('div', { className: 'pt-8 text-slate-300 text-sm leading-relaxed space-y-4' },
                                         history.split('\n\n').map((p, idx) => h('p', { key: idx }, p))
                                     )
                                 ),
-                                // Visi & Misi
+
                                 h('div', { className: 'relative pl-8 border-l-4 border-emerald-500/20' },
                                     h('span', { className: 'absolute -left-[10px] top-0 bg-emerald-500 text-white text-[8px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-tighter' }, 'Visi & Misi'),
                                     h('div', { className: 'pt-8 space-y-6' },
@@ -267,9 +212,6 @@
                 }
             }));
 
-            // ----------------------------------------
-            // 2. TEMPLATE PREVIEW: PROGRAM BELAJAR
-            // ----------------------------------------
             CMS.registerPreviewTemplate("programs", createClass({
                 render: function () {
                     const entry = this.props.entry;
@@ -288,7 +230,6 @@
                                 h('h2', { className: 'text-2xl font-black' }, 'Preview Kartu & Detail')
                             ),
 
-                            // Card View (Front-end style)
                             h('div', { className: 'bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-800 max-w-sm mx-auto shadow-2xl' },
                                 h('div', { className: 'relative overflow-hidden aspect-[4/3] bg-slate-800' },
                                     h('img', { src: imgUrl, className: 'w-full h-full object-cover' })
@@ -300,7 +241,6 @@
                                 )
                             ),
 
-                            // Detail View (Modal style)
                             h('div', { className: 'border-t border-slate-800 pt-8 mt-12 text-center' },
                                 h('p', { className: 'text-xs text-slate-500 mb-6 font-bold uppercase tracking-widest' }, '--- DETAIL DI DALAM MODAL ---'),
                                 imgUrl ? h('img', {
@@ -319,9 +259,6 @@
                 }
             }));
 
-            // ----------------------------------------
-            // 3. TEMPLATE PREVIEW: TIM MENTOR
-            // ----------------------------------------
             CMS.registerPreviewTemplate("mentors", createClass({
                 render: function () {
                     const entry = this.props.entry;
@@ -343,9 +280,6 @@
                 }
             }));
 
-            // ----------------------------------------
-            // 4. TEMPLATE PREVIEW: TESTIMONI
-            // ----------------------------------------
             CMS.registerPreviewTemplate("testimonials", createClass({
                 render: function () {
                     const entry = this.props.entry;
@@ -370,9 +304,6 @@
                 }
             }));
 
-            // ----------------------------------------
-            // 5. TEMPLATE PREVIEW: ARTIKEL LITERASI
-            // ----------------------------------------
             CMS.registerPreviewTemplate("articles", createClass({
                 render: function () {
                     const entry = this.props.entry;
@@ -390,7 +321,6 @@
                                 h('h2', { className: 'text-2xl font-black' }, 'Preview Kartu & Halaman Baca')
                             ),
 
-                            // Card View
                             h('div', { className: 'bg-slate-900 rounded-3xl p-1.5 border border-slate-800 max-w-sm mx-auto shadow-xl' },
                                 h('div', { className: 'bg-slate-800 aspect-video rounded-[1.35rem] mb-4 overflow-hidden relative flex items-center justify-center' },
                                     thumbnail ? h('img', { src: imgUrl, className: 'w-full h-full object-cover' }) : h('div', { className: 'absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-blue-500/20' })
@@ -403,7 +333,6 @@
                                 )
                             ),
 
-                            // Modal Reader View
                             h('div', { className: 'border-t border-slate-800 pt-8 mt-12 text-center' },
                                 h('p', { className: 'text-xs text-slate-500 mb-6 font-bold uppercase tracking-widest' }, '--- DETAIL DI DALAM MODAL BACA ---'),
                                 thumbnail ? h('img', {
@@ -421,9 +350,6 @@
                 }
             }));
 
-            // ----------------------------------------
-            // 6. TEMPLATE PREVIEW: PRODUK & E-BOOK
-            // ----------------------------------------
             CMS.registerPreviewTemplate("products", createClass({
                 render: function () {
                     const entry = this.props.entry;
@@ -466,9 +392,6 @@
                 }
             }));
 
-            // ----------------------------------------
-            // 7. TEMPLATE PREVIEW: KOLEKSI KUIS
-            // ----------------------------------------
             CMS.registerPreviewTemplate("quizzes", createClass({
                 render: function () {
                     const entry = this.props.entry;
