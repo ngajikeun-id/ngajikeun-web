@@ -7,30 +7,30 @@
     <title>Dashboard | Ngajikeun.id</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* --------------------------------------------------
+           1. ARSITEKTUR UTAMA & BACKGROUND (EMERALD DARK)
+           -------------------------------------------------- */
         body {
             background-color: #022c22 !important;
-            /* Emerald super gelap agar adem */
             color: #f8fafc !important;
-            /* Teks putih terang kontras tinggi */
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
         }
 
-        /* App Wrapper */
         .nc-app-container,
         [class*="AppContainer"],
-        [class*="AppLayout"] {
+        [class*="AppLayout"],
+        [class*="EditorContainer"],
+        [class*="EditorLayout"],
+        [class*="EditorPane"] {
             background-color: #022c22 !important;
             color: #f8fafc !important;
         }
 
-        /* Top Navigation Bar */
+        /* Topbar & Sidebar */
         header,
         [class*="AppHeader"] {
             background-color: #064e3b !important;
-            /* Hijau tua tegas */
             border-bottom: 2px solid #10b981 !important;
-            /* Border emerald menyala */
-            color: #ffffff !important;
         }
 
         [class*="AppHeader"] button,
@@ -40,11 +40,6 @@
             font-weight: bold !important;
         }
 
-        [class*="AppHeader"] button:hover {
-            color: #a7f3d0 !important;
-        }
-
-        /* Sidebar Container */
         aside,
         [class*="SidebarContainer"],
         [class*="Sidebar"] {
@@ -52,12 +47,8 @@
             border-right: 2px solid #064e3b !important;
         }
 
-        /* Sidebar Links */
         [class*="SidebarLink"] {
             color: #a7f3d0 !important;
-            border-left: 4px solid transparent !important;
-            background-color: transparent !important;
-            font-size: 0.9rem !important;
             font-weight: 600 !important;
         }
 
@@ -65,39 +56,11 @@
             color: #ffffff !important;
             background-color: #022c22 !important;
             border-left: 4px solid #10b981 !important;
-            font-weight: 800 !important;
         }
 
-        [class*="SidebarLink"]:hover {
-            color: #ffffff !important;
-            background-color: rgba(6, 78, 59, 0.6) !important;
-        }
-
-        /* Collection Card & Lists */
-        [class*="Card"] {
-            background-color: #064e3b !important;
-            border: 2px solid #0f766e !important;
-            border-radius: 1.25rem !important;
-            color: #ffffff !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
-        }
-
-        [class*="Card"] h2,
-        [class*="Card"] h3,
-        [class*="Card"] p,
-        [class*="Card"] span {
-            color: #ffffff !important;
-            font-weight: bold !important;
-        }
-
-        /* Editor Layout & Inputs */
-        [class*="EditorContainer"],
-        [class*="EditorLayout"],
-        [class*="EditorPane"] {
-            background-color: #022c22 !important;
-        }
-
-        /* Form Controls Wrapper (Kotak pembungkus input field) */
+        /* --------------------------------------------------
+           2. SISI KIRI: INPUT FORM (WAJIB PUTIH MERDEKA)
+           -------------------------------------------------- */
         [class*="ControlContainer"] {
             background-color: #064e3b !important;
             border: 2px solid #0f766e !important;
@@ -105,53 +68,39 @@
             padding: 1.5rem !important;
         }
 
-        [class*="ControlContainer"] label {
+        [class*="ControlContainer"] label[class*="ControlLabel"] {
             color: #34d399 !important;
-            /* Label warna hijau terang menyala */
             font-weight: 900 !important;
             text-transform: uppercase !important;
             font-size: 0.85rem !important;
             letter-spacing: 0.05em !important;
+            background: transparent !important;
+            padding: 0 !important;
         }
 
-        /* FIX MUTLAK UNTUK INPUT FIELD & TEXTAREA YANG BLANK */
         input,
         textarea,
         select,
         div[role="textbox"],
         [class*="ControlPane"],
         [id^="nc-root"] input,
-        [id^="nc-root"] textarea,
-        .w-md-editor,
-        .w-md-editor-text {
+        [id^="nc-root"] textarea {
             background-color: #ffffff !important;
-            /* WAJIB PUTIH agar teks internal editor keliatan */
             color: #0f172a !important;
-            /* TEKS HITAM PEKAT agar ustadzah bisa baca inputannya */
             border: 2px solid #cbd5e1 !important;
             border-radius: 0.75rem !important;
             font-size: 1rem !important;
             font-weight: 500 !important;
         }
 
-        /* Memastikan area pengetikan editor teks kaya/markdown tidak ikutan hitam */
         div[role="textbox"] *,
         [class*="ControlPane"] * {
             color: #0f172a !important;
-            /* Paksa seluruh anak element teks di dalam input berwarna gelap */
         }
 
-        input:focus,
-        textarea:focus,
-        div[role="textbox"]:focus {
-            border-color: #10b981 !important;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
-        }
-
-        /* Markdown Editor Toolbar */
+        /* Markdown Toolbar */
         [class*="Toolbar"] {
             background-color: #f1f5f9 !important;
-            /* Toolbar warna terang */
             border-bottom: 2px solid #cbd5e1 !important;
         }
 
@@ -159,47 +108,53 @@
             color: #334155 !important;
         }
 
-        /* Login Screen */
-        [class*="LoginContainer"] {
-            background-color: #022c22 !important;
+        /* --------------------------------------------------
+           3. SISI KANAN: PREVIEW PANEL (FIX UNTUK BLANK/REDEP)
+           -------------------------------------------------- */
+        [class*="PreviewPane"] {
+            background-color: #0f172a !important;
+            border-left: 2px solid #1e293b !important;
         }
 
-        [class*="LoginCard"] {
-            background-color: #064e3b !important;
-            border: 2px solid #10b981 !important;
-            border-radius: 2rem !important;
-        }
-
-        [class*="LoginButton"] {
-            background-color: #10b981 !important;
+        [class*="PreviewPane"] h1,
+        [class*="PreviewPane"] h2,
+        [class*="PreviewPane"] h3,
+        [class*="PreviewPane"] h4,
+        [class*="PreviewPane"] h5,
+        [class*="PreviewPane"] h6 {
             color: #ffffff !important;
-            border-radius: 0.75rem !important;
             font-weight: 900 !important;
-            padding: 0.75rem 1.5rem !important;
         }
 
-        /* Bottom Editor Action Toolbar */
+        [class*="PreviewPane"] p,
+        [class*="PreviewPane"] span,
+        [class*="PreviewPane"] div,
+        [class*="PreviewPane"] time {
+            color: #e2e8f0 !important;
+        }
+
+        [class*="PreviewPane"] a,
+        [class*="PreviewPane"] button {
+            color: #ffffff !important;
+            opacity: 1 !important;
+        }
+
+        /* --------------------------------------------------
+           4. TOMBOL SAVE & PUBLISH DI BAWAH DASHBOARD
+           -------------------------------------------------- */
         [class*="EditorToolbar"],
         [class*="ToolbarContainer"] {
             background-color: #064e3b !important;
             border-top: 2px solid #10b981 !important;
         }
 
-        /* Publish / Save Buttons */
         [class*="PublishButton"],
         [class*="SaveButton"],
         button[class*="Button-Grid-StyledButton"] {
             background-color: #10b981 !important;
             color: #ffffff !important;
-            border-radius: 0.75rem !important;
             font-weight: bold !important;
-        }
-
-        /* Preview Pane Wrapper (Sisi Kanan) */
-        [class*="PreviewPane"] {
-            background-color: #0f172a !important;
-            /* Preview tetap dark premium slate */
-            border-left: 2px solid #1e293b !important;
+            border-radius: 0.75rem !important;
         }
     </style>
 </head>
