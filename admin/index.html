@@ -59,7 +59,7 @@
         }
 
         /* --------------------------------------------------
-           2. SISI KIRI: INPUT FORM (WAJIB PUTIH MERDEKA)
+           2. SISI KIRI: INPUT FORM (BACKGROUND PUTIH, TEKS HITAM)
            -------------------------------------------------- */
         [class*="ControlContainer"] {
             background-color: #064e3b !important;
@@ -98,7 +98,6 @@
             color: #0f172a !important;
         }
 
-        /* Markdown Toolbar */
         [class*="Toolbar"] {
             background-color: #f1f5f9 !important;
             border-bottom: 2px solid #cbd5e1 !important;
@@ -109,38 +108,34 @@
         }
 
         /* --------------------------------------------------
-           3. SISI KANAN: PREVIEW PANEL (FIX UNTUK BLANK/REDEP)
+           3. SISI KANAN: PREVIEW PANEL (MUTLAK ANTI-GAIB)
            -------------------------------------------------- */
-        [class*="PreviewPane"] {
+        [class*="PreviewPane"],
+        div[class*="PreviewPane"] {
             background-color: #0f172a !important;
             border-left: 2px solid #1e293b !important;
         }
 
-        [class*="PreviewPane"] h1,
-        [class*="PreviewPane"] h2,
-        [class*="PreviewPane"] h3,
-        [class*="PreviewPane"] h4,
-        [class*="PreviewPane"] h5,
-        [class*="PreviewPane"] h6 {
-            color: #ffffff !important;
-            font-weight: 900 !important;
-        }
-
+        div[class*="PreviewPane"] *,
         [class*="PreviewPane"] p,
         [class*="PreviewPane"] span,
         [class*="PreviewPane"] div,
-        [class*="PreviewPane"] time {
-            color: #e2e8f0 !important;
+        [class*="PreviewPane"] li,
+        [class*="PreviewPane"] h1,
+        [class*="PreviewPane"] h2,
+        [class*="PreviewPane"] h3,
+        [class*="PreviewPane"] h4 {
+            color: #f1f5f9 !important;
         }
 
-        [class*="PreviewPane"] a,
-        [class*="PreviewPane"] button {
-            color: #ffffff !important;
-            opacity: 1 !important;
+        div[class*="PreviewPane"] a,
+        div[class*="PreviewPane"] a * {
+            color: #34d399 !important;
+            font-weight: bold !important;
         }
 
         /* --------------------------------------------------
-           4. TOMBOL SAVE & PUBLISH DI BAWAH DASHBOARD
+           4. TOMBOL ACTION BAR DI BAWAH
            -------------------------------------------------- */
         [class*="EditorToolbar"],
         [class*="ToolbarContainer"] {
