@@ -8,219 +8,198 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background-color: #020617 !important;
-            color: #cbd5e1 !important;
+            background-color: #022c22 !important;
+            /* Emerald super gelap agar adem */
+            color: #f8fafc !important;
+            /* Teks putih terang kontras tinggi */
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
         }
 
         /* App Wrapper */
         .nc-app-container,
-        [class*="AppContainer"] {
-            background-color: #020617 !important;
-            color: #cbd5e1 !important;
+        [class*="AppContainer"],
+        [class*="AppLayout"] {
+            background-color: #022c22 !important;
+            color: #f8fafc !important;
         }
 
         /* Top Navigation Bar */
         header,
         [class*="AppHeader"] {
-            background-color: #090d16 !important;
-            border-bottom: 1px solid #1e293b !important;
-            color: #f1f5f9 !important;
+            background-color: #064e3b !important;
+            /* Hijau tua tegas */
+            border-bottom: 2px solid #10b981 !important;
+            /* Border emerald menyala */
+            color: #ffffff !important;
         }
 
         [class*="AppHeader"] button,
-        [class*="AppHeader"] a {
-            color: #cbd5e1 !important;
+        [class*="AppHeader"] a,
+        [class*="AppHeader"] span {
+            color: #ffffff !important;
+            font-weight: bold !important;
         }
 
         [class*="AppHeader"] button:hover {
-            color: #34d399 !important;
+            color: #a7f3d0 !important;
         }
 
         /* Sidebar Container */
         aside,
         [class*="SidebarContainer"],
         [class*="Sidebar"] {
-            background-color: #090d16 !important;
-            border-right: 1px solid #1e293b !important;
+            background-color: #043e2f !important;
+            border-right: 2px solid #064e3b !important;
         }
 
         /* Sidebar Links */
         [class*="SidebarLink"] {
-            color: #94a3b8 !important;
-            border-left: 3px solid transparent !important;
+            color: #a7f3d0 !important;
+            border-left: 4px solid transparent !important;
             background-color: transparent !important;
-            font-size: 0.875rem !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
         }
 
         [class*="SidebarLinkActive"] {
-            color: #34d399 !important;
-            background-color: #020617 !important;
-            border-left: 3px solid #10b981 !important;
+            color: #ffffff !important;
+            background-color: #022c22 !important;
+            border-left: 4px solid #10b981 !important;
             font-weight: 800 !important;
         }
 
         [class*="SidebarLink"]:hover {
-            color: #f1f5f9 !important;
-            background-color: rgba(2, 6, 23, 0.5) !important;
+            color: #ffffff !important;
+            background-color: rgba(6, 78, 59, 0.6) !important;
         }
 
         /* Collection Card & Lists */
         [class*="Card"] {
-            background-color: #0f172a !important;
-            border: 1px solid #1e293b !important;
+            background-color: #064e3b !important;
+            border: 2px solid #0f766e !important;
             border-radius: 1.25rem !important;
-            color: #f1f5f9 !important;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
-            transition: all 0.2s ease-in-out !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
         }
 
         [class*="Card"] h2,
+        [class*="Card"] h3,
         [class*="Card"] p,
         [class*="Card"] span {
-            color: #e2e8f0 !important;
-        }
-
-        [class*="Card"]:hover {
-            border-color: #10b981 !important;
-            transform: translateY(-2px) !important;
+            color: #ffffff !important;
+            font-weight: bold !important;
         }
 
         /* Editor Layout & Inputs */
         [class*="EditorContainer"],
-        [class*="EditorLayout"] {
-            background-color: #020617 !important;
-        }
-
+        [class*="EditorLayout"],
         [class*="EditorPane"] {
-            background-color: #090d16 !important;
-            border: 1px solid #1e293b !important;
-            border-radius: 1.5rem !important;
-            padding: 2rem !important;
+            background-color: #022c22 !important;
         }
 
-        /* Form Controls Wrapper */
+        /* Form Controls Wrapper (Kotak pembungkus input field) */
         [class*="ControlContainer"] {
-            background-color: #0f172a !important;
-            border: 1px solid #1e293b !important;
+            background-color: #064e3b !important;
+            border: 2px solid #0f766e !important;
             border-radius: 1.25rem !important;
             padding: 1.5rem !important;
-            margin-bottom: 1.5rem !important;
         }
 
         [class*="ControlContainer"] label {
             color: #34d399 !important;
-            font-weight: 800 !important;
+            /* Label warna hijau terang menyala */
+            font-weight: 900 !important;
             text-transform: uppercase !important;
-            font-size: 0.75rem !important;
+            font-size: 0.85rem !important;
             letter-spacing: 0.05em !important;
-            margin-bottom: 0.75rem !important;
         }
 
-        /* Text Input, Textarea, Select */
+        /* FIX MUTLAK UNTUK INPUT FIELD & TEXTAREA YANG BLANK */
         input,
         textarea,
         select,
-        [class*="ControlPane"],
         div[role="textbox"],
-        div[class*="ControlPane"] input,
-        div[class*="ControlPane"] textarea,
-        div[class*="ControlPane"] div[role="textbox"],
+        [class*="ControlPane"],
         [id^="nc-root"] input,
-        [id^="nc-root"] textarea {
-            background-color: #020617 !important;
-            color: #ffffff !important;
-            border: 1px solid #1e293b !important;
+        [id^="nc-root"] textarea,
+        .w-md-editor,
+        .w-md-editor-text {
+            background-color: #ffffff !important;
+            /* WAJIB PUTIH agar teks internal editor keliatan */
+            color: #0f172a !important;
+            /* TEKS HITAM PEKAT agar ustadzah bisa baca inputannya */
+            border: 2px solid #cbd5e1 !important;
             border-radius: 0.75rem !important;
-            padding: 0.75rem !important;
+            font-size: 1rem !important;
+            font-weight: 500 !important;
+        }
+
+        /* Memastikan area pengetikan editor teks kaya/markdown tidak ikutan hitam */
+        div[role="textbox"] *,
+        [class*="ControlPane"] * {
+            color: #0f172a !important;
+            /* Paksa seluruh anak element teks di dalam input berwarna gelap */
         }
 
         input:focus,
         textarea:focus,
-        div[role="textbox"]:focus,
-        div[class*="ControlPane"] input:focus,
-        div[class*="ControlPane"] textarea:focus {
-            color: #ffffff !important;
-            background-color: #090d16 !important;
+        div[role="textbox"]:focus {
             border-color: #10b981 !important;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
         }
 
         /* Markdown Editor Toolbar */
         [class*="Toolbar"] {
-            background-color: #0f172a !important;
-            border-color: #1e293b !important;
-            color: #cbd5e1 !important;
+            background-color: #f1f5f9 !important;
+            /* Toolbar warna terang */
+            border-bottom: 2px solid #cbd5e1 !important;
         }
 
         [class*="Toolbar"] button {
-            color: #cbd5e1 !important;
-        }
-
-        [class*="Toolbar"] button:hover {
-            background-color: #1e293b !important;
-            color: #34d399 !important;
+            color: #334155 !important;
         }
 
         /* Login Screen */
         [class*="LoginContainer"] {
-            background-color: #020617 !important;
+            background-color: #022c22 !important;
         }
 
         [class*="LoginCard"] {
-            background-color: #0f172a !important;
-            border: 1px solid #1e293b !important;
+            background-color: #064e3b !important;
+            border: 2px solid #10b981 !important;
             border-radius: 2rem !important;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
         }
 
         [class*="LoginButton"] {
             background-color: #10b981 !important;
-            color: #020617 !important;
+            color: #ffffff !important;
             border-radius: 0.75rem !important;
             font-weight: 900 !important;
-            letter-spacing: 0.05em !important;
-            text-transform: uppercase !important;
-            transition: all 0.2s !important;
-            border: none !important;
             padding: 0.75rem 1.5rem !important;
-        }
-
-        [class*="LoginButton"]:hover {
-            background-color: #34d399 !important;
-            transform: scale(1.02) !important;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
         }
 
         /* Bottom Editor Action Toolbar */
         [class*="EditorToolbar"],
         [class*="ToolbarContainer"] {
-            background-color: #090d16 !important;
-            border-top: 1px solid #1e293b !important;
+            background-color: #064e3b !important;
+            border-top: 2px solid #10b981 !important;
         }
 
         /* Publish / Save Buttons */
         [class*="PublishButton"],
-        [class*="SaveButton"] {
+        [class*="SaveButton"],
+        button[class*="Button-Grid-StyledButton"] {
             background-color: #10b981 !important;
-            color: #020617 !important;
+            color: #ffffff !important;
             border-radius: 0.75rem !important;
             font-weight: bold !important;
-            border: none !important;
         }
 
-        [class*="PublishButton"]:hover,
-        [class*="SaveButton"]:hover {
-            background-color: #34d399 !important;
-        }
-
-        /* Preview Pane Wrapper */
+        /* Preview Pane Wrapper (Sisi Kanan) */
         [class*="PreviewPane"] {
-            background-color: #020617 !important;
-            border-left: 1px solid #1e293b !important;
-        }
-
-        iframe {
-            color: #f1f5f9 !important;
+            background-color: #0f172a !important;
+            /* Preview tetap dark premium slate */
+            border-left: 2px solid #1e293b !important;
         }
     </style>
 </head>
