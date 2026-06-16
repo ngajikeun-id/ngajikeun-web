@@ -19,7 +19,6 @@ media_folder: "public/images/uploads"
 public_folder: "/public/images/uploads"
 
 collections:
-  # --- 0. DASHBOARD UTAMA (Pusat Kendali) ---
   - name: "dashboard"
     label: "🏠 Dashboard & Statistik"
     files:
@@ -27,6 +26,7 @@ collections:
         label: "Welcome & Link Statistik"
         name: "main_dashboard"
         fields:
+          - {label: "Mode Perawatan (Maintenance)", name: "is_maintenance", widget: "boolean", default: false, hint: "Aktifkan jika website ingin dialihkan ke halaman maintenance"}
           - {label: "Pesan Selamat Datang", name: "welcome_msg", widget: "string", default: "Selamat Datang Admin Ngajikeun.id"}
           - {label: "Link Statistik (Umami)", name: "stats_link", widget: "string", default: "https://cloud.umami.is/share/wwTd9VfrO2Xe8A77", hint: "Klik link ini untuk pantau pengunjung"}
           - {label: "Pusat Bantuan", name: "help", widget: "markdown", default: "Hubungi [CiwAI™ Support](https://wa.me/6285121380541)"}

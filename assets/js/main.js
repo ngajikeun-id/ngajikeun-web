@@ -70,6 +70,19 @@
     }
 
     async function initPage() {
+        try {
+            const response = await fetch('content/dashboard.json');
+            if (response.ok) {
+                const dashboardData = await response.json();
+                if (dashboardData && dashboardData.is_maintenance === true) {
+                    window.location.href = 'maintenance.html';
+                    return;
+                }
+            }
+        } catch (error) {
+            console.error('Ngajikeun.id: Gagal memvalidasi status maintenance:', error);
+        }
+
         if (window.NgajikeunComponents) {
             await window.NgajikeunComponents.loadComponents();
         }
