@@ -26,10 +26,10 @@ collections:
         label: "Welcome & Link Statistik"
         name: "main_dashboard"
         fields:
-          - {label: "Mode Perawatan (Maintenance)", name: "is_maintenance", widget: "boolean", default: false, hint: "Aktifkan jika website ingin dialihkan ke halaman maintenance"}
+          - {label: "Mode Perawatan (Maintenance)", name: "is_maintenance", widget: "boolean", default: false, hint: "Aktifkan untuk halaman maintenance"}
           - {label: "Pesan Selamat Datang", name: "welcome_msg", widget: "string", default: "Selamat Datang Admin Ngajikeun.id"}
-          - {label: "Link Statistik (Umami)", name: "stats_link", widget: "string", default: "https://cloud.umami.is/share/wwTd9VfrO2Xe8A77", hint: "Klik link ini untuk pantau pengunjung"}
-          - {label: "Pengaturan Running Text (Navbar)", name: "running_text", widget: "string", default: "Pendaftaran Gelombang Baru Profil Musyrifah Bersanad Telah Dibuka!", hint: "Teks berjalan di bagian paling atas navbar untuk info/pengumuman darurat."}
+          - {label: "Link Statistik (Umami)", name: "stats_link", widget: "string", default: "https://cloud.umami.is/share/wwTd9VfrO2Xe8A77", hint: "Link untuk pantau pengunjung"}
+          - {label: "Pengaturan Running Text (Navbar)", name: "running_text", widget: "string", default: "Pendaftaran Gelombang Baru Profil Musyrifah Bersanad Telah Dibuka!", hint: "Teks berjalan untuk info/pengumuman."}
           - {label: "Pusat Bantuan", name: "help", widget: "markdown", default: "Hubungi [CiwAI™ Support](https://wa.me/6285121380541)"}
 
   # --- 1. PROFIL (About) ---
@@ -69,7 +69,7 @@ collections:
       - {label: "Nama", name: "name", widget: "string"}
       - {label: "Spesialisasi", name: "specialty", widget: "string"}
       - {label: "Foto", name: "image", widget: "image"}
-      - {label: "Biodata & Silsilah Sanad", name: "bio", widget: "markdown", hint: "Tuliskan riwayat sanad dan profil lengkap Ustadzah di sini"}
+      - {label: "Biodata & Silsilah Sanad", name: "bio", widget: "markdown", required: false}
 
   # --- 4. TESTIMONI ---
   - name: "testimonials"
