@@ -69,22 +69,23 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2) !important;
         }
 
-        [class*="ControlContainer"] label {
-            color: #f8fafc !important;
+        [class*="ControlContainer"] label,
+        [class*="ControlContainer"] label span,
+        [class*="ControlContainer"] [class*="Label"],
+        [class*="ControlPane"] label {
+            color: #a7f3d0 !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
             font-weight: 700 !important;
             text-transform: uppercase !important;
             font-size: 0.8rem !important;
             letter-spacing: 0.05em !important;
-            display: inline-block !important;
+            padding: 0 !important;
+            /* Buang padding kotak lama */
             margin-bottom: 0.5rem !important;
-        }
-
-        [class*="ControlContainer"] label span {
-            background-color: #064e3b !important;
-            color: #34d399 !important;
-            padding: 4px 10px !important;
-            border-radius: 6px !important;
-            border: 1px solid #10b981 /30 !important;
+            display: inline-block !important;
         }
 
         input,
