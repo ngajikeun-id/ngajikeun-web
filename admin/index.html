@@ -58,34 +58,54 @@
         }
 
         /* ==================================================
-           2. SISI KIRI: CONFIG FORM INPUT (KONTRAS TINGGI)
+           2. SISI KIRI: CONFIG FORM INPUT (ELEGAN & ADEM)
            ================================================== */
         [class*="ControlContainer"] {
             background-color: #043e2f !important;
             border: 2px solid #064e3b !important;
             border-radius: 1rem !important;
-            padding: 1.25rem !important;
+            padding: 1.5rem !important;
             margin-bottom: 1.5rem !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2) !important;
         }
 
         [class*="ControlContainer"] label {
-            color: #34d399 !important;
-            font-weight: 800 !important;
+            color: #f8fafc !important;
+            font-weight: 700 !important;
             text-transform: uppercase !important;
             font-size: 0.8rem !important;
             letter-spacing: 0.05em !important;
+            display: inline-block !important;
+            margin-bottom: 0.5rem !important;
+        }
+
+        [class*="ControlContainer"] label span {
+            background-color: #064e3b !important;
+            color: #34d399 !important;
+            padding: 4px 10px !important;
+            border-radius: 6px !important;
+            border: 1px solid #10b981 /30 !important;
         }
 
         input,
         select,
         textarea {
-            background-color: #ffffff !important;
-            color: #0f172a !important;
-            border: 2px solid #cbd5e1 !important;
-            border-radius: 0.5rem !important;
+            background-color: #022c22 !important;
+            color: #f8fafc !important;
+            border: 2px solid #064e3b !important;
+            border-radius: 0.75rem !important;
             padding: 0.75rem !important;
             font-size: 0.95rem !important;
             font-weight: 500 !important;
+            transition: all 0.2s ease !important;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none !important;
+            border-color: #10b981 !important;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
         }
 
         div[role="textbox"],
@@ -93,8 +113,9 @@
         .w-md-editor-text,
         [class*="EditorControlPane"] div[role="textbox"],
         [class*="ControlPane"] div[role="textbox"] {
-            background-color: #ffffff !important;
-            border-radius: 0.5rem !important;
+            background-color: #022c22 !important;
+            border: 2px solid #064e3b !important;
+            border-radius: 0.75rem !important;
         }
 
         div[role="textbox"] span,
@@ -102,30 +123,40 @@
         div[role="textbox"] div,
         .w-md-editor-text *,
         [class*="ControlPane"] div[role="textbox"] * {
-            color: #0f172a !important;
+            color: #f8fafc !important;
             background-color: transparent !important;
         }
 
         [class*="Toolbar"] {
-            background-color: #f1f5f9 !important;
-            border-color: #cbd5e1 !important;
+            background-color: #043e2f !important;
+            border-color: #064e3b !important;
         }
 
         [class*="Toolbar"] button {
-            color: #334155 !important;
+            color: #a7f3d0 !important;
+        }
+
+        [class*="Toolbar"] button:hover {
+            color: #ffffff !important;
+            background-color: #064e3b !important;
+        }
+
+        [class*="ControlContainer"] p[class*="Hint"],
+        div[class*="Hint"] {
+            color: #94a3b8 !important;
+            font-size: 0.75rem !important;
+            margin-top: 0.5rem !important;
         }
 
         /* ==================================================
-           3. SISI KANAN: PREVIEW PANEL (ANTI KOTAK TANDA TANYA)
+           3. SISI KAIAN: PREVIEW PANEL
            ================================================== */
         [class*="PreviewPane"],
         div[class*="PreviewPane"] {
             background-color: #f1f5f9 !important;
-            /* Kembalikan ke light mode abu-abu terang agar serasi dengan preview bawaan */
             border-left: 2px solid #cbd5e1 !important;
         }
 
-        /* Tombol bottom action bar */
         [class*="EditorToolbar"],
         [class*="ToolbarContainer"] {
             background-color: #064e3b !important;
@@ -137,6 +168,7 @@
             background-color: #10b981 !important;
             color: #ffffff !important;
             font-weight: bold !important;
+            border-radius: 0.5rem !important;
         }
     </style>
 </head>
