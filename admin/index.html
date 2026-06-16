@@ -184,6 +184,25 @@
             font-weight: bold !important;
             border-radius: 0.5rem !important;
         }
+
+        [class*="AppHeader"] [class*="BackLink"],
+        [class*="AppHeader"] [class*="Breadcrumbs"],
+        [class*="AppHeader"] [class*="Container"] div,
+        [class*="AppHeader"] a,
+        [class*="AppHeader"] span,
+        [class*="AppHeader"] p,
+        header a,
+        header span,
+        header p {
+            color: #ffffff !important;
+            opacity: 1 !important;
+        }
+
+        [class*="AppHeader"] [class*="BackLink"] span[class*="Saved"],
+        [class*="AppHeader"] span[style*="color"],
+        header span:contains("SAVED") {
+            color: #34d399 !important;
+        }
     </style>
 </head>
 
