@@ -281,16 +281,29 @@
             for (const mentor of mentors) {
                 const imageUrl = safeUrl(mentor.image, 'https://via.placeholder.com/150');
 
-                container.innerHTML += `
-                    <div class="text-center group">
-                        <div class="relative inline-block">
-                            <img src="${imageUrl}"
-                                class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-slate-800 group-hover:border-emerald-500 transition-all duration-300 shadow-md">
-                        </div>
-                        <h3 class="mt-4 text-lg font-bold text-gray-200">${safeText(mentor.name, 'Mentor')}</h3>
-                        <p class="text-emerald-400 text-sm font-medium mb-2">${safeText(mentor.specialty, 'Mentor Al-Qur\'an')}</p>
+                const bioContent = mentor.bio || mentor.description || 'Profil bimbingan musyrifah bersanad.';
+
+                const card = document.createElement('div');
+                card.className = "text-center group cursor-pointer transition-transform active:scale-95";
+                card.innerHTML = `
+                    <div class="relative inline-block">
+                        <img src="${imageUrl}"
+                            class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-slate-800 group-hover:border-emerald-500 transition-all duration-300 shadow-md">
                     </div>
+                    <h3 class="mt-4 text-lg font-bold text-gray-200">${safeText(mentor.name, 'Mentor')}</h3>
+                    <p class="text-emerald-400 text-sm font-medium mb-2">${safeText(mentor.specialty, 'Mentor Al-Qur\'an')}</p>
                 `;
+
+                card.onclick = () => {
+                    window.openMentorModal({
+                        name: safeText(mentor.name, 'Mentor'),
+                        badge: safeText(mentor.specialty, 'Muhafizhoh Bersanad'),
+                        image: imageUrl,
+                        bio: bioContent
+                    });
+                };
+
+                container.appendChild(card);
             }
         } catch (error) {
             console.error('Gagal load mentor:', error);

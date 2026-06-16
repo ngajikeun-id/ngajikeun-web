@@ -139,6 +139,41 @@
         document.body.style.overflow = '';
     };
 
+    window.openMentorModal = function openMentorModal(mentorData) {
+        const modal = document.getElementById('mentor-modal');
+        const img = document.getElementById('modal-mentor-img');
+        const name = document.getElementById('modal-mentor-name');
+        const badge = document.getElementById('modal-mentor-badge');
+        const bio = document.getElementById('modal-mentor-bio');
+
+        if (!modal || !mentorData) return;
+
+        if (img) img.src = mentorData.image || 'public/images/uploads/logo-ngk.png';
+        if (name) name.innerText = mentorData.name || 'Nama Musyrifah';
+        if (badge) badge.innerText = mentorData.badge || 'Muhafizhoh Bersanad';
+        if (bio) bio.innerHTML = mentorData.bio || 'Profil sedang dimuat...';
+
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeMentorModal = function closeMentorModal() {
+        const modal = document.getElementById('mentor-modal');
+        const content = document.getElementById('mentor-modal-content');
+        if (!modal) return;
+
+        modal.classList.add('hidden');
+        modal.scrollTop = 0;
+        if (content) content.scrollTop = 0;
+        document.body.style.overflow = '';
+    };
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            window.closeMentorModal();
+        }
+    });
+
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
             window.closeArticleModal();

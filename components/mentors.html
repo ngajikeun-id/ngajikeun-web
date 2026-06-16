@@ -13,3 +13,41 @@
         </div>
     </div>
 </section>
+
+<!-- FILTER MODAL PROFIL MUSYRIFAH (SERAGAM DAN PREMIUM) -->
+<div id="mentor-modal"
+    class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div
+        class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl transform transition-all">
+
+        <!-- Header Modal (Tombol Close Silang) -->
+        <div class="p-4 border-b border-slate-800 flex justify-end">
+            <button onclick="window.closeMentorModal()"
+                class="text-slate-400 hover:text-emerald-400 p-1 hover:bg-slate-800 rounded-lg transition-all"
+                type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Konten Dinamis Profil (Di-inject lewat JS) -->
+        <div id="mentor-modal-content" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto custom-scroll">
+            <div class="flex flex-col items-center text-center space-y-3">
+                <img id="modal-mentor-img" src="" alt=""
+                    class="h-28 w-28 rounded-full object-cover ring-4 ring-emerald-500/30 shadow-md">
+                <h3 id="modal-mentor-name" class="text-xl font-bold text-slate-100"></h3>
+                <span id="modal-mentor-badge"
+                    class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold px-3 py-1 rounded-full"></span>
+            </div>
+
+            <div class="border-t border-slate-800 pt-4">
+                <p class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Biodata & Sanad</p>
+                <div id="modal-mentor-bio" class="text-slate-300 text-sm leading-relaxed space-y-2 prose prose-invert">
+                    <!-- Deskripsi lengkap musyrifah masuk sini, bro -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

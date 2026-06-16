@@ -69,6 +69,7 @@ collections:
       - {label: "Nama", name: "name", widget: "string"}
       - {label: "Spesialisasi", name: "specialty", widget: "string"}
       - {label: "Foto", name: "image", widget: "image"}
+      - {label: "Biodata & Silsilah Sanad", name: "bio", widget: "markdown", hint: "Tuliskan riwayat sanad dan profil lengkap Ustadzah di sini"}
 
   # --- 4. TESTIMONI ---
   - name: "testimonials"
