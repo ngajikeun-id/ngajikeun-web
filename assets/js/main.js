@@ -74,19 +74,16 @@
             const response = await fetch('content/dashboard.json');
             if (response.ok) {
                 const dashboardData = await response.json();
-
                 if (dashboardData && dashboardData.is_maintenance === true) {
                     window.location.href = 'maintenance.html';
                     return;
                 }
 
-                const marqueeElement = document.getElementById('navbar-running-text');
-                if (dashboardData && dashboardData.running_text && marqueeElement) {
-                    marqueeElement.innerText = dashboardData.running_text;
-                }
+                // Simpan data dashboard ke window global agar bisa diakses di event listener bawah
+                window.currentDashboardData = dashboardData;
             }
         } catch (error) {
-            console.error('Ngajikeun.id: Gagal memvalidasi status maintenance atau running text:', error);
+            console.error('Ngajikeun.id: Gagal memvalidasi status maintenance:', error);
         }
 
         if (window.NgajikeunComponents) {
@@ -101,6 +98,15 @@
 
     document.addEventListener("componentsLoaded", () => {
         console.log("🔥 Components ready, syncing content...");
+
+        if (window.currentDashboardData && window.currentDashboardData.running_text) {
+            const marqueeElement = document.getElementById('navbar-running-text');
+            if (marqueeElement) {
+                marqueeElement.innerText = window.currentDashboardData.running_text;
+                console.log("✅ Running text berhasil di-inject!");
+            }
+        }
+
         initializeContentSync();
     });
 
