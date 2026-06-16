@@ -74,13 +74,19 @@
             const response = await fetch('content/dashboard.json');
             if (response.ok) {
                 const dashboardData = await response.json();
+
                 if (dashboardData && dashboardData.is_maintenance === true) {
                     window.location.href = 'maintenance.html';
                     return;
                 }
+
+                const marqueeElement = document.getElementById('navbar-running-text');
+                if (dashboardData && dashboardData.running_text && marqueeElement) {
+                    marqueeElement.innerText = dashboardData.running_text;
+                }
             }
         } catch (error) {
-            console.error('Ngajikeun.id: Gagal memvalidasi status maintenance:', error);
+            console.error('Ngajikeun.id: Gagal memvalidasi status maintenance atau running text:', error);
         }
 
         if (window.NgajikeunComponents) {
