@@ -8,11 +8,29 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* ==================================================
-           1. LAYOUT UTAMA (DARK EMERALD THEME)
-           ================================================== */
+   MIDNIGHT EMERALD PREMIUM THEME
+   ================================================== */
+
+        :root {
+            --bg: #0f172a;
+            --sidebar: #111827;
+            --panel: #1e293b;
+            --border: #334155;
+
+            --accent: #10b981;
+            --accent-hover: #34d399;
+
+            --text: #f8fafc;
+            --muted: #94a3b8;
+        }
+
+        /* ==================================================
+   APP LAYOUT
+   ================================================== */
+
         body {
-            background-color: #022c22 !important;
-            color: #f8fafc !important;
+            background: var(--bg) !important;
+            color: var(--text) !important;
         }
 
         .nc-app-container,
@@ -21,168 +39,243 @@
         [class*="EditorContainer"],
         [class*="EditorLayout"],
         [class*="EditorPane"] {
-            background-color: #022c22 !important;
-            color: #f8fafc !important;
+            background: var(--bg) !important;
+            color: var(--text) !important;
         }
+
+        /* ==================================================
+   HEADER
+   ================================================== */
 
         header,
         [class*="AppHeader"] {
-            background-color: #064e3b !important;
-            border-bottom: 2px solid #10b981 !important;
+            background: #111827 !important;
+            border-bottom: 1px solid var(--border) !important;
+            backdrop-filter: blur(12px);
         }
 
-        [class*="AppHeader"] button,
-        [class*="AppHeader"] a,
-        [class*="AppHeader"] span {
-            color: #ffffff !important;
-            font-weight: bold !important;
+        header *,
+        [class*="AppHeader"] * {
+            color: white !important;
         }
+
+        /* ==================================================
+   SIDEBAR
+   ================================================== */
 
         aside,
         [class*="SidebarContainer"],
         [class*="Sidebar"] {
-            background-color: #043e2f !important;
-            border-right: 2px solid #064e3b !important;
+            background: var(--sidebar) !important;
+            border-right: 1px solid var(--border) !important;
         }
 
         [class*="SidebarLink"] {
-            color: #a7f3d0 !important;
-            font-weight: 600 !important;
+            color: #cbd5e1 !important;
+            font-weight: 500 !important;
+            transition: .2s;
+        }
+
+        [class*="SidebarLink"]:hover {
+            color: white !important;
         }
 
         [class*="SidebarLinkActive"] {
-            color: #ffffff !important;
-            background-color: #022c22 !important;
-            border-left: 4px solid #10b981 !important;
-            font-weight: bold !important;
+            background: rgba(16, 185, 129, .15) !important;
+            color: white !important;
+            border-left: 3px solid var(--accent) !important;
+            font-weight: 700 !important;
         }
 
         /* ==================================================
-           2. SISI KIRI: CONFIG FORM INPUT (ELEGAN & ADEM)
-           ================================================== */
+   CONTROL PANEL
+   ================================================== */
+
         [class*="ControlContainer"] {
-            background-color: #043e2f !important;
-            border: 2px solid #064e3b !important;
-            border-radius: 1rem !important;
+            background: var(--panel) !important;
+
+            border: 1px solid var(--border) !important;
+
+            border-radius: 20px !important;
+
             padding: 1.5rem !important;
+
             margin-bottom: 1.5rem !important;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2) !important;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, .25);
+
+            transition: .25s ease;
         }
+
+        [class*="ControlContainer"]:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent) !important;
+        }
+
+        /* ==================================================
+   LABEL
+   ================================================== */
 
         [class*="ControlContainer"] label,
         [class*="ControlContainer"] label span,
         [class*="ControlContainer"] [class*="Label"],
         [class*="ControlPane"] label {
-            color: #a7f3d0 !important;
+
+            color: #cbd5e1 !important;
+
             background: transparent !important;
-            background-color: transparent !important;
-            box-shadow: none !important;
+
             border: none !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            font-size: 0.8rem !important;
-            letter-spacing: 0.05em !important;
-            padding: 0 !important;
-            /* Buang padding kotak lama */
-            margin-bottom: 0.5rem !important;
-            display: inline-block !important;
+
+            text-transform: none !important;
+
+            letter-spacing: 0 !important;
+
+            font-size: .9rem !important;
+
+            font-weight: 600 !important;
+
+            margin-bottom: .5rem !important;
         }
 
-        [class*="AppHeader"] [class*="TopBar"] *,
-        header *,
-        [class*="AppHeader"] span,
-        [class*="AppHeader"] div {
-            text-shadow: none !important;
-        }
-
-        [class*="AppHeader"] a,
-        [class*="AppHeader"] h1,
-        [class*="AppHeader"] p {
-            color: #ffffff !important;
-        }
+        /* ==================================================
+   INPUT
+   ================================================== */
 
         input,
         select,
         textarea {
-            background-color: #022c22 !important;
-            color: #f8fafc !important;
-            border: 2px solid #064e3b !important;
-            border-radius: 0.75rem !important;
-            padding: 0.75rem !important;
-            font-size: 0.95rem !important;
-            font-weight: 500 !important;
-            transition: all 0.2s ease !important;
+
+            background: #0b1220 !important;
+
+            color: white !important;
+
+            border: 1px solid var(--border) !important;
+
+            border-radius: 12px !important;
+
+            padding: .8rem !important;
+
+            transition: .2s ease;
         }
 
         input:focus,
         select:focus,
         textarea:focus {
+
             outline: none !important;
-            border-color: #10b981 !important;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+
+            border-color: var(--accent) !important;
+
+            box-shadow:
+                0 0 0 4px rgba(16, 185, 129, .15) !important;
         }
+
+        /* ==================================================
+   MARKDOWN EDITOR
+   ================================================== */
 
         div[role="textbox"],
         .w-md-editor,
         .w-md-editor-text,
         [class*="EditorControlPane"] div[role="textbox"],
         [class*="ControlPane"] div[role="textbox"] {
-            background-color: #022c22 !important;
-            border: 2px solid #064e3b !important;
-            border-radius: 0.75rem !important;
+
+            background: #0b1220 !important;
+
+            border: 1px solid var(--border) !important;
+
+            border-radius: 12px !important;
         }
 
-        div[role="textbox"] span,
-        div[role="textbox"] p,
-        div[role="textbox"] div,
-        .w-md-editor-text *,
-        [class*="ControlPane"] div[role="textbox"] * {
-            color: #f8fafc !important;
-            background-color: transparent !important;
-        }
-
-        [class*="Toolbar"] {
-            background-color: #043e2f !important;
-            border-color: #064e3b !important;
-        }
-
-        [class*="Toolbar"] button {
-            color: #a7f3d0 !important;
-        }
-
-        [class*="Toolbar"] button:hover {
-            color: #ffffff !important;
-            background-color: #064e3b !important;
-        }
-
-        [class*="ControlContainer"] p[class*="Hint"],
-        div[class*="Hint"] {
-            color: #94a3b8 !important;
-            font-size: 0.75rem !important;
-            margin-top: 0.5rem !important;
+        div[role="textbox"] *,
+        .w-md-editor-text * {
+            color: white !important;
+            background: transparent !important;
         }
 
         /* ==================================================
-           3. SISI KAIAN: PREVIEW PANEL
-           ================================================== */
+   TOOLBAR
+   ================================================== */
+
+        [class*="Toolbar"] {
+            background: var(--panel) !important;
+            border-color: var(--border) !important;
+        }
+
+        [class*="Toolbar"] button {
+            color: #cbd5e1 !important;
+        }
+
+        [class*="Toolbar"] button:hover {
+            background: rgba(16, 185, 129, .15) !important;
+            color: white !important;
+        }
+
+        /* ==================================================
+   HINT
+   ================================================== */
+
+        [class*="Hint"],
+        div[class*="Hint"] {
+            color: var(--muted) !important;
+            font-size: .8rem !important;
+        }
+
+        /* ==================================================
+   PREVIEW PANEL
+   ================================================== */
+
         [class*="PreviewPane"],
         div[class*="PreviewPane"] {
-            background-color: #f1f5f9 !important;
-            border-left: 2px solid #cbd5e1 !important;
+
+            background: #f8fafc !important;
+
+            border-left: 1px solid #e2e8f0 !important;
         }
+
+        /* ==================================================
+   FOOTER TOOLBAR
+   ================================================== */
 
         [class*="EditorToolbar"],
         [class*="ToolbarContainer"] {
-            background-color: #064e3b !important;
-            border-top: 2px solid #10b981 !important;
+
+            background: #111827 !important;
+
+            border-top: 1px solid var(--border) !important;
         }
+
+        /* ==================================================
+   BUTTON
+   ================================================== */
 
         [class*="PublishButton"],
         [class*="SaveButton"] {
-            background-color: #10b981 !important;
-            color: #ffffff !important;
-            font-weight: bold !important;
-            border-radius: 0.5rem !important;
+
+            background: linear-gradient(135deg,
+                    #10b981,
+                    #34d399) !important;
+
+            color: white !important;
+
+            border: none !important;
+
+            border-radius: 12px !important;
+
+            font-weight: 700 !important;
+
+            box-shadow:
+                0 10px 25px rgba(16, 185, 129, .25);
+        }
+
+        [class*="PublishButton"]:hover,
+        [class*="SaveButton"]:hover {
+
+            transform: translateY(-1px);
+
+            filter: brightness(1.05);
         }
     </style>
 </head>
