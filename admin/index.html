@@ -8,20 +8,21 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* ==================================================
-   MIDNIGHT EMERALD PREMIUM THEME
+   NGAJIKEUN.ID - SOFT SAGE PREMIUM
    ================================================== */
 
         :root {
-            --bg: #0f172a;
-            --sidebar: #111827;
-            --panel: #1e293b;
-            --border: #334155;
+            --bg: #f8faf7;
+            --sidebar: #f1f5f2;
+            --card: #ffffff;
 
-            --accent: #10b981;
-            --accent-hover: #34d399;
+            --accent: #3fa66b;
+            --accent-light: #dff4e6;
 
-            --text: #f8fafc;
-            --muted: #94a3b8;
+            --border: #dbe5dc;
+
+            --text: #1f2937;
+            --muted: #6b7280;
         }
 
         /* ==================================================
@@ -49,14 +50,14 @@
 
         header,
         [class*="AppHeader"] {
-            background: #111827 !important;
+            background: #ffffff !important;
             border-bottom: 1px solid var(--border) !important;
-            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, .03);
         }
 
         header *,
         [class*="AppHeader"] * {
-            color: white !important;
+            color: var(--text) !important;
         }
 
         /* ==================================================
@@ -71,19 +72,19 @@
         }
 
         [class*="SidebarLink"] {
-            color: #cbd5e1 !important;
+            color: var(--text) !important;
             font-weight: 500 !important;
-            transition: .2s;
+            transition: .2s ease;
         }
 
         [class*="SidebarLink"]:hover {
-            color: white !important;
+            color: var(--accent) !important;
         }
 
         [class*="SidebarLinkActive"] {
-            background: rgba(16, 185, 129, .15) !important;
-            color: white !important;
-            border-left: 3px solid var(--accent) !important;
+            background: var(--accent-light) !important;
+            color: #2d7d52 !important;
+            border-left: 4px solid var(--accent) !important;
             font-weight: 700 !important;
         }
 
@@ -92,25 +93,26 @@
    ================================================== */
 
         [class*="ControlContainer"] {
-            background: var(--panel) !important;
+            background: var(--card) !important;
 
-            border: 1px solid var(--border) !important;
+            border: 1px solid #e5ebe6 !important;
 
-            border-radius: 20px !important;
+            border-radius: 18px !important;
 
             padding: 1.5rem !important;
 
             margin-bottom: 1.5rem !important;
 
             box-shadow:
-                0 10px 30px rgba(0, 0, 0, .25);
+                0 4px 18px rgba(0, 0, 0, .04);
 
-            transition: .25s ease;
+            transition: .2s ease;
         }
 
         [class*="ControlContainer"]:hover {
             transform: translateY(-2px);
-            border-color: var(--accent) !important;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, .06);
         }
 
         /* ==================================================
@@ -122,21 +124,19 @@
         [class*="ControlContainer"] [class*="Label"],
         [class*="ControlPane"] label {
 
-            color: #cbd5e1 !important;
+            color: var(--text) !important;
 
             background: transparent !important;
 
             border: none !important;
 
-            text-transform: none !important;
-
-            letter-spacing: 0 !important;
+            font-weight: 600 !important;
 
             font-size: .9rem !important;
 
-            font-weight: 600 !important;
+            text-transform: none !important;
 
-            margin-bottom: .5rem !important;
+            letter-spacing: 0 !important;
         }
 
         /* ==================================================
@@ -147,15 +147,15 @@
         select,
         textarea {
 
-            background: #0b1220 !important;
+            background: #fafcfb !important;
 
-            color: white !important;
+            color: var(--text) !important;
 
             border: 1px solid var(--border) !important;
 
             border-radius: 12px !important;
 
-            padding: .8rem !important;
+            padding: .85rem !important;
 
             transition: .2s ease;
         }
@@ -169,7 +169,7 @@
             border-color: var(--accent) !important;
 
             box-shadow:
-                0 0 0 4px rgba(16, 185, 129, .15) !important;
+                0 0 0 4px rgba(63, 166, 107, .12) !important;
         }
 
         /* ==================================================
@@ -182,7 +182,7 @@
         [class*="EditorControlPane"] div[role="textbox"],
         [class*="ControlPane"] div[role="textbox"] {
 
-            background: #0b1220 !important;
+            background: #fafcfb !important;
 
             border: 1px solid var(--border) !important;
 
@@ -191,7 +191,9 @@
 
         div[role="textbox"] *,
         .w-md-editor-text * {
-            color: white !important;
+
+            color: var(--text) !important;
+
             background: transparent !important;
         }
 
@@ -200,17 +202,22 @@
    ================================================== */
 
         [class*="Toolbar"] {
-            background: var(--panel) !important;
+
+            background: #ffffff !important;
+
             border-color: var(--border) !important;
         }
 
         [class*="Toolbar"] button {
-            color: #cbd5e1 !important;
+
+            color: var(--muted) !important;
         }
 
         [class*="Toolbar"] button:hover {
-            background: rgba(16, 185, 129, .15) !important;
-            color: white !important;
+
+            background: var(--accent-light) !important;
+
+            color: var(--accent) !important;
         }
 
         /* ==================================================
@@ -219,7 +226,9 @@
 
         [class*="Hint"],
         div[class*="Hint"] {
+
             color: var(--muted) !important;
+
             font-size: .8rem !important;
         }
 
@@ -230,9 +239,9 @@
         [class*="PreviewPane"],
         div[class*="PreviewPane"] {
 
-            background: #f8fafc !important;
+            background: #ffffff !important;
 
-            border-left: 1px solid #e2e8f0 !important;
+            border-left: 1px solid var(--border) !important;
         }
 
         /* ==================================================
@@ -242,7 +251,7 @@
         [class*="EditorToolbar"],
         [class*="ToolbarContainer"] {
 
-            background: #111827 !important;
+            background: #ffffff !important;
 
             border-top: 1px solid var(--border) !important;
         }
@@ -254,9 +263,7 @@
         [class*="PublishButton"],
         [class*="SaveButton"] {
 
-            background: linear-gradient(135deg,
-                    #10b981,
-                    #34d399) !important;
+            background: var(--accent) !important;
 
             color: white !important;
 
@@ -267,15 +274,17 @@
             font-weight: 700 !important;
 
             box-shadow:
-                0 10px 25px rgba(16, 185, 129, .25);
+                0 6px 18px rgba(63, 166, 107, .18);
+
+            transition: .2s ease;
         }
 
         [class*="PublishButton"]:hover,
         [class*="SaveButton"]:hover {
 
-            transform: translateY(-1px);
+            background: #2f8a58 !important;
 
-            filter: brightness(1.05);
+            transform: translateY(-1px);
         }
     </style>
 </head>
