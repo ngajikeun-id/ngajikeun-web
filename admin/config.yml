@@ -28,8 +28,8 @@ collections:
         fields:
           - {label: "Mode Perawatan (Maintenance)", name: "is_maintenance", widget: "boolean", default: false, hint: "Aktifkan untuk halaman maintenance"}
           - {label: "Pesan Selamat Datang", name: "welcome_msg", widget: "string", default: "Selamat Datang Admin Ngajikeun.id"}
-          - {label: "Link Statistik (Umami)", name: "stats_link", widget: "string", default: "https://cloud.umami.is/share/wwTd9VfrO2Xe8A77", hint: "Link untuk pantau pengunjung"}
-          - {label: "Pengaturan Running Text (Navbar)", name: "running_text", widget: "string", default: "Pendaftaran Gelombang Baru Profil Musyrifah Bersanad Telah Dibuka!", hint: "Teks berjalan untuk info/pengumuman."}
+          - {label: "Link Statistik", name: "stats_link", widget: "string", default: "https://cloud.umami.is/share/wwTd9VfrO2Xe8A77", hint: "Link untuk pantau pengunjung"}
+          - {label: "Pengaturan Running Text", name: "running_text", widget: "string", default: "Pendaftaran Gelombang Baru Profil Musyrifah Bersanad Telah Dibuka!", hint: "Teks berjalan untuk info/pengumuman."}
           - {label: "Pusat Bantuan", name: "help", widget: "markdown", default: "Hubungi [CiwAI™ Support](https://wa.me/6285121380541)"}
 
   # --- 1. PROFIL (About) ---
@@ -52,10 +52,10 @@ collections:
     extension: "json"
     format: "json"
     fields:
-      - {label: "Judul", name: "title", widget: "string"}
-      - {label: "Deskripsi", name: "description", widget: "text"}
+      - {label: "Title Program", name: "title", widget: "string"}
+      - {label: "Deskripsi Program", name: "description", widget: "text"}
       - {label: "Link Pendaftaran (WA/Form)", name: "registration_link", widget: "string"}
-      - {label: "Image", name: "image", widget: "image", required: false}
+      - {label: "Image Program", name: "image", widget: "image", required: false}
       - {label: "Detail / Overview Program", name: "body", widget: "markdown", required: false}
 
   # --- 3. TIM MENTOR ---
@@ -66,10 +66,10 @@ collections:
     extension: "json"
     format: "json"
     fields:
-      - {label: "Nama", name: "name", widget: "string"}
-      - {label: "Spesialisasi", name: "specialty", widget: "string"}
-      - {label: "Foto", name: "image", widget: "image"}
-      - {label: "Biodata & Silsilah Sanad", name: "bio", widget: "markdown", required: false}
+      - {label: "Nama Mentor", name: "name", widget: "string"}
+      - {label: "Spesialisasi Mentor", name: "specialty", widget: "string"}
+      - {label: "Image mentors", name: "image", widget: "image"}
+      - {label: "Profil Mentor", name: "bio", widget: "markdown", required: false}
 
   # --- 4. TESTIMONI ---
   - name: "testimonials"
@@ -79,8 +79,8 @@ collections:
     extension: "json"
     format: "json"
     fields:
-      - {label: "Nama", name: "name", widget: "string"}
-      - {label: "Isi", name: "content", widget: "text"}
+      - {label: "Nama Testimoni", name: "name", widget: "string"}
+      - {label: "Detail Testimoni", name: "content", widget: "text"}
 
   # --- 5. LITERASI ---
   - name: "articles"
@@ -89,8 +89,8 @@ collections:
     create: true
     extension: "md"
     fields:
-      - {label: "Judul", name: "title", widget: "string"}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Title Artikel", name: "title", widget: "string"}
+      - {label: "Detail Artikel", name: "body", widget: "markdown"}
 
   # --- 6. PRODUK ---
   - name: "products"
@@ -100,11 +100,11 @@ collections:
     extension: "json"
     format: "json"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Price", name: "price", widget: "string"}
-      - {label: "Link", name: "link", widget: "string"}
-      - {label: "Image", name: "image", widget: "image", required: false}
+      - {label: "Title Produk & E-Book", name: "title", widget: "string"}
+      - {label: "Description Produk & E-Book", name: "description", widget: "text"}
+      - {label: "Price Produk & E-Book", name: "price", widget: "string"}
+      - {label: "Link Produk & E-Book", name: "link", widget: "string"}
+      - {label: "Image Produk & E-Book", name: "image", widget: "image", required: false}
 
   # --- 7. EVALUASI ---
   - name: "quizzes"
@@ -114,5 +114,5 @@ collections:
     extension: "json"
     format: "json"
     fields:
-      - {label: "Judul", name: "title", widget: "string"}
-      - {label: "Link", name: "link", widget: "string"}
+      - {label: "Title Kuis", name: "title", widget: "string"}
+      - {label: "Link Kuis", name: "link", widget: "string"}
