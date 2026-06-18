@@ -491,14 +491,14 @@
             descContainer.innerHTML = product.description || 'Detail deskripsi belum tersedia.';
         }
 
-        const modalImg = document.getElementById('modal-product-img');
-        if (modalImg) {
-            const imgSrc = product.image || 'public/images/uploads/book-icon.png';
-            modalImg.src = imgSrc;
-            modalImg.alt = product.title || 'Produk';
-
-            modalImg.setAttribute('onclick', `window.zoomImage('${imgSrc}')`);
-            modalImg.className = 'h-20 w-20 object-contain transition-all duration-300 cursor-zoom-in hover:scale-105';
+        const imgContainer = document.getElementById('modal-product-img')?.parentElement;
+        if (imgContainer) {
+            if (product.image) {
+                const imgSrc = safeUrl(product.image);
+                imgContainer.innerHTML = `<img id="modal-product-img" src="${imgSrc}" alt="${safeText(product.title)}" onclick="window.zoomImage('${imgSrc}')" class="h-20 w-20 object-contain transition-all duration-300 cursor-zoom-in hover:scale-105">`;
+            } else {
+                imgContainer.innerHTML = `<span id="modal-product-img" class="text-5xl select-none transition-transform duration-500">📖</span>`;
+            }
         }
 
         const modalBtn = document.getElementById('modal-product-btn');
