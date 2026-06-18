@@ -166,8 +166,8 @@
 
         if (img) {
             img.src = mentorData.image || 'public/images/uploads/logo-ngk.png';
-            img.classList.remove('scale-150', 'z-30', 'rounded-xl', 'cursor-zoom-out');
-            img.classList.add('scale-100', 'rounded-none', 'cursor-zoom-in');
+            img.classList.remove('scale-150', 'z-30', 'cursor-zoom-out');
+            img.classList.add('cursor-zoom-in');
 
             if (container) {
                 container.classList.remove('overflow-visible');
@@ -176,7 +176,11 @@
         }
         if (name) name.innerText = mentorData.name || 'Nama Musyrifah';
         if (badge) badge.innerText = mentorData.badge || 'Muhafizhoh Bersanad';
-        if (bio) bio.innerHTML = mentorData.bio || 'Profil sedang dimuat...';
+
+        if (bio) {
+            bio.innerHTML = mentorData.bio || 'Profil sedang dimuat...';
+            bio.scrollTop = 0;
+        }
 
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
