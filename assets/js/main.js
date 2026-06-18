@@ -160,13 +160,19 @@
         const name = document.getElementById('modal-mentor-name');
         const badge = document.getElementById('modal-mentor-badge');
         const bio = document.getElementById('modal-mentor-bio');
+        const wrapper = document.getElementById('mentor-img-wrapper');
 
         if (!modal || !mentorData) return;
 
         if (img) {
             img.src = mentorData.image || 'public/images/uploads/logo-ngk.png';
-            img.classList.remove('scale-150', 'cursor-zoom-out');
+            img.classList.remove('scale-110', 'cursor-zoom-out');
             img.classList.add('cursor-zoom-in');
+
+            if (wrapper) {
+                wrapper.classList.remove('h-56', 'w-56', 'rounded-xl');
+                wrapper.classList.add('h-28', 'w-28', 'rounded-full', 'overflow-hidden');
+            }
         }
         if (name) name.innerText = mentorData.name || 'Nama Musyrifah';
         if (badge) badge.innerText = mentorData.badge || 'Muhafizhoh Bersanad';
@@ -177,12 +183,22 @@
     };
 
     window.toggleMentorImageZoom = function toggleMentorImageZoom(element) {
-        if (element.classList.contains('scale-150')) {
-            element.classList.remove('scale-150', 'cursor-zoom-out');
+        const wrapper = document.getElementById('mentor-img-wrapper');
+
+        if (element.classList.contains('scale-110')) {
+            element.classList.remove('scale-110', 'cursor-zoom-out');
             element.classList.add('cursor-zoom-in');
+            if (wrapper) {
+                wrapper.classList.remove('h-56', 'w-56', 'rounded-xl');
+                wrapper.classList.add('h-28', 'w-28', 'rounded-full', 'overflow-hidden');
+            }
         } else {
             element.classList.remove('cursor-zoom-in');
-            element.classList.add('scale-150', 'cursor-zoom-out');
+            element.classList.add('scale-110', 'cursor-zoom-out');
+            if (wrapper) {
+                wrapper.classList.remove('h-28', 'w-28', 'rounded-full', 'overflow-hidden');
+                wrapper.classList.add('h-56', 'w-56', 'rounded-xl');
+            }
         }
     };
 
