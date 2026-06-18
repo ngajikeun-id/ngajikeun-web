@@ -160,18 +160,18 @@
         const name = document.getElementById('modal-mentor-name');
         const badge = document.getElementById('modal-mentor-badge');
         const bio = document.getElementById('modal-mentor-bio');
-        const wrapper = document.getElementById('mentor-img-wrapper');
+        const container = document.getElementById('mentor-img-container');
 
         if (!modal || !mentorData) return;
 
         if (img) {
             img.src = mentorData.image || 'public/images/uploads/logo-ngk.png';
-            img.classList.remove('scale-110', 'cursor-zoom-out');
-            img.classList.add('cursor-zoom-in');
+            img.classList.remove('scale-150', 'z-30', 'rounded-xl', 'cursor-zoom-out');
+            img.classList.add('scale-100', 'rounded-none', 'cursor-zoom-in');
 
-            if (wrapper) {
-                wrapper.classList.remove('h-56', 'w-56', 'rounded-xl');
-                wrapper.classList.add('h-28', 'w-28', 'rounded-full', 'overflow-hidden');
+            if (container) {
+                container.classList.remove('overflow-visible');
+                container.classList.add('overflow-hidden');
             }
         }
         if (name) name.innerText = mentorData.name || 'Nama Musyrifah';
@@ -183,21 +183,21 @@
     };
 
     window.toggleMentorImageZoom = function toggleMentorImageZoom(element) {
-        const wrapper = document.getElementById('mentor-img-wrapper');
+        const container = document.getElementById('mentor-img-container');
 
-        if (element.classList.contains('scale-110')) {
-            element.classList.remove('scale-110', 'cursor-zoom-out');
-            element.classList.add('cursor-zoom-in');
-            if (wrapper) {
-                wrapper.classList.remove('h-56', 'w-56', 'rounded-xl');
-                wrapper.classList.add('h-28', 'w-28', 'rounded-full', 'overflow-hidden');
+        if (element.classList.contains('scale-150')) {
+            element.classList.remove('scale-150', 'z-30', 'rounded-xl', 'cursor-zoom-out');
+            element.classList.add('scale-100', 'rounded-none', 'cursor-zoom-in');
+            if (container) {
+                container.classList.remove('overflow-visible');
+                container.classList.add('overflow-hidden');
             }
         } else {
-            element.classList.remove('cursor-zoom-in');
-            element.classList.add('scale-110', 'cursor-zoom-out');
-            if (wrapper) {
-                wrapper.classList.remove('h-28', 'w-28', 'rounded-full', 'overflow-hidden');
-                wrapper.classList.add('h-56', 'w-56', 'rounded-xl');
+            element.classList.remove('scale-100', 'rounded-none', 'cursor-zoom-in');
+            element.classList.add('scale-150', 'z-30', 'rounded-xl', 'cursor-zoom-out');
+            if (container) {
+                container.classList.remove('overflow-hidden');
+                container.classList.add('overflow-visible');
             }
         }
     };
