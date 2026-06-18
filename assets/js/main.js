@@ -1,5 +1,4 @@
 (function () {
-    // --- STATE UTK FITUR ZOOM INSPEKSI MUSYRIFAH ---
     let currentZoom = 1;
     let isPanning = false;
     let startX = 0, startY = 0;
@@ -62,7 +61,6 @@
         });
     }
 
-    // --- JAMU DETEKSI AUTO-UPDATE PWA BIAR LANGSUNG SINKRON, BRO ---
     function setupPwaAutoUpdate() {
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.addEventListener('controllerchange', () => {
@@ -109,7 +107,7 @@
         setupRevealOnScroll();
         setupBackToTopButton();
         setupAosAnimations();
-        setupPwaAutoUpdate(); // Hidupkan radar update PWA, antum
+        setupPwaAutoUpdate();
     }
 
     document.addEventListener("componentsLoaded", () => {
@@ -156,7 +154,6 @@
         document.body.style.overflow = '';
     };
 
-    // --- JALUR GAIB MODAL MENTOR DENGAN KANVAS INSPEKSI ZOOM ---
     window.openMentorModal = function openMentorModal(mentorData) {
         const modal = document.getElementById('mentor-modal');
         const img = document.getElementById('modal-mentor-img');
@@ -169,7 +166,6 @@
 
         if (!modal || !mentorData) return;
 
-        // Reset state per-zooman setiap kali modal dibuka baru
         currentZoom = 1;
         translateX = 0;
         translateY = 0;
@@ -191,7 +187,6 @@
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
 
-        // Nyalakan sensor mouse drag & slider penjelajah gambar
         initZoomControls();
     };
 
@@ -203,14 +198,12 @@
 
         if (!slider || !zoomImg || !viewport) return;
 
-        // Gerakan slider range input
         slider.oninput = function () {
             currentZoom = this.value / 100;
             if (label) label.innerText = `${this.value}%`;
             updateImageTransform();
         };
 
-        // Mulai drag gambar (klik tahan)
         viewport.onmousedown = function (e) {
             if (currentZoom <= 1) return;
             isPanning = true;
@@ -220,7 +213,6 @@
             e.preventDefault();
         };
 
-        // Gambar digeser saat mouse bergerak
         window.onmousemove = function (e) {
             if (!isPanning) return;
             translateX = e.clientX - startX;
@@ -228,7 +220,6 @@
             updateImageTransform();
         };
 
-        // Lepas klik mouse
         window.onmouseup = function () {
             isPanning = false;
             if (viewport) viewport.classList.remove('cursor-grabbing');
@@ -248,7 +239,6 @@
         isPanning = false;
     };
 
-    // --- SHORTCUT PENGAMAN ESC KEY ---
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
             window.closeMentorModal();
