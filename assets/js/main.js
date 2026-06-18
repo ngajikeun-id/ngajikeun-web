@@ -182,19 +182,22 @@
         document.body.style.overflow = 'hidden';
     };
 
+    // --- LOGIC MELEBARKAN FOTO BULAT KELUAR FRAME, ENTE ---
     window.toggleMentorImageZoom = function toggleMentorImageZoom(element) {
         const container = document.getElementById('mentor-img-container');
 
         if (element.classList.contains('scale-150')) {
-            element.classList.remove('scale-150', 'z-30', 'rounded-xl', 'cursor-zoom-out');
-            element.classList.add('scale-100', 'rounded-none', 'cursor-zoom-in');
+            // BALIK NORMAL: Kembalikan ukuran asli, sembunyikan luberan
+            element.classList.remove('scale-150', 'z-30', 'cursor-zoom-out');
+            element.classList.add('cursor-zoom-in');
             if (container) {
                 container.classList.remove('overflow-visible');
                 container.classList.add('overflow-hidden');
             }
         } else {
-            element.classList.remove('scale-100', 'rounded-none', 'cursor-zoom-in');
-            element.classList.add('scale-150', 'z-30', 'rounded-xl', 'cursor-zoom-out');
+            // PROSES ZOOM: Gambar membesar bulat raksasa menimpa konten bawah!
+            element.classList.remove('cursor-zoom-in');
+            element.classList.add('scale-150', 'z-30', 'cursor-zoom-out');
             if (container) {
                 container.classList.remove('overflow-hidden');
                 container.classList.add('overflow-visible');
