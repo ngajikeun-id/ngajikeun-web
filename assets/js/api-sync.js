@@ -436,22 +436,29 @@
             container.innerHTML = '';
 
             for (const product of products) {
+                // Konversi objek data produk ke string JSON agar aman dilempar ke fungsi onclick, antum
+                const safeProductData = JSON.stringify(product).replace(/"/g, '&quot;');
 
+                // Setup asset gambar atau fallback emoji ikon buku bawaan antum, ente
                 const productImage = product.image
-                    ? `<img src="${product.image}" class="w-full h-full object-cover rounded-[2rem] shadow-sm" alt="${safeText(product.title)}">`
+                    ? `<img src="${safeUrl(product.image)}" class="w-full h-full object-cover rounded-[2rem] shadow-sm" alt="${safeText(product.title)}">`
                     : `<span class="text-5xl group-hover:scale-110 transition-transform duration-500">📖</span>`;
 
                 container.innerHTML += `
         <div class="group bg-slate-900 rounded-[2.5rem] border border-slate-800 shadow-sm hover:shadow-xl hover:shadow-emerald-950/20 transition-all duration-500 overflow-hidden col-span-full">
             <div class="flex flex-col md:flex-row items-center p-4 md:p-6 gap-8">
                 
-                <div class="w-full md:w-48 h-48 bg-slate-800/50 rounded-[2rem] flex-shrink-0 flex items-center justify-center overflow-hidden group-hover:bg-slate-800 transition-colors duration-500">
+                <div onclick="window.openProductModal(${safeProductData})"
+                    class="w-full md:w-48 h-48 bg-slate-800/50 rounded-[2rem] flex-shrink-0 flex items-center justify-center overflow-hidden cursor-pointer hover:bg-slate-800 ring-1 ring-transparent hover:ring-emerald-500/30 transform hover:scale-102 transition-all duration-500">
                     ${productImage}
                 </div>
 
                 <div class="flex-grow text-center md:text-left">
                     <div class="flex flex-col md:flex-row md:items-center gap-2 mb-3">
-                        <h3 class="text-xl font-black text-slate-100">${safeText(product.title, 'Produk')}</h3>
+                        <h3 onclick="window.openProductModal(${safeProductData})"
+                            class="text-xl font-black text-slate-100 cursor-pointer hover:text-emerald-400 transition-colors duration-300">
+                            ${safeText(product.title, 'Produk')}
+                        </h3>
                         <span class="hidden md:block w-1 h-1 rounded-full bg-emerald-500"></span>
                         <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-[0.2em]">E-Book Series</span>
                     </div>
@@ -467,13 +474,7 @@
 
                 <div class="w-full md:w-auto md:min-w-[180px] p-6 bg-slate-800/50 rounded-[2rem] flex flex-col items-center justify-center border border-slate-700">
                     <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1 text-center">Investasi</span>
-                    <span class="text-2xl font-black text-emerald-400 mb-4">${safeText(product.price, 'Gratis')}</span>
-                    <a href="${safeText(product.link, 'https://wa.me/6281932692047')}" 
-               target="_blank"
-               data-umami-event="Beli ${safeText(product.title)}"
-               class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] px-6 py-3 rounded-xl font-black uppercase tracking-widest shadow-lg shadow-emerald-500/20 transition-all active:scale-95 text-center">
-                Beli Sekarang
-            </a>
+                    <span class="text-2xl font-black text-emerald-400 text-center">${safeText(product.price, 'Gratis')}</span>
                 </div>
 
             </div>
