@@ -182,12 +182,10 @@
         document.body.style.overflow = 'hidden';
     };
 
-    // --- LOGIC MELEBARKAN FOTO BULAT KELUAR FRAME, ENTE ---
     window.toggleMentorImageZoom = function toggleMentorImageZoom(element) {
         const container = document.getElementById('mentor-img-container');
 
         if (element.classList.contains('scale-150')) {
-            // BALIK NORMAL: Kembalikan ukuran asli, sembunyikan luberan
             element.classList.remove('scale-150', 'z-30', 'cursor-zoom-out');
             element.classList.add('cursor-zoom-in');
             if (container) {
@@ -195,7 +193,6 @@
                 container.classList.add('overflow-hidden');
             }
         } else {
-            // PROSES ZOOM: Gambar membesar bulat raksasa menimpa konten bawah!
             element.classList.remove('cursor-zoom-in');
             element.classList.add('scale-150', 'z-30', 'cursor-zoom-out');
             if (container) {
