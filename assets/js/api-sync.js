@@ -470,12 +470,7 @@
                     </div>
                 </div>
 
-                <div class="w-full md:w-auto md:min-w-[180px] p-6 bg-slate-800/50 rounded-[2rem] flex flex-col items-center justify-center border border-slate-700">
-                    <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1 text-center">Investasi</span>
-                    <span class="text-2xl font-black text-emerald-400 text-center">${safeText(product.price, 'Gratis')}</span>
                 </div>
-
-            </div>
         </div>`;
             }
         } catch (error) {
