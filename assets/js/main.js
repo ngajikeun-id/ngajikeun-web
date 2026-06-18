@@ -224,49 +224,6 @@
         }
     });
 
-    // --- MODAL PRODUK ---
-    window.openProductModal = function openProductModal(productData) {
-        const modal = document.getElementById('product-modal');
-        const img = document.getElementById('modal-product-img');
-        const title = document.getElementById('modal-product-title');
-        const category = document.getElementById('modal-product-category');
-        const price = document.getElementById('modal-product-price');
-        const desc = document.getElementById('modal-product-description');
-        const btn = document.getElementById('modal-product-btn');
-
-        if (!modal || !productData) return;
-
-        if (img) {
-            img.src = productData.image || 'public/images/uploads/logo-ngk.png';
-        }
-        if (title) title.innerText = productData.title || 'Nama Produk';
-        if (category) category.innerText = productData.category || 'Koleksi';
-        if (price) price.innerText = productData.price || 'Rp 0';
-
-        if (desc) {
-            desc.innerHTML = productData.description || 'Deskripsi sedang dimuat...';
-            desc.scrollTop = 0;
-        }
-
-        if (btn) {
-            btn.href = productData.link || '#';
-            btn.innerText = productData.category === 'E-Book' ? 'Download E-Book' : 'Ambil Produk';
-        }
-
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    };
-
-    window.closeProductModal = function closeProductModal() {
-        const modal = document.getElementById('product-modal');
-        const content = document.getElementById('product-modal-content');
-        if (!modal) return;
-
-        modal.classList.add('hidden');
-        if (content) content.scrollTop = 0;
-        document.body.style.overflow = '';
-    };
-
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
             if (window.closeMentorModal) window.closeMentorModal();

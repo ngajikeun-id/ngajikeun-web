@@ -436,10 +436,8 @@
             container.innerHTML = '';
 
             for (const product of products) {
-                // Konversi objek data produk ke string JSON agar aman dilempar ke fungsi onclick, antum
                 const safeProductData = JSON.stringify(product).replace(/"/g, '&quot;');
 
-                // Setup asset gambar atau fallback emoji ikon buku bawaan antum, ente
                 const productImage = product.image
                     ? `<img src="${safeUrl(product.image)}" class="w-full h-full object-cover rounded-[2rem] shadow-sm" alt="${safeText(product.title)}">`
                     : `<span class="text-5xl group-hover:scale-110 transition-transform duration-500">📖</span>`;
@@ -484,6 +482,100 @@
             console.error('Gagal load produk:', error);
         }
     }
+
+    window.openProductModal = function (product) {
+        const modal = document.getElementById('product-modal');
+        if (!modal) return;
+
+        document.getElementById('modal-product-title').innerText = product.title || 'Produk';
+        document.getElementById('modal-product-category').innerText = product.category || 'E-BOOK SERIES';
+        document.getElementById('modal-product-price').innerText = product.price || 'Gratis';
+
+        const descContainer = document.getElementById('modal-product-description');
+        if (descContainer) {
+            descContainer.innerHTML = product.description || 'Detail deskripsi belum tersedia.';
+        }
+
+        const modalImg = document.getElementById('modal-product-img');
+        if (modalImg) {
+            const imgSrc = product.image || 'public/images/uploads/book-icon.png';
+            modalImg.src = imgSrc;
+            modalImg.alt = product.title || 'Produk';
+
+            modalImg.setAttribute('onclick', `window.zoomImage('${imgSrc}')`);
+            modalImg.className = 'h-20 w-20 object-contain transition-all duration-300 cursor-zoom-in hover:scale-105';
+        }
+
+        const modalBtn = document.getElementById('modal-product-btn');
+        if (modalBtn) {
+            modalBtn.href = product.link || 'https://wa.me/6281932692047';
+            modalBtn.innerText = 'BELI SEKARANG';
+
+            modalBtn.setAttribute('data-umami-event', `Beli ${product.title || 'Produk'}`);
+        }
+
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeProductModal = function () {
+        const modal = document.getElementById('product-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            const lightbox = document.querySelector('.cursor-zoom-out');
+            if (!lightbox) {
+                document.body.style.overflow = 'auto';
+            }
+        }
+    };
+
+    window.zoomImage = function (src) {
+        const overlay = document.createElement('div');
+        overlay.className = 'fixed inset-0 z-[10000] bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out opacity-0 transition-opacity duration-300';
+
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'max-h-[90vh] max-w-full object-contain rounded-2xl shadow-2xl transform scale-90 transition-transform duration-300';
+
+        overlay.appendChild(img);
+        document.body.appendChild(overlay);
+
+        document.body.style.overflow = 'hidden';
+
+        setTimeout(() => {
+            overlay.classList.remove('opacity-0');
+            img.classList.remove('scale-90');
+            img.classList.add('scale-100');
+        }, 10);
+
+        const closeLightbox = () => {
+            overlay.classList.add('opacity-0');
+            img.classList.remove('scale-100');
+            img.classList.add('scale-90');
+
+            setTimeout(() => {
+                overlay.remove();
+                const productModal = document.getElementById('product-modal');
+                const articleModal = document.getElementById('article-modal');
+                const isProductModalHidden = productModal ? productModal.classList.contains('hidden') : true;
+                const isArticleModalHidden = articleModal ? articleModal.classList.contains('hidden') : true;
+
+                if (isProductModalHidden && isArticleModalHidden) {
+                    document.body.style.overflow = 'auto';
+                }
+            }, 300);
+        };
+
+        overlay.addEventListener('click', closeLightbox);
+
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+    };
 
     async function syncQuizzes() {
         const listTahfidz = document.getElementById('list-tahfidz');
