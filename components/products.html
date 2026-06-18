@@ -1,9 +1,58 @@
 <section id="product-container"
-    class="max-w-7xl mx-auto px-4 py-12 bg-slate-950 rounded-3xl shadow-sm border border-slate-800 mb-12">
+    class="max-w-7xl mx-auto px-4 py-12 bg-slate-950 rounded-3xl shadow-sm border border-slate-800 mb-12 scroll-mt-24">
     <h2 class="text-3xl font-bold text-center text-slate-100 mb-10">Produk & E-Book</h2>
+
     <div id="products-list" class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="text-center col-span-full py-10 text-gray-400 italic">
-            Nantikan koleksi produk & e-book kami...
+            Memuat koleksi produk & e-book...
         </div>
     </div>
 </section>
+
+<div id="product-modal"
+    class="fixed inset-0 z-[999] hidden bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4">
+
+    <div
+        class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl transform transition-all max-h-[85vh] overflow-y-auto custom-scroll relative">
+
+        <div class="absolute top-4 right-4 z-50">
+            <button onclick="window.closeProductModal()"
+                class="text-slate-400 hover:text-emerald-400 p-2 bg-slate-950/60 hover:bg-slate-800 backdrop-blur-sm rounded-xl transition-all border border-slate-800/50 shadow-lg"
+                type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <div id="product-modal-content" class="p-6 pt-12 space-y-4">
+            <div class="flex flex-col items-center text-center space-y-3">
+                <div id="product-img-container"
+                    class="h-40 w-40 rounded-2xl overflow-hidden ring-4 ring-emerald-500/30 shadow-md bg-slate-950 flex items-center justify-center transition-all duration-300 relative">
+                    <img id="modal-product-img" src="" alt=""
+                        class="h-full w-full object-cover rounded-none transform transition-all duration-300 origin-center relative">
+                </div>
+
+                <h3 id="modal-product-title" class="text-xl font-bold text-slate-100 px-4"></h3>
+                <span id="modal-product-category"
+                    class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold px-3 py-1 rounded-full"></span>
+                <p id="modal-product-price" class="text-lg font-extrabold text-emerald-400"></p>
+            </div>
+
+            <div class="border-t border-slate-800 pt-4">
+                <p class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Deskripsi Produk</p>
+                <div id="modal-product-description"
+                    class="text-slate-300 text-sm leading-relaxed space-y-2 prose prose-invert max-h-40 overflow-y-auto pr-2 custom-scroll">
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <a id="modal-product-btn" href="#" target="_blank"
+                    class="block w-full text-center bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-4 rounded-xl transition-all shadow-lg shadow-emerald-500/10 active:scale-95">
+                    Beli / Download Sekarang
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
