@@ -1,4 +1,9 @@
 (function () {
+    let currentZoom = 1;
+    let isPanning = false;
+    let startX = 0, startY = 0;
+    let translateX = 0, translateY = 0;
+
     function setupMobileMenu() {
         const menuBtn = document.getElementById('menu-btn');
         const navMenu = document.getElementById('nav-menu');
@@ -35,18 +40,108 @@
         const backToTopBtn = document.getElementById('backToTopBtn');
         if (!backToTopBtn) return;
 
-        window.addEventListener('scroll', () => {
+        const toggleButton = () => {
             if (window.scrollY > 300) {
                 backToTopBtn.classList.remove('hidden');
             } else {
                 backToTopBtn.classList.add('hidden');
             }
-        });
+        };
 
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.addEventListener('scroll', toggleButton);
+        toggleButton();
+    }
+
+    function setupAosAnimations() {
+        if (!window.AOS) return;
+
+        window.AOS.init({
+            duration: 700,
+            once: true
         });
     }
+
+    function setupPwaAutoUpdate() {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                console.log('🔥 PWA mendeteksi aset baru, merefresh halaman otomatis...');
+                window.location.reload();
+            });
+        }
+    }
+
+    function initializeContentSync() {
+        if (!window.NgajikeunApi) return;
+
+        console.log('Ngajikeun.id: Starting content synchronization...');
+        window.NgajikeunApi.syncAbout();
+        window.NgajikeunApi.syncPrograms();
+        window.NgajikeunApi.syncMentors();
+        window.NgajikeunApi.syncTestimonials();
+        window.NgajikeunApi.syncArticles();
+        window.NgajikeunApi.syncProducts();
+        window.NgajikeunApi.syncQuizzes();
+    }
+
+    async function initPage() {
+        try {
+            const response = await fetch('content/dashboard.json');
+            if (response.ok) {
+                const dashboardData = await response.json();
+                if (dashboardData && dashboardData.is_maintenance === true) {
+                    window.location.href = 'maintenance.html';
+                    return;
+                }
+
+                window.currentDashboardData = dashboardData;
+            }
+        } catch (error) {
+            console.error('Ngajikeun.id: Gagal memvalidasi status maintenance:', error);
+        }
+
+        if (window.NgajikeunComponents) {
+            await window.NgajikeunComponents.loadComponents();
+        }
+
+        setupMobileMenu();
+        setupRevealOnScroll();
+        setupBackToTopButton();
+        setupAosAnimations();
+        setupPwaAutoUpdate();
+    }
+
+    document.addEventListener("componentsLoaded", () => {
+        console.log("🔥 Components ready, syncing content...");
+
+        if (window.currentDashboardData && window.currentDashboardData.running_text) {
+            const marqueeElement = document.getElementById('navbar-running-text');
+            if (marqueeElement) {
+                marqueeElement.innerText = window.currentDashboardData.running_text;
+                console.log("✅ Running text berhasil di-inject!");
+            }
+        }
+
+        initializeContentSync();
+    });
+
+    window.scrollToTop = function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initPage().catch((error) => {
+            console.error('Gagal inisialisasi halaman:', error);
+        });
+    });
+
+    // --- MODAL ARTIKEL ---
+    window.openArticleModal = function openArticleModal(slug) {
+        if (typeof window.getArticleBySlug === 'function') {
+            return window.getArticleBySlug(slug);
+        }
+
+        return window.NgajikeunApi?.getArticleBySlug?.(slug);
+    };
 
     window.closeArticleModal = function closeArticleModal() {
         const modal = document.getElementById('article-modal');
@@ -59,26 +154,80 @@
         document.body.style.overflow = '';
     };
 
-    window.openMentorModal = function openMentorModal(slug) {
-        return window.NgajikeunApi?.getMentorModalBySlug?.(slug);
+    // --- MODAL MENTOR ---
+    window.openMentorModal = function openMentorModal(mentorData) {
+        const modal = document.getElementById('mentor-modal');
+        const img = document.getElementById('modal-mentor-img');
+        const name = document.getElementById('modal-mentor-name');
+        const badge = document.getElementById('modal-mentor-badge');
+        const bio = document.getElementById('modal-mentor-bio');
+        const container = document.getElementById('mentor-img-container');
+
+        if (!modal || !mentorData) return;
+
+        if (img) {
+            img.src = mentorData.image || 'public/images/uploads/logo-ngk.png';
+            img.classList.remove('scale-150', 'z-30', 'cursor-zoom-out');
+            img.classList.add('cursor-zoom-in');
+
+            if (container) {
+                container.classList.remove('overflow-visible');
+                container.classList.add('overflow-hidden');
+            }
+        }
+        if (name) name.innerText = mentorData.name || 'Nama Musyrifah';
+        if (badge) badge.innerText = mentorData.badge || 'Muhafizhoh Bersanad';
+
+        if (bio) {
+            bio.innerHTML = mentorData.bio || 'Profil sedang dimuat...';
+            bio.scrollTop = 0;
+        }
+
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
     };
 
-    window.openProductModal = function openProductModal(slug) {
-        return window.NgajikeunApi?.getProductModalBySlug?.(slug);
+    window.toggleMentorImageZoom = function toggleMentorImageZoom(element) {
+        const container = document.getElementById('mentor-img-container');
+
+        if (element.classList.contains('scale-150')) {
+            element.classList.remove('scale-150', 'z-30', 'cursor-zoom-out');
+            element.classList.add('cursor-zoom-in');
+            if (container) {
+                container.classList.remove('overflow-visible');
+                container.classList.add('overflow-hidden');
+            }
+        } else {
+            element.classList.remove('cursor-zoom-in');
+            element.classList.add('scale-150', 'z-30', 'cursor-zoom-out');
+            if (container) {
+                container.classList.remove('overflow-hidden');
+                container.classList.add('overflow-visible');
+            }
+        }
     };
 
-    window.closeMentorModal = window.closeArticleModal;
-    window.closeProductModal = window.closeArticleModal;
+    window.closeMentorModal = function closeMentorModal() {
+        const modal = document.getElementById('mentor-modal');
+        const content = document.getElementById('mentor-modal-content');
+        if (!modal) return;
+
+        modal.classList.add('hidden');
+        modal.scrollTop = 0;
+        if (content) content.scrollTop = 0;
+        document.body.style.overflow = '';
+    };
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
-            window.closeArticleModal();
+            window.closeMentorModal();
         }
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-        setupMobileMenu();
-        setupRevealOnScroll();
-        setupBackToTopButton();
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (window.closeMentorModal) window.closeMentorModal();
+            if (window.closeProductModal) window.closeProductModal();
+        }
     });
-})();
+}());
