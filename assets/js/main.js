@@ -63,7 +63,12 @@
 
     function setupPwaAutoUpdate() {
         if ('serviceWorker' in navigator) {
+            let refreshing = false;
+
             navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (refreshing) return;
+                refreshing = true;
+
                 console.log('🔥 PWA mendeteksi aset baru, merefresh halaman otomatis...');
                 window.location.reload();
             });
@@ -73,7 +78,7 @@
     function initializeContentSync() {
         if (!window.NgajikeunApi) return;
 
-        console.log('Ngajikeun.id: Starting content synchronization...');
+        // console.log('Ngajikeun.id: Starting content synchronization...');
         window.NgajikeunApi.syncAbout();
         window.NgajikeunApi.syncPrograms();
         window.NgajikeunApi.syncMentors();
@@ -111,13 +116,13 @@
     }
 
     document.addEventListener("componentsLoaded", () => {
-        console.log("🔥 Components ready, syncing content...");
+        // console.log("🔥 Components ready, syncing content...");
 
         if (window.currentDashboardData && window.currentDashboardData.running_text) {
             const marqueeElement = document.getElementById('navbar-running-text');
             if (marqueeElement) {
                 marqueeElement.innerText = window.currentDashboardData.running_text;
-                console.log("✅ Running text berhasil di-inject!");
+                // console.log("✅ Running text berhasil di-inject!");
             }
         }
 
