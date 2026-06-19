@@ -26,12 +26,58 @@
         content="Belajar Al-Qur'an privat, jadwal fleksibel, dibimbing pengajar bersanad.">
     <meta property="twitter:image" content="https://ngajikeun.id/images/logo/og-ngk.png">
 
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <script>
         tailwind.config = {
-            darkMode: 'class'
-        };
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            950: '#052e16',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    scale: {
+                        '102': '1.02',
+                    }
+                }
+            }
+        }
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdn.tailwindcss.com?plugins=typography,forms,aspect-ratio,line-clamp"></script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .custom-scroll::-webkit-scrollbar {
+                width: 6px;
+            }
+            .custom-scroll::-webkit-scrollbar-track {
+                background: #0f172a;
+            }
+            .custom-scroll::-webkit-scrollbar-thumb {
+                background: #1e293b;
+                border-radius: 9999px;
+            }
+            .custom-scroll::-webkit-scrollbar-thumb:hover {
+                background: #059669;
+            }
+        }
+    </style>
+
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -185,7 +231,8 @@
     <div data-component="quiz" data-component-src="components/quiz.html" class="relative z-10"></div>
 
     <div data-component="footer" data-component-src="components/footer.html" class="relative z-10"></div>
-    <div data-component="floating-actions" data-component-src="components/floating-actions.html" class="relative z-50"></div>
+    <div data-component="floating-actions" data-component-src="components/floating-actions.html" class="relative z-50">
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="assets/js/api-sync.js"></script>
