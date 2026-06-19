@@ -40,181 +40,68 @@
     }
 
     function renderSimpleMarkdown(markdown) {
-        const safeMarkdown = String(markdown ?? '').trim();
-        if (!safeMarkdown) {
-            return '<p>Informasi belum tersedia.</p>';
-        }
-
+        const safeMarkdown = String(markdown ?? '');
         return safeMarkdown
-            .split(/\n\s*\n/)
-            .map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, '<br>')}</p>`)
-            .join('');
-    }
-
-    function styleMarkdownTables(scope) {
-        if (!scope) return;
-
-        scope.querySelectorAll('table').forEach((table) => {
-            table.classList.add('w-full', 'min-w-[640px]', 'border-collapse', 'overflow-hidden', 'rounded-xl', 'border', 'border-slate-700', 'text-xs');
-        });
-
-        scope.querySelectorAll('thead').forEach((thead) => {
-            thead.classList.add('bg-emerald-950/60');
-        });
-
-        scope.querySelectorAll('tbody tr').forEach((row) => {
-            row.classList.add('border-t', 'border-slate-800');
-        });
-
-        scope.querySelectorAll('th').forEach((cell) => {
-            cell.classList.add('px-4', 'py-3', 'text-left', 'font-black', 'uppercase', 'tracking-widest', 'text-emerald-300', 'border', 'border-slate-700', 'align-top');
-        });
-
-        scope.querySelectorAll('td').forEach((cell) => {
-            cell.classList.add('px-4', 'py-3', 'text-slate-300', 'border', 'border-slate-800', 'align-top');
-        });
-    }
-
-    async function fetchJson(url) {
-        const response = await fetch(url, { cache: 'no-store' });
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status} while loading ${url}`);
-        }
-
-        return response.json();
+            .replace(/\n\n/g, '<br><br>')
+            .replace(/\n/g, '<br>')
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>');
     }
 
     function loadSiteData() {
         if (!siteDataPromise) {
-            siteDataPromise = (async () => {
-                try {
-                    return await fetchJson('content/data/site-data.json');
-                } catch (localError) {
-                    console.warn('Gagal load aggregate lokal, mencoba CDN fallback.', localError);
-                    return fetchJson(CDN_SITE_DATA_URL);
-                }
-            })();
+            siteDataPromise = fetch(CDN_SITE_DATA_URL)
+                .then((res) => {
+                    if (!res.ok) throw new Error('Jaringan bermasalah pas ambil data, Antum!');
+                    return res.json();
+                })
+                .catch((err) => {
+                    console.error('Gagal mengambil data dari CDN:', err);
+                    siteDataPromise = null;
+                    throw err;
+                });
         }
-
         return siteDataPromise;
     }
 
     function getCollection(data, key) {
-        const collection = data?.[key];
-        return Array.isArray(collection) ? collection : [];
+        if (!data || !data.collections || !data.collections[key]) return [];
+        return Object.values(data.collections[key]);
     }
 
     function resetModalScroll() {
         const modal = document.getElementById('article-modal');
         const content = document.getElementById('modal-content');
-
         if (modal) modal.scrollTop = 0;
         if (content) content.scrollTop = 0;
     }
 
-    async function getProgramDetails(slug, fallbackProgram) {
-        if (!/^[a-z0-9-]+$/.test(slug)) {
-            return fallbackProgram;
-        }
-
-        try {
-            const details = await fetchJson(`content/programs/${slug}.json`);
-            return {
-                ...fallbackProgram,
-                ...details,
-                slug
-            };
-        } catch (error) {
-            console.warn('Gagal load detail program langsung, memakai data aggregate.', error);
-            return fallbackProgram;
-        }
-    }
-
-    async function getArticleBySlug(slug) {
-        const modal = document.getElementById('article-modal');
-        const content = document.getElementById('modal-content');
-
-        if (!modal || !content) {
-            console.error('Elemen modal artikel tidak ditemukan.');
-            return;
-        }
+    async function syncAbout() {
+        const descEl = document.getElementById('about-description');
+        const visionEl = document.getElementById('about-vision');
+        const missionEl = document.getElementById('about-mission');
 
         try {
             const data = await loadSiteData();
-            const articles = getCollection(data, 'articles');
-            const post = articles.find((article) => article.slug === slug);
+            if (!data || !data.collections || !data.collections.about) return;
+            const aboutData = Object.values(data.collections.about)[0];
 
-            if (!post) return;
-
-            const imageHtml = post.thumbnail
-                ? `<img src="${safeUrl(post.thumbnail)}" alt="${safeText(post.title)}" onclick="zoomImage(this.src)" class="w-full max-h-[60vh] object-contain rounded-[2rem] mb-8 shadow-lg cursor-zoom-in transition-transform duration-300 hover:scale-[1.01]">`
-                : '';
-
-            content.innerHTML = `
-                <div class="max-w-2xl mx-auto text-center">
-                    ${imageHtml}
-                    <span class="text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-4">Literasi Al-Qur'an</span>
-                    <h2 class="text-3xl md:text-4xl font-black text-slate-100 mb-6 leading-tight">${safeText(post.title)}</h2>
-                    <div class="prose prose-invert prose-emerald prose-sm max-w-none text-slate-300 leading-relaxed text-left border-t border-slate-800 pt-8">
-                        ${window.marked ? window.marked.parse(post.body || '') : renderSimpleMarkdown(post.body)}
-                    </div>
-                </div>
-            `;
-
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            resetModalScroll();
+            if (aboutData) {
+                if (descEl) descEl.innerText = aboutData.description || '';
+                if (visionEl) visionEl.innerText = aboutData.vision || '';
+                if (missionEl) {
+                    missionEl.innerHTML = '';
+                    if (Array.isArray(aboutData.mission)) {
+                        aboutData.mission.forEach((m) => {
+                            const li = document.createElement('li');
+                            li.innerText = m;
+                            missionEl.appendChild(li);
+                        });
+                    }
+                }
+            }
         } catch (error) {
-            console.error('Gagal memuat artikel:', error);
-        }
-    }
-
-    async function getProgramBySlug(slug) {
-        const modal = document.getElementById('article-modal');
-        const content = document.getElementById('modal-content');
-
-        if (!modal || !content) {
-            console.error('Elemen modal tidak ditemukan, Antum!');
-            return;
-        }
-
-        try {
-            const data = await loadSiteData();
-            const programs = getCollection(data, 'programs');
-            const programSummary = programs.find((p) => p.slug === slug);
-
-            if (!programSummary) return;
-
-            const program = await getProgramDetails(slug, programSummary);
-
-            const imageHtml = program.image
-                ? `<img src="${safeUrl(program.image)}" alt="${safeText(program.title)}" onclick="zoomImage(this.src)" class="w-full max-h-[60vh] object-contain rounded-[2rem] mb-8 shadow-lg cursor-zoom-in transition-transform duration-300 hover:scale-[1.01]">`
-                : '';
-            const programBody = String(program.body || program.description || '').trim();
-
-            content.innerHTML = `
-                <div class="max-w-2xl mx-auto text-center">
-                    ${imageHtml}
-                    <span class="text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-4">Detail Program Belajar</span>
-                    <h2 class="text-3xl md:text-4xl font-black text-slate-100 mb-6 leading-tight">${safeText(program.title)}</h2>
-
-                    <div id="program-markdown-content" class="prose prose-invert prose-emerald prose-sm max-w-none overflow-x-auto text-slate-300 leading-relaxed text-left border-t border-slate-800 pt-8 mb-8">
-                        ${programBody && window.marked ? window.marked.parse(programBody) : renderSimpleMarkdown(programBody)}
-                    </div>
-
-                    <a href="${safeUrl(program.registration_link)}" target="_blank" rel="noopener noreferrer"
-                       class="inline-block w-full sm:w-auto px-8 py-4 bg-emerald-600 border border-emerald-500 text-white text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-700 transition-all active:scale-95 shadow-lg shadow-emerald-950/50">
-                        Daftar Sekarang Lewat WA ⚡
-                    </a>
-                </div>
-            `;
-
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            styleMarkdownTables(content.querySelector('#program-markdown-content'));
-            resetModalScroll();
-        } catch (error) {
-            console.error('Gagal memuat detail program:', error);
+            console.error('Gagal load section About:', error);
         }
     }
 
@@ -229,41 +116,61 @@
 
             container.innerHTML = '';
 
-            programs.forEach(program => {
-                const imageUrl = safeUrl(program.image, 'https://via.placeholder.com/600x400?text=Flyer+Program');
-                const slug = program.slug || program.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-
+            programs.forEach((prog) => {
+                const slug = prog.slug || prog.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
                 container.innerHTML += `
-    <div class="group bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-800 hover:shadow-2xl hover:shadow-emerald-950/30 transition-all duration-500">
-        <div class="relative overflow-hidden aspect-[4/3] cursor-pointer" onclick="window.NgajikeunApi.getProgramBySlug('${safeText(slug)}')">
-            <img src="${imageUrl}" alt="${safeText(program.title)}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                <span class="text-white text-xs font-bold tracking-widest uppercase">Lihat Detail Program 📖</span>
-            </div>
-        </div>
-        
-        <div class="p-8">
-            <div class="mb-4">
-                <h3 class="text-xl font-bold text-slate-100 leading-tight">${safeText(program.title)}</h3>
-            </div>
-            <p class="text-slate-400 text-xs leading-relaxed mb-6">${safeText(program.description)}</p>
-            
-            <button type="button" data-program-slug="${safeText(slug)}"
-               class="block w-full text-center py-4 bg-slate-950 border border-slate-800 text-slate-100 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-all active:scale-95">
-                Detail Program 📖
-            </button>
-        </div>
-    </div>
-`;
-            });
-
-            container.querySelectorAll('[data-program-slug]').forEach((button) => {
-                button.addEventListener('click', () => {
-                    window.NgajikeunApi.getProgramBySlug(button.dataset.programSlug);
-                });
+                    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 flex flex-col justify-between hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-950/10 transition-all duration-300 transform hover:-translate-y-1">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-100">${safeText(prog.title, 'Program')}</h3>
+                            <p class="text-slate-400 text-xs mt-3 leading-relaxed line-clamp-3">${safeText(prog.description)}</p>
+                        </div>
+                        <div class="mt-8 border-t border-slate-800/80 pt-6 flex items-center justify-between">
+                            <span class="text-emerald-400 font-extrabold text-sm">${safeText(prog.price, 'Gratis')}</span>
+                            <button onclick="window.NgajikeunApi.getProgramBySlug('${safeText(slug)}')"
+                                class="bg-slate-800 hover:bg-emerald-600 text-white text-[11px] font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl transition-all active:scale-95">
+                                Detail →
+                            </button>
+                        </div>
+                    </div>
+                `;
             });
         } catch (error) {
-            console.error('Gagal sync program:', error);
+            console.error('Gagal load program:', error);
+        }
+    }
+
+    async function getProgramBySlug(slug) {
+        const modal = document.getElementById('article-modal');
+        const content = document.getElementById('modal-content');
+
+        if (!modal || !content) return;
+
+        try {
+            const data = await loadSiteData();
+            const programs = getCollection(data, 'programs');
+            const prog = programs.find((p) => p.slug === slug || (p.title && p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === slug));
+
+            if (!prog) return;
+
+            content.innerHTML = `
+                <div class="max-w-2xl mx-auto">
+                    <span class="text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-1">PROGRAM KAMI</span>
+                    <h2 class="text-3xl font-black text-slate-100 mb-4 leading-tight">${safeText(prog.title)}</h2>
+                    <div class="inline-block px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl mb-6">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">Biaya Investasi</span>
+                        <p class="text-lg font-black text-emerald-400">${safeText(prog.price, 'Gratis')}</p>
+                    </div>
+                    <div class="prose prose-invert prose-emerald prose-sm max-w-none text-slate-300 leading-relaxed border-t border-slate-800 pt-6">
+                        ${window.marked ? window.marked.parse(prog.description || '') : renderSimpleMarkdown(prog.description)}
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            resetModalScroll();
+        } catch (error) {
+            console.error('Gagal memuat detail program:', error);
         }
     }
 
@@ -278,35 +185,72 @@
 
             container.innerHTML = '';
 
-            for (const mentor of mentors) {
+            mentors.forEach((mentor) => {
                 const imageUrl = safeUrl(mentor.image, 'https://via.placeholder.com/150');
+                const slug = mentor.slug || mentor.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
-                const bioContent = mentor.bio || mentor.description || 'Profil bimbingan musyrifah bersanad.';
-
-                const card = document.createElement('div');
-                card.className = "text-center group cursor-pointer transition-transform active:scale-95";
-                card.innerHTML = `
-                    <div class="relative inline-block">
-                        <img src="${imageUrl}"
-                            class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-slate-800 group-hover:border-emerald-500 transition-all duration-300 shadow-md">
+                container.innerHTML += `
+                    <div class="text-center group cursor-pointer transition-transform active:scale-95" data-mentor-slug="${safeText(slug)}">
+                        <div class="relative inline-block">
+                            <img src="${imageUrl}" alt="${safeText(mentor.name)}"
+                                class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-slate-800 group-hover:border-emerald-500 transition-all duration-300 shadow-md">
+                        </div>
+                        <h3 class="mt-4 text-lg font-bold text-gray-200">${safeText(mentor.name, 'Mentor')}</h3>
+                        <p class="text-emerald-400 text-sm font-medium mb-2">${safeText(mentor.specialty, "Mentor Al-Qur'an")}</p>
                     </div>
-                    <h3 class="mt-4 text-lg font-bold text-gray-200">${safeText(mentor.name, 'Mentor')}</h3>
-                    <p class="text-emerald-400 text-sm font-medium mb-2">${safeText(mentor.specialty, 'Mentor Al-Qur\'an')}</p>
                 `;
+            });
 
-                card.onclick = () => {
-                    window.openMentorModal({
-                        name: safeText(mentor.name, 'Mentor'),
-                        badge: safeText(mentor.specialty, 'Muhafizhoh Bersanad'),
-                        image: imageUrl,
-                        bio: bioContent
-                    });
-                };
-
-                container.appendChild(card);
-            }
+            container.querySelectorAll('[data-mentor-slug]').forEach((card) => {
+                card.addEventListener('click', () => {
+                    window.NgajikeunApi.getMentorModalBySlug(card.dataset.mentorSlug);
+                });
+            });
         } catch (error) {
             console.error('Gagal load mentor:', error);
+        }
+    }
+
+    async function getMentorModalBySlug(slug) {
+        const modal = document.getElementById('article-modal');
+        const content = document.getElementById('modal-content');
+
+        if (!modal || !content) return;
+
+        try {
+            const data = await loadSiteData();
+            const mentors = getCollection(data, 'mentors');
+            const mentor = mentors.find((m) => m.slug === slug || (m.name && m.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') === slug));
+
+            if (!mentor) return;
+
+            const imageUrl = safeUrl(mentor.image, 'https://via.placeholder.com/150');
+            const bioContent = mentor.bio || mentor.description || 'Profil bimbingan musyrifah bersanad.';
+
+            content.innerHTML = `
+                <div class="max-w-2xl mx-auto text-center">
+                    <div class="flex flex-col items-center text-center mb-6">
+                        <div class="h-32 w-32 rounded-full overflow-hidden ring-4 ring-emerald-500/30 shadow-md bg-slate-950 flex items-center justify-center mb-4">
+                            <img src="${imageUrl}" alt="${safeText(mentor.name)}" onclick="window.zoomImage(this.src)" class="h-full w-full object-cover cursor-zoom-in transition-transform duration-300 hover:scale-105">
+                        </div>
+                        <span class="text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-1">${safeText(mentor.specialty, "Muhafizhoh Bersanad")}</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-slate-100 leading-tight">${safeText(mentor.name)}</h2>
+                    </div>
+
+                    <div class="border-t border-slate-800 pt-6 text-left">
+                        <p class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-3">Biodata & Sanad</p>
+                        <div class="prose prose-invert prose-emerald prose-sm max-w-none text-slate-300 leading-relaxed">
+                            ${window.marked ? window.marked.parse(bioContent) : renderSimpleMarkdown(bioContent)}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            resetModalScroll();
+        } catch (error) {
+            console.error('Gagal memuat detail mentor:', error);
         }
     }
 
@@ -321,108 +265,95 @@
 
             container.innerHTML = '';
 
-            for (const testimonial of testimonials) {
-                const imageUrl = safeUrl(
-                    testimonial.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name || 'Santri')}`,
-                    'https://ui-avatars.com/api/?name=Santri'
-                );
-
+            testimonials.forEach((testi) => {
                 container.innerHTML += `
-                    <div class="bg-slate-900 p-8 rounded-2xl shadow-sm border border-slate-800 italic text-gray-300 relative">
-                        <span class="text-6xl text-emerald-500/30 absolute top-2 left-2 font-serif">“</span>
-                        <p class="relative z-10 mb-6">${safeText(testimonial.content)}</p>
-                        <div class="flex items-center gap-4 border-t border-slate-800 pt-4">
-                            <img src="${imageUrl}" class="w-12 h-12 rounded-full border-2 border-emerald-500">
+                    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 hover:border-slate-700/80 transition-all duration-300 flex flex-col justify-between">
+                        <p class="text-slate-300 text-sm leading-relaxed italic">"${safeText(testi.text || testi.description)}"</p>
+                        <div class="mt-6 flex items-center gap-4 border-t border-slate-800/60 pt-4">
                             <div>
-                                <h4 class="font-bold text-gray-200 not-italic">${safeText(testimonial.name, 'Santri')}</h4>
-                                <p class="text-xs text-emerald-400 not-italic">${safeText(testimonial.status)}</p>
+                                <h4 class="text-sm font-bold text-slate-100">${safeText(testi.name, 'Ukhti')}</h4>
+                                <p class="text-[11px] font-semibold text-emerald-400 mt-0.5">${safeText(testi.batch, 'Alumni')}</p>
                             </div>
                         </div>
                     </div>
                 `;
-            }
+            });
         } catch (error) {
-            container.innerHTML = '';
             console.error('Gagal load testimoni:', error);
         }
     }
 
-    window.closeArticleModal = function () {
-        const modal = document.getElementById('article-modal');
-        if (modal) {
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-            resetModalScroll();
-        }
-    };
-
-    window.getArticleBySlug = getArticleBySlug;
-
     async function syncArticles() {
-        const list = document.getElementById('articles-list');
-        if (!list) return;
+        const container = document.getElementById('articles-list');
+        if (!container) return;
 
         try {
             const data = await loadSiteData();
             const articles = getCollection(data, 'articles');
-            if (!articles || !articles.length) return;
+            if (!articles.length) return;
 
-            list.innerHTML = '';
+            container.innerHTML = '';
 
-            const featured = articles.slice(0, 3);
-            const others = articles.slice(3);
-
-            const createCard = (post) => {
-                const date = new Date(post.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
-                return `
-                <article class="group bg-slate-900 rounded-3xl p-1.5 border border-slate-800 hover:border-emerald-700 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-950/20 flex flex-col h-full animate-in fade-in slide-in-from-bottom-4">
-                    <div class="bg-slate-800 aspect-video rounded-[1.35rem] mb-4 overflow-hidden relative">
-                        ${post.thumbnail ? `<img src="${post.thumbnail}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">` : `<div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-blue-500/20"></div>`}
+            articles.forEach((art) => {
+                const slug = art.slug || art.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                container.innerHTML += `
+                    <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden hover:border-emerald-500/30 transition-all duration-300 flex flex-col justify-between group h-full">
+                        <div class="p-6 md:p-8">
+                            <span class="text-emerald-400 text-[10px] font-bold tracking-widest uppercase block mb-3">LITERASI ISLAMI</span>
+                            <h3 onclick="window.NgajikeunApi.getArticleBySlug('${safeText(slug)}')"
+                                class="text-lg font-bold text-slate-100 leading-snug cursor-pointer group-hover:text-emerald-400 transition-colors line-clamp-2">
+                                ${safeText(art.title)}
+                            </h3>
+                            <p class="text-slate-400 text-xs mt-3 leading-relaxed line-clamp-3">${safeText(art.excerpt || art.description)}</p>
+                        </div>
+                        <div class="px-6 md:px-8 pb-6 md:pb-8 pt-4 border-t border-slate-800/50 flex items-center justify-between">
+                            <span class="text-[11px] text-slate-500 font-semibold">${safeText(art.date, 'Baru')}</span>
+                            <button onclick="window.NgajikeunApi.getArticleBySlug('${safeText(slug)}')"
+                                class="text-xs font-bold text-emerald-400 group-hover:text-emerald-300 transition-colors flex items-center gap-1">
+                                Baca Lengkap <span class="transform group-hover:translate-x-1 transition-transform">→</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="p-5 flex-grow flex flex-col items-center text-center">
-                        <time class="text-[9px] font-bold text-emerald-400 uppercase tracking-widest block mb-2">${date}</time>
-                        <h3 class="text-lg font-bold text-slate-100 leading-snug group-hover:text-emerald-400 transition-colors mb-3">${safeText(post.title)}</h3>
-                        <p class="text-slate-400 text-xs line-clamp-2 mb-5 leading-relaxed">${safeText(post.description || post.body.substring(0, 100))}...</p>
-                        <button type="button" onclick="getArticleBySlug('${post.slug}')" class="mt-auto inline-flex w-full items-center justify-center py-3 px-4 bg-slate-950 border border-slate-800 text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-all active:scale-95">
-                            Baca Selengkapnya 
-                            <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                        </button>
-                    </div>
-                </article>
-            `;
-            };
-
-            featured.forEach(post => { list.innerHTML += createCard(post); });
-
-            if (others.length > 0) {
-                const extraContainer = document.createElement('div');
-                extraContainer.id = 'extra-articles';
-                extraContainer.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 col-span-full hidden mt-8'; // hidden by default
-                others.forEach(post => { extraContainer.innerHTML += createCard(post); });
-                list.appendChild(extraContainer);
-            }
-
-        } catch (err) { console.error('Gagal sync artikel:', err); }
+                `;
+            });
+        } catch (error) {
+            console.error('Gagal load artikel:', error);
+        }
     }
 
-    window.syncArticles = syncArticles;
+    async function getArticleBySlug(slug) {
+        const modal = document.getElementById('article-modal');
+        const content = document.getElementById('modal-content');
 
-    window.toggleAllArticles = function () {
-        const extra = document.getElementById('extra-articles');
-        const btn = document.getElementById('btn-show-all');
+        if (!modal || !content) return;
 
-        if (!extra) return;
+        try {
+            const data = await loadSiteData();
+            const articles = getCollection(data, 'articles');
+            const art = articles.find((a) => a.slug === slug || (a.title && a.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === slug));
 
-        if (extra.classList.contains('hidden')) {
-            extra.classList.remove('hidden');
-            btn.innerHTML = 'Tutup Artikel Lainnya ↑';
-            extra.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-            extra.classList.add('hidden');
-            btn.innerHTML = 'Lihat Semua Artikel →';
-            document.getElementById('article-section').scrollIntoView({ behavior: 'smooth' });
+            if (!art) return;
+
+            content.innerHTML = `
+                <div class="max-w-2xl mx-auto">
+                    <div class="mb-6">
+                        <span class="text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-2">LITERASI ISLAMI</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-slate-100 leading-tight">${safeText(art.title)}</h2>
+                        <p class="text-slate-500 text-xs font-semibold mt-2">Diterbitkan pada: ${safeText(art.date, '-')}</p>
+                    </div>
+                    <div class="prose prose-invert prose-emerald prose-sm max-w-none text-slate-300 leading-relaxed border-t border-slate-800 pt-6">
+                        ${window.marked ? window.marked.parse(art.content || art.description || '') : renderSimpleMarkdown(art.content || art.description)}
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            resetModalScroll();
+        } catch (error) {
+            console.error('Gagal memuat detail artikel:', error);
         }
-    };
+    }
 
     async function syncProducts() {
         const container = document.getElementById('products-list');
@@ -435,251 +366,200 @@
 
             container.innerHTML = '';
 
-            for (const product of products) {
-                const safeProductData = JSON.stringify(product).replace(/"/g, '&quot;');
-
+            products.forEach((product) => {
+                const slug = product.slug || product.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
                 const productImage = product.image
                     ? `<img src="${safeUrl(product.image)}" class="w-full h-full object-cover rounded-[2rem] shadow-sm" alt="${safeText(product.title)}">`
                     : `<span class="text-5xl group-hover:scale-110 transition-transform duration-500">📖</span>`;
 
                 container.innerHTML += `
-        <div class="group bg-slate-900 rounded-[2.5rem] border border-slate-800 shadow-sm hover:shadow-xl hover:shadow-emerald-950/20 transition-all duration-500 overflow-hidden col-span-full">
-            <div class="flex flex-col md:flex-row items-center p-4 md:p-6 gap-8">
-                
-                <div onclick="window.openProductModal(${safeProductData})"
-                    class="w-full md:w-48 h-48 bg-slate-800/50 rounded-[2rem] flex-shrink-0 flex items-center justify-center overflow-hidden cursor-pointer hover:bg-slate-800 ring-1 ring-transparent hover:ring-emerald-500/30 transform hover:scale-102 transition-all duration-500">
-                    ${productImage}
-                </div>
-
-                <div class="flex-grow text-center md:text-left">
-                    <div class="flex flex-col md:flex-row md:items-center gap-2 mb-3">
-                        <h3 onclick="window.openProductModal(${safeProductData})"
-                            class="text-xl font-black text-slate-100 cursor-pointer hover:text-emerald-400 transition-colors duration-300">
-                            ${safeText(product.title, 'Produk')}
-                        </h3>
-                        <span class="hidden md:block w-1 h-1 rounded-full bg-emerald-500"></span>
-                        <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-[0.2em]">E-Book Series</span>
-                    </div>
-                    <p class="text-[13px] leading-relaxed text-slate-400 mb-4 max-w-2xl">${safeText(product.description)}</p>
-                    
-                    <div class="flex items-center justify-center md:justify-start gap-4">
-                        <div class="flex items-center gap-1 text-emerald-500">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
-                            <span class="text-[11px] font-bold">Akses Selamanya</span>
+                    <div class="group bg-slate-900 rounded-[2.5rem] border border-slate-800 shadow-sm hover:shadow-xl hover:shadow-emerald-950/20 transition-all duration-500 overflow-hidden col-span-full">
+                        <div class="flex flex-col md:flex-row items-center p-4 md:p-6 gap-8">
+                            <div data-product-slug="${safeText(slug)}"
+                                class="w-full md:w-48 h-48 bg-slate-800/50 rounded-[2rem] flex-shrink-0 flex items-center justify-center overflow-hidden cursor-pointer hover:bg-slate-800 ring-1 ring-transparent hover:ring-emerald-500/30 transform hover:scale-102 transition-all duration-500">
+                                ${productImage}
+                            </div>
+                            <div class="flex-grow text-center md:text-left">
+                                <div class="flex flex-col md:flex-row md:items-center gap-2 mb-3">
+                                    <h3 data-product-slug="${safeText(slug)}"
+                                        class="text-xl font-black text-slate-100 cursor-pointer hover:text-emerald-400 transition-colors duration-300">
+                                        ${safeText(product.title, 'Produk')}
+                                    </h3>
+                                    <span class="hidden md:block w-1 h-1 rounded-full bg-emerald-500"></span>
+                                    <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-[0.2em]">E-Book Series</span>
+                                </div>
+                                <p class="text-[13px] leading-relaxed text-slate-400 mb-4 max-w-2xl">${safeText(product.description)}</p>
+                                <div class="flex items-center justify-center md:justify-start gap-4">
+                                    <div class="flex items-center gap-1 text-emerald-500">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                                        <span class="text-[11px] font-bold">Akses Selamanya</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                `;
+            });
 
-                </div>
-        </div>`;
-            }
+            container.querySelectorAll('[data-product-slug]').forEach((el) => {
+                el.addEventListener('click', () => {
+                    window.NgajikeunApi.getProductModalBySlug(el.dataset.productSlug);
+                });
+            });
         } catch (error) {
             console.error('Gagal load produk:', error);
         }
     }
 
-    window.openProductModal = function (product) {
-        const modal = document.getElementById('product-modal');
-        if (!modal) return;
+    async function getProductModalBySlug(slug) {
+        const modal = document.getElementById('article-modal');
+        const content = document.getElementById('modal-content');
 
-        document.getElementById('modal-product-title').innerText = product.title || 'Produk';
-        document.getElementById('modal-product-category').innerText = product.category || 'E-BOOK SERIES';
-        document.getElementById('modal-product-price').innerText = product.price || 'Gratis';
-
-        const descContainer = document.getElementById('modal-product-description');
-        if (descContainer) {
-            descContainer.innerHTML = product.description || 'Detail deskripsi belum tersedia.';
-        }
-
-        const imgContainer = document.getElementById('modal-product-img')?.parentElement;
-        if (imgContainer) {
-            if (product.image) {
-                const imgSrc = safeUrl(product.image);
-                imgContainer.innerHTML = `<img id="modal-product-img" src="${imgSrc}" alt="${safeText(product.title)}" onclick="window.zoomImage('${imgSrc}')" class="h-20 w-20 object-contain transition-all duration-300 cursor-zoom-in hover:scale-105">`;
-            } else {
-                imgContainer.innerHTML = `<span id="modal-product-img" class="text-5xl select-none transition-transform duration-500">📖</span>`;
-            }
-        }
-
-        const modalBtn = document.getElementById('modal-product-btn');
-        if (modalBtn) {
-            modalBtn.href = product.link || 'https://wa.me/6281932692047';
-            modalBtn.innerText = 'BELI SEKARANG';
-
-            modalBtn.setAttribute('data-umami-event', `Beli ${product.title || 'Produk'}`);
-        }
-
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    };
-
-    window.closeProductModal = function () {
-        const modal = document.getElementById('product-modal');
-        if (modal) {
-            modal.classList.add('hidden');
-            const lightbox = document.querySelector('.cursor-zoom-out');
-            if (!lightbox) {
-                document.body.style.overflow = 'auto';
-            }
-        }
-    };
-
-    window.zoomImage = function (src) {
-        const overlay = document.createElement('div');
-        overlay.className = 'fixed inset-0 z-[10000] bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out opacity-0 transition-opacity duration-300';
-
-        const img = document.createElement('img');
-        img.src = src;
-        img.className = 'max-h-[90vh] max-w-full object-contain rounded-2xl shadow-2xl transform scale-90 transition-transform duration-300';
-
-        overlay.appendChild(img);
-        document.body.appendChild(overlay);
-
-        document.body.style.overflow = 'hidden';
-
-        setTimeout(() => {
-            overlay.classList.remove('opacity-0');
-            img.classList.remove('scale-90');
-            img.classList.add('scale-100');
-        }, 10);
-
-        const closeLightbox = () => {
-            overlay.classList.add('opacity-0');
-            img.classList.remove('scale-100');
-            img.classList.add('scale-90');
-
-            setTimeout(() => {
-                overlay.remove();
-                const productModal = document.getElementById('product-modal');
-                const articleModal = document.getElementById('article-modal');
-                const isProductModalHidden = productModal ? productModal.classList.contains('hidden') : true;
-                const isArticleModalHidden = articleModal ? articleModal.classList.contains('hidden') : true;
-
-                if (isProductModalHidden && isArticleModalHidden) {
-                    document.body.style.overflow = 'auto';
-                }
-            }, 300);
-        };
-
-        overlay.addEventListener('click', closeLightbox);
-
-        const escHandler = (e) => {
-            if (e.key === 'Escape') {
-                closeLightbox();
-                document.removeEventListener('keydown', escHandler);
-            }
-        };
-        document.addEventListener('keydown', escHandler);
-    };
-
-    async function syncQuizzes() {
-        const listTahfidz = document.getElementById('list-tahfidz');
-        const listTajwid = document.getElementById('list-tajwid');
-        if (!listTahfidz || !listTajwid) return;
+        if (!modal || !content) return;
 
         try {
             const data = await loadSiteData();
-            const quizzes = getCollection(data, 'quizzes');
+            const products = getCollection(data, 'products');
+            const product = products.find((p) => p.slug === slug || (p.title && p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === slug));
 
-            listTahfidz.innerHTML = '';
-            listTajwid.innerHTML = '';
+            if (!product) return;
 
-            quizzes.forEach(quiz => {
-                const category = (quiz.category || '').toLowerCase();
-                const quizHtml = `
-                <div class="flex items-center justify-between bg-slate-900/70 p-4 rounded-xl border border-slate-800 shadow-sm hover:bg-slate-900 transition-all">
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-100">${safeText(quiz.title)}</h4>
-                        <p class="text-[10px] text-slate-400">${safeText(quiz.description)}</p>
+            const imageUrl = product.image ? safeUrl(product.image) : null;
+            const imageHtml = imageUrl
+                ? `<div class="h-40 w-40 mx-auto rounded-2xl overflow-hidden ring-4 ring-emerald-500/30 shadow-md bg-slate-950 flex items-center justify-center mb-4">
+                    <img src="${imageUrl}" alt="${safeText(product.title)}" onclick="window.zoomImage(this.src)" class="h-28 w-28 object-contain cursor-zoom-in transition-transform duration-300 hover:scale-105">
+                   </div>`
+                : `<div class="text-6xl mb-4 text-center select-none">📖</div>`;
+
+            content.innerHTML = `
+                <div class="max-w-2xl mx-auto text-center">
+                    ${imageHtml}
+                    <span class="text-emerald-400 font-bold tracking-widest text-[10px] uppercase block mb-1">${safeText(product.category, 'E-BOOK SERIES')}</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-slate-100 mb-4 leading-tight">${safeText(product.title)}</h2>
+                    <div class="w-full max-w-[180px] mx-auto my-4 p-3 bg-slate-950 rounded-2xl border border-slate-800 text-center">
+                        <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Investasi</span>
+                        <p class="text-xl font-black text-emerald-400">${safeText(product.price, 'Gratis')}</p>
                     </div>
-                    <a href="${safeUrl(quiz.link)}" target="_blank" class="text-[10px] font-black uppercase tracking-widest text-emerald-400 hover:text-emerald-300">
-                        Mulai Quiz ⚡
+                    <div class="border-t border-slate-800 pt-6 text-left mb-8">
+                        <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-3">Deskripsi Lengkap</h4>
+                        <div class="prose prose-invert prose-emerald prose-sm max-w-none text-slate-300 leading-relaxed">
+                            ${window.marked ? window.marked.parse(product.description || '') : renderSimpleMarkdown(product.description)}
+                        </div>
+                    </div>
+                    <a href="${safeUrl(product.link, 'https://wa.me/6281932692047')}" target="_blank" rel="noopener noreferrer"
+                       class="inline-block w-full sm:w-auto px-8 py-4 bg-emerald-600 border border-emerald-500 text-white text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-700 transition-all active:scale-95 shadow-lg">
+                        BELI SEKARANG ⚡
                     </a>
                 </div>
             `;
 
-                if (category === 'tahfidz') listTahfidz.innerHTML += quizHtml;
-                else if (category === 'tajwid') listTajwid.innerHTML += quizHtml;
-            });
-
-        } catch (err) { console.error(err); }
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            resetModalScroll();
+        } catch (error) {
+            console.error('Gagal memuat detail produk:', error);
+        }
     }
 
-    async function syncAbout() {
-        const historyEl = document.getElementById("about-history");
-        const slidesEl = document.getElementById("about-slides");
-        const visionEl = document.getElementById("about-vision");
-        const missionsEl = document.getElementById("about-missions");
-
-        if (!historyEl) return;
+    async function syncQuizzes() {
+        const container = document.getElementById('quizzes-container');
+        if (!container) return;
 
         try {
-            const siteData = await loadSiteData();
-            const data = siteData?.about_details || {};
+            const data = await loadSiteData();
+            const quizzes = getCollection(data, 'quizzes');
+            if (!quizzes.length) return;
 
-            // 1. Render Sejarah
-            historyEl.innerHTML = window.marked
-                ? window.marked.parse(data.history || '')
-                : renderSimpleMarkdown(data.history || '');
+            const categorized = {};
+            quizzes.forEach((q) => {
+                const cat = q.category || 'Umum';
+                if (!categorized[cat]) categorized[cat] = [];
+                categorized[cat].push(q);
+            });
 
-            // 2. Render Visi & Misi
-            if (visionEl) visionEl.innerText = data.vision ? `"${data.vision}"` : "";
-            if (missionsEl && data.missions) {
-                missionsEl.innerHTML = data.missions.map(misi => `
-        <p class="relative pl-4">
-            <span class="absolute left-0 text-emerald-500">•</span>
-            ${safeText(misi)}
-        </p>
-    `).join('');
-            }
+            container.innerHTML = '';
 
-            // 3. Render Gallery (Grid Full)
-            if (slidesEl && data.slides) {
-                slidesEl.innerHTML = data.slides.map(slide => {
-                    const imgPath = safeUrl(slide.image);
-                    return `
-                        <a href="${imgPath}" data-fancybox="about-gallery" class="cursor-zoom-in block overflow-hidden rounded-2xl shadow-md">
-                            <img src="${imgPath}" class="h-48 md:h-64 w-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy">
-                        </a>
+            Object.entries(categorized).forEach(([cat, items]) => {
+                const safeCatId = cat.toLowerCase().replace(/[^a-z0-9]/g, '');
+                let listHtml = `<div id=\"list-${safeCatId}\" class=\"hidden mt-6 space-y-3\">`;
+
+                items.forEach((q) => {
+                    listHtml += `
+                        <div class="bg-slate-900/50 border border-slate-800/60 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-200">${safeText(q.title)}</h4>
+                                <p class="text-[11px] text-slate-400 mt-1">${safeText(q.description)}</p>
+                            </div>
+                            <a href="${safeUrl(q.link)}" target="_blank" rel="noopener noreferrer"
+                               class="bg-emerald-600/10 hover:bg-emerald-600 border border-emerald-500/20 text-emerald-400 hover:text-white text-[10px] font-bold uppercase tracking-wider px-4 py-2 rounded-xl text-center transition-all active:scale-95 flex-shrink-0">
+                                Mulai Kuis ⚡
+                            </a>
+                        </div>
                     `;
-                }).join('');
+                });
+                listHtml += '</div>';
 
-                if (window.Fancybox) {
-                    window.Fancybox.bind("[data-fancybox='about-gallery']", { Images: { zoom: true } });
-                }
-            }
-        } catch (err) { console.error('Gagal sync about:', err); }
+                container.innerHTML += `
+                    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-100">Kategori: ${safeText(cat)}</h3>
+                                <p class="text-xs text-slate-400 mt-1">Total tersedia ${items.length} paket evaluasi hafalan.</p>
+                            </div>
+                            <button id="btn-${safeCatId}" onclick="window.toggleQuizList('${safeCatId}')"
+                                    class="bg-slate-800 hover:bg-slate-700 text-white text-[11px] font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl transition-all active:scale-95 flex-shrink-0">
+                                Lihat Daftar Kuis
+                            </button>
+                        </div>
+                        ${listHtml}
+                    </div>
+                `;
+            });
+        } catch (error) {
+            console.error('Gagal load kuis:', error);
+        }
     }
 
     window.zoomImage = function (src) {
+        if (!src) return;
+
         const overlay = document.createElement('div');
-        overlay.className = 'fixed inset-0 z-[200] bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out opacity-0 transition-opacity duration-300';
+        overlay.style.position = 'fixed';
+        overlay.style.inset = '0';
+        overlay.style.backgroundColor = 'rgba(2, 6, 23, 0.85)';
+        overlay.style.backdropFilter = 'blur(8px)';
+        overlay.style.zIndex = '99999';
+        overlay.style.display = 'flex';
+        overlay.style.alignItems = 'center';
+        overlay.style.justifyContent = 'center';
+        overlay.style.cursor = 'zoom-out';
+        overlay.style.opacity = '0';
+        overlay.style.transition = 'opacity 0.3s ease';
 
         const img = document.createElement('img');
         img.src = src;
-        img.className = 'max-h-[90vh] max-w-full object-contain rounded-2xl shadow-2xl transform scale-90 transition-transform duration-300';
+        img.style.maxWidth = '90vw';
+        img.style.maxHeight = '90vh';
+        img.style.objectFit = 'contain';
+        img.style.borderRadius = '1rem';
+        img.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5)';
+        img.style.transform = 'scale(0.9)';
+        img.style.transition = 'transform 0.3s ease';
 
         overlay.appendChild(img);
         document.body.appendChild(overlay);
 
-        document.body.style.overflow = 'hidden';
-
         setTimeout(() => {
-            overlay.classList.remove('opacity-0');
-            img.classList.remove('scale-90');
-            img.classList.add('scale-100');
+            overlay.style.opacity = '1';
+            img.style.transform = 'scale(1)';
         }, 10);
 
         const closeLightbox = () => {
-            overlay.classList.add('opacity-0');
-            img.classList.remove('scale-100');
-            img.classList.add('scale-90');
-
+            overlay.style.opacity = '0';
+            img.style.transform = 'scale(0.9)';
             setTimeout(() => {
-                overlay.remove();
-                const articleModal = document.getElementById('article-modal');
-                if (articleModal && articleModal.classList.contains('hidden')) {
-                    document.body.style.overflow = 'auto';
+                if (overlay.parentNode) {
+                    overlay.parentNode.removeChild(overlay);
                 }
             }, 300);
         };
@@ -700,9 +580,11 @@
         syncPrograms,
         getProgramBySlug,
         syncMentors,
+        getMentorModalBySlug,
         syncTestimonials,
         syncArticles,
         syncProducts,
+        getProductModalBySlug,
         syncQuizzes,
         getArticleBySlug
     };
@@ -711,20 +593,16 @@
         const list = document.getElementById(`list-${cat}`);
         const btn = document.getElementById(`btn-${cat}`);
 
-        if (!list || !btn) {
-            console.error("Elemen list atau button tidak ketemu, Bro!");
-            return;
-        }
+        if (!list || !btn) return;
 
         if (list.classList.contains('hidden')) {
             list.classList.remove('hidden');
-            list.classList.add('animate-in', 'fade-in', 'slide-in-from-top-2');
-            btn.innerText = `Tutup Kuis ${cat.charAt(0).toUpperCase() + cat.slice(1)}`;
-            btn.classList.replace('bg-slate-800', 'bg-red-500');
+            btn.innerText = 'Tutup Daftar Kuis';
+            btn.classList.replace('bg-slate-800', 'bg-emerald-600');
         } else {
             list.classList.add('hidden');
-            btn.innerText = `Buka Kuis ${cat.charAt(0).toUpperCase() + cat.slice(1)}`;
-            btn.classList.replace('bg-red-500', 'bg-slate-800');
+            btn.innerText = 'Lihat Daftar Kuis';
+            btn.classList.replace('bg-emerald-600', 'bg-slate-800');
         }
     };
-}());
+})();
