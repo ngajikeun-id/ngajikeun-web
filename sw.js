@@ -4,6 +4,7 @@ const CORE_ASSETS = [
   '/',
   '/index.html',
   '/assets/js/api-sync.js',
+  '/assets/js/ui-render.js',
   '/assets/js/component-loader.js',
   '/assets/js/main.js',
   '/components/navbar.html',

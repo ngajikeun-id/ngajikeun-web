@@ -1,8 +1,13 @@
 (function () {
-    let currentZoom = 1;
-    let isPanning = false;
-    let startX = 0, startY = 0;
-    let translateX = 0, translateY = 0;
+    window.NG_STATE = window.NG_STATE || {
+        componentsReady: false,
+        dataReady: false,
+        uiReady: false
+    };
+
+    let appData = null;
+
+    // ===== PLUGIN AND UI INIT =====
 
     function setupMobileMenu() {
         const menuBtn = document.getElementById('menu-btn');
@@ -61,6 +66,12 @@
         });
     }
 
+    function setupFancybox() {
+        if (window.Fancybox) {
+            window.Fancybox.bind("[data-fancybox='about-gallery']", { Images: { zoom: true } });
+        }
+    }
+
     function setupPwaAutoUpdate() {
         if ('serviceWorker' in navigator) {
             let refreshing = false;
@@ -75,164 +86,103 @@
         }
     }
 
-    function initializeContentSync() {
-        if (!window.NgajikeunApi) return;
-
-        // console.log('Ngajikeun.id: Starting content synchronization...');
-        window.NgajikeunApi.syncAbout();
-        window.NgajikeunApi.syncPrograms();
-        window.NgajikeunApi.syncMentors();
-        window.NgajikeunApi.syncTestimonials();
-        window.NgajikeunApi.syncArticles();
-        window.NgajikeunApi.syncProducts();
-        window.NgajikeunApi.syncQuizzes();
+    function setupGlobalEscHandlers() {
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                if (window.closeMentorModal) window.closeMentorModal();
+                if (window.closeProductModal) window.closeProductModal();
+            }
+        });
     }
 
-    async function initPage() {
-        try {
-            const response = await fetch('content/dashboard.json');
-            if (response.ok) {
-                const dashboardData = await response.json();
-                if (dashboardData && dashboardData.is_maintenance === true) {
-                    window.location.href = 'maintenance.html';
-                    return;
-                }
-
-                window.currentDashboardData = dashboardData;
-            }
-        } catch (error) {
-            console.error('Ngajikeun.id: Gagal memvalidasi status maintenance:', error);
-        }
-
-        if (window.NgajikeunComponents) {
-            await window.NgajikeunComponents.loadComponents();
-        }
-
+    function initializePlugins() {
         setupMobileMenu();
         setupRevealOnScroll();
         setupBackToTopButton();
         setupAosAnimations();
+        setupFancybox();
         setupPwaAutoUpdate();
+        setupGlobalEscHandlers();
     }
 
-    document.addEventListener("componentsLoaded", () => {
-        // console.log("🔥 Components ready, syncing content...");
+    // ===== BOOT STAGES =====
 
-        if (window.currentDashboardData && window.currentDashboardData.running_text) {
-            const marqueeElement = document.getElementById('navbar-running-text');
-            if (marqueeElement) {
-                marqueeElement.innerText = window.currentDashboardData.running_text;
-                // console.log("✅ Running text berhasil di-inject!");
-            }
+    function markState(key, value) {
+        window.NG_STATE[key] = value;
+    }
+
+    async function initializeComponents() {
+        if (window.NgajikeunComponents) {
+            await window.NgajikeunComponents.loadComponents();
         }
 
-        initializeContentSync();
-    });
+        markState('componentsReady', true);
+    }
+
+    async function loadApplicationData() {
+        if (!window.NgajikeunApi?.loadAppData) return null;
+
+        const data = await window.NgajikeunApi.loadAppData();
+        appData = data;
+        window.NG_DATA = data;
+        window.currentDashboardData = data?.dashboard || null;
+        markState('dataReady', true);
+
+        return data;
+    }
+
+    function renderApplication(data) {
+        if (window.NgajikeunRender?.renderSite) {
+            window.NgajikeunRender.renderSite(data);
+        }
+
+        markState('uiReady', true);
+    }
+
+    async function bootApplication() {
+        await initializeComponents();
+
+        const data = await loadApplicationData();
+        if (data?.dashboard?.is_maintenance === true) {
+            window.location.href = 'maintenance.html';
+            return;
+        }
+
+        renderApplication(data || {});
+        initializePlugins();
+    }
+
+    // ===== PUBLIC ORCHESTRATION API =====
 
     window.scrollToTop = function scrollToTop() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    window.openArticleModal = function openArticleModal(slug) {
+        return window.getArticleBySlug(slug);
+    };
+
+    window.getArticleBySlug = async function getArticleBySlug(slug) {
+        const post = await window.NgajikeunApi?.getArticleBySlug?.(slug, appData?.site);
+        window.NgajikeunRender?.openArticleModal?.(post);
+        return post;
+    };
+
+    window.openProgramModalBySlug = async function openProgramModalBySlug(slug) {
+        const program = await window.NgajikeunApi?.getProgramBySlug?.(slug, appData?.site);
+        window.NgajikeunRender?.openProgramModal?.(program);
+        return program;
+    };
+
+    window.syncArticles = function syncArticles() {
+        if (appData?.articles) {
+            window.NgajikeunRender?.renderArticles?.(appData.articles);
+        }
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
-        initPage().catch((error) => {
+        bootApplication().catch((error) => {
             console.error('Gagal inisialisasi halaman:', error);
         });
-    });
-
-    // --- MODAL ARTIKEL ---
-    window.openArticleModal = function openArticleModal(slug) {
-        if (typeof window.getArticleBySlug === 'function') {
-            return window.getArticleBySlug(slug);
-        }
-
-        return window.NgajikeunApi?.getArticleBySlug?.(slug);
-    };
-
-    window.closeArticleModal = function closeArticleModal() {
-        const modal = document.getElementById('article-modal');
-        const content = document.getElementById('modal-content');
-        if (!modal) return;
-
-        modal.classList.add('hidden');
-        modal.scrollTop = 0;
-        if (content) content.scrollTop = 0;
-        document.body.style.overflow = '';
-    };
-
-    // --- MODAL MENTOR ---
-    window.openMentorModal = function openMentorModal(mentorData) {
-        const modal = document.getElementById('mentor-modal');
-        const img = document.getElementById('modal-mentor-img');
-        const name = document.getElementById('modal-mentor-name');
-        const badge = document.getElementById('modal-mentor-badge');
-        const bio = document.getElementById('modal-mentor-bio');
-        const container = document.getElementById('mentor-img-container');
-
-        if (!modal || !mentorData) return;
-
-        if (img) {
-            img.src = mentorData.image || 'public/images/uploads/logo-ngk.png';
-            img.classList.remove('scale-150', 'z-30', 'cursor-zoom-out');
-            img.classList.add('cursor-zoom-in');
-
-            if (container) {
-                container.classList.remove('overflow-visible');
-                container.classList.add('overflow-hidden');
-            }
-        }
-        if (name) name.innerText = mentorData.name || 'Nama Musyrifah';
-        if (badge) badge.innerText = mentorData.badge || 'Muhafizhoh Bersanad';
-
-        if (bio) {
-            bio.innerHTML = mentorData.bio || 'Profil sedang dimuat...';
-            bio.scrollTop = 0;
-        }
-
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    };
-
-    window.toggleMentorImageZoom = function toggleMentorImageZoom(element) {
-        const container = document.getElementById('mentor-img-container');
-
-        if (element.classList.contains('scale-150')) {
-            element.classList.remove('scale-150', 'z-30', 'cursor-zoom-out');
-            element.classList.add('cursor-zoom-in');
-            if (container) {
-                container.classList.remove('overflow-visible');
-                container.classList.add('overflow-hidden');
-            }
-        } else {
-            element.classList.remove('cursor-zoom-in');
-            element.classList.add('scale-150', 'z-30', 'cursor-zoom-out');
-            if (container) {
-                container.classList.remove('overflow-hidden');
-                container.classList.add('overflow-visible');
-            }
-        }
-    };
-
-    window.closeMentorModal = function closeMentorModal() {
-        const modal = document.getElementById('mentor-modal');
-        const content = document.getElementById('mentor-modal-content');
-        if (!modal) return;
-
-        modal.classList.add('hidden');
-        modal.scrollTop = 0;
-        if (content) content.scrollTop = 0;
-        document.body.style.overflow = '';
-    };
-
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-            window.closeMentorModal();
-        }
-    });
-
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-            if (window.closeMentorModal) window.closeMentorModal();
-            if (window.closeProductModal) window.closeProductModal();
-        }
     });
 }());
