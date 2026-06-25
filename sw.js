@@ -7,6 +7,7 @@ const CORE_ASSETS = [
   '/assets/js/ui-render.js',
   '/assets/js/component-loader.js',
   '/assets/js/main.js',
+  '/assets/js/modal-engine.js',
   '/components/navbar.html',
   '/components/hero.html',
   '/components/about.html',

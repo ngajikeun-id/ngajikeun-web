@@ -77,7 +77,11 @@
         const bioContent = mentor.bio || mentor.description || 'Profil bimbingan musyrifah bersanad.';
         const card = document.createElement('div');
 
+        const mentorId = mentor.slug || mentor.id || mentor.name;
+
         card.className = "text-center group cursor-pointer transition-transform active:scale-95";
+        card.dataset.modal = 'mentor';
+        card.dataset.id = mentorId;
         card.innerHTML = `
                     <div class="relative inline-block">
                         <img src="${imageUrl}"
@@ -86,15 +90,6 @@
                     <h3 class="mt-4 text-lg font-bold text-gray-200">${safeText(mentor.name, 'Mentor')}</h3>
                     <p class="text-emerald-400 text-sm font-medium mb-2">${safeText(mentor.specialty, 'Mentor Al-Qur\'an')}</p>
                 `;
-
-        card.onclick = () => {
-            window.openMentorModal({
-                name: safeText(mentor.name, 'Mentor'),
-                badge: safeText(mentor.specialty, 'Muhafizhoh Bersanad'),
-                image: imageUrl,
-                bio: bioContent
-            });
-        };
 
         return card;
     }
@@ -131,7 +126,7 @@
                         <time class="text-[9px] font-bold text-emerald-400 uppercase tracking-widest block mb-2">${date}</time>
                         <h3 class="text-lg font-bold text-slate-100 leading-snug group-hover:text-emerald-400 transition-colors mb-3">${safeText(post.title)}</h3>
                         <p class="text-slate-400 text-xs line-clamp-2 mb-5 leading-relaxed">${safeText(post.description || post.body.substring(0, 100))}...</p>
-                        <button type="button" onclick="getArticleBySlug('${post.slug}')" class="mt-auto inline-flex w-full items-center justify-center py-3 px-4 bg-slate-950 border border-slate-800 text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-all active:scale-95">
+                        <button type="button" data-modal="article" data-id="${safeText(post.slug)}" class="mt-auto inline-flex w-full items-center justify-center py-3 px-4 bg-slate-950 border border-slate-800 text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-all active:scale-95">
                             Baca Selengkapnya 
                             <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </button>
@@ -141,7 +136,7 @@
     }
 
     function renderProductCard(product) {
-        const safeProductData = JSON.stringify(product).replace(/"/g, '&quot;');
+        const productId = product.slug || product.id || product.title;
         const productImage = product.image
             ? `<img src="${safeUrl(product.image)}" class="w-full h-full object-cover rounded-[2rem] shadow-sm" alt="${safeText(product.title)}">`
             : `<span class="text-5xl group-hover:scale-110 transition-transform duration-500">📖</span>`;
@@ -150,14 +145,14 @@
         <div class="group bg-slate-900 rounded-[2.5rem] border border-slate-800 shadow-sm hover:shadow-xl hover:shadow-emerald-950/20 transition-all duration-500 overflow-hidden col-span-full">
             <div class="flex flex-col md:flex-row items-center p-4 md:p-6 gap-8">
                 
-                <div onclick="window.openProductModal(${safeProductData})"
+                <div data-modal="product" data-id="${safeText(productId)}"
                     class="w-full md:w-48 h-48 bg-slate-800/50 rounded-[2rem] flex-shrink-0 flex items-center justify-center overflow-hidden cursor-pointer hover:bg-slate-800 ring-1 ring-transparent hover:ring-emerald-500/30 transform hover:scale-102 transition-all duration-500">
                     ${productImage}
                 </div>
 
                 <div class="flex-grow text-center md:text-left">
                     <div class="flex flex-col md:flex-row md:items-center gap-2 mb-3">
-                        <h3 onclick="window.openProductModal(${safeProductData})"
+                        <h3 data-modal="product" data-id="${safeText(productId)}"
                             class="text-xl font-black text-slate-100 cursor-pointer hover:text-emerald-400 transition-colors duration-300">
                             ${safeText(product.title, 'Produk')}
                         </h3>
