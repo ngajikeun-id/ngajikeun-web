@@ -19,6 +19,8 @@
 
             --primary-hover: #115e59;
 
+            --primary-soft: #ecfdf5;
+
             --gold: #c8a96b;
 
             --gold-soft: #f8f1e3;
@@ -95,17 +97,8 @@
             border-right: 1px solid var(--border) !important;
         }
 
-        [class*="SidebarLinkActive"] {
-
-            background: #ecfdf5 !important;
-
-            border-left: 4px solid var(--gold) !important;
-
-            color: var(--primary) !important;
-        }
-
         [class*="SidebarLink"]:hover {
-            color: var(--accent) !important;
+            color: var(--primary) !important;
         }
 
         [class*="SidebarLinkActive"] {
@@ -249,9 +242,9 @@
 
         [class*="Toolbar"] button:hover {
 
-            background: var(--accent-light) !important;
+            background: var(--primary-soft) !important;
 
-            color: var(--accent) !important;
+            color: var(--primary) !important;
         }
 
         /* ==================================================
@@ -419,16 +412,22 @@
         form {
 
             background: white !important;
-            margin-top: -10px !important;
-            width: 420px;
-            padding: 32px !important;
-            border-radius: 28px !important;
-            box-shadow:
-                0 20px 50px rgba(0, 0, 0, .08);
-            border: 1px solid #e5e7eb !important;
 
-            input {
-                height: 60px;
+            margin-top: -20px !important;
+
+            width: 460px;
+
+            padding: 36px !important;
+
+            border-radius: 32px !important;
+
+            border: 1px solid var(--border) !important;
+
+            box-shadow: var(--shadow-lg);
+
+            form input {
+
+                height: 60px !important;
             }
         }
 
@@ -440,7 +439,13 @@
 
             margin-right: auto !important;
 
-            margin-bottom: -15px !important;
+            margin-bottom: -25px !important;
+
+            position: relative;
+
+            left: 8px;
+
+            z-index: 10;
         }
 
         a[href*="decap"] {
@@ -469,7 +474,7 @@
                             style: {
                                 background: '#ffffff',
                                 border: '1px solid #e5e7eb',
-                                boxShadow: '0 8px 25px rgba(0,0,0,.05)', padding: '30px', borderRadius: '24px', marginBottom: '20px', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                                boxShadow: '0 8px 25px rgba(0,0,0,.05)', padding: '30px', borderRadius: '24px', marginBottom: '20px', boxShadow: '0 10px 25px rgba(0,0,0,.06)'
                             }
                         },
                             h('div', {
@@ -556,17 +561,23 @@
 
             setTimeout(() => {
 
-                document.querySelectorAll('*').forEach(el => {
+                document.querySelectorAll('a,span,div').forEach(el => {
 
                     if (el.textContent.trim() === 'Decap') {
 
-                        el.textContent = 'CiwAI™';
-
+                        el.innerHTML = `
+                    <span style="
+                        color:#0f766e;
+                        font-weight:700;
+                    ">
+                        Powered by CiwAI™
+                    </span>
+                `;
                     }
 
                 });
 
-            }, 1500);
+            }, 1000);
 
         });
 
