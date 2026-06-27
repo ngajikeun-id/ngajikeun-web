@@ -7,22 +7,41 @@
     <title>Dashboard | Ngajikeun.id</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* ==================================================
-   NGAJIKEUN.ID - SOFT SAGE PREMIUM
-   ================================================== */
-
         :root {
-            --bg: #f8faf7;
-            --sidebar: #f1f5f2;
+
+            /* ==========================
+       NGAJIKEUN ADMIN SUITE V2
+    ========================== */
+
+            --bg: #f7f8f6;
+
+            --sidebar: #ffffff;
+
             --card: #ffffff;
 
-            --accent: #3fa66b;
-            --accent-light: #dff4e6;
+            --primary: #0f766e;
 
-            --border: #dbe5dc;
+            --primary-hover: #115e59;
 
-            --text: #1f2937;
+            --primary-soft: #dff7f2;
+
+            --gold: #c8a96b;
+
+            --gold-soft: #f7f0e1;
+
+            --border: #e5e7eb;
+
+            --text: #111827;
+
             --muted: #6b7280;
+
+            --shadow-sm:
+                0 4px 12px rgba(15, 23, 42, .04);
+
+            --shadow-md:
+                0 10px 30px rgba(15, 23, 42, .08);
+
+            --radius: 20px;
         }
 
         /* ==================================================
@@ -50,9 +69,14 @@
 
         header,
         [class*="AppHeader"] {
-            background: #ffffff !important;
+
+            background: rgba(255, 255, 255, .95) !important;
+
+            backdrop-filter: blur(12px);
+
             border-bottom: 1px solid var(--border) !important;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, .03);
+
+            box-shadow: var(--shadow-sm);
         }
 
         header *,
@@ -67,7 +91,9 @@
         aside,
         [class*="SidebarContainer"],
         [class*="Sidebar"] {
-            background: var(--sidebar) !important;
+
+            background: #ffffff !important;
+
             border-right: 1px solid var(--border) !important;
         }
 
@@ -82,9 +108,13 @@
         }
 
         [class*="SidebarLinkActive"] {
-            background: var(--accent-light) !important;
-            color: #2d7d52 !important;
-            border-left: 4px solid var(--accent) !important;
+
+            background: var(--primary-soft) !important;
+
+            color: var(--primary) !important;
+
+            border-left: 4px solid var(--gold) !important;
+
             font-weight: 700 !important;
         }
 
@@ -93,26 +123,27 @@
    ================================================== */
 
         [class*="ControlContainer"] {
-            background: var(--card) !important;
 
-            border: 1px solid #e5ebe6 !important;
+            background: #ffffff !important;
 
-            border-radius: 18px !important;
+            border: 1px solid var(--border) !important;
 
-            padding: 1.5rem !important;
+            border-radius: 24px !important;
+
+            padding: 1.75rem !important;
 
             margin-bottom: 1.5rem !important;
 
-            box-shadow:
-                0 4px 18px rgba(0, 0, 0, .04);
+            box-shadow: var(--shadow-sm);
 
-            transition: .2s ease;
+            transition: .25s ease;
         }
 
         [class*="ControlContainer"]:hover {
-            transform: translateY(-2px);
-            box-shadow:
-                0 10px 30px rgba(0, 0, 0, .06);
+
+            transform: translateY(-3px);
+
+            box-shadow: var(--shadow-md);
         }
 
         /* ==================================================
@@ -120,7 +151,19 @@
    ================================================== */
 
         [class*="ControlContainer"] label,
-        [class*="ControlContainer"] label span,
+        [class*="ControlContainer"] label span {
+
+            color: var(--text) !important;
+
+            font-size: .75rem !important;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+
+            font-weight: 700 !important;
+        }
+
         [class*="ControlContainer"] [class*="Label"],
         [class*="ControlPane"] label {
 
@@ -147,15 +190,15 @@
         select,
         textarea {
 
-            background: #fafcfb !important;
-
-            color: var(--text) !important;
+            background: #fafafa !important;
 
             border: 1px solid var(--border) !important;
 
-            border-radius: 12px !important;
+            border-radius: 14px !important;
 
-            padding: .85rem !important;
+            padding: 1rem !important;
+
+            color: var(--text) !important;
 
             transition: .2s ease;
         }
@@ -164,12 +207,10 @@
         select:focus,
         textarea:focus {
 
-            outline: none !important;
-
-            border-color: var(--accent) !important;
+            border-color: var(--primary) !important;
 
             box-shadow:
-                0 0 0 4px rgba(63, 166, 107, .12) !important;
+                0 0 0 4px rgba(15, 118, 110, .12) !important;
         }
 
         /* ==================================================
@@ -263,20 +304,22 @@
         [class*="PublishButton"],
         [class*="SaveButton"] {
 
-            background: var(--accent) !important;
+            background: linear-gradient(135deg,
+                    var(--primary),
+                    var(--primary-hover)) !important;
 
             color: white !important;
 
-            border: none !important;
+            border-radius: 14px !important;
 
-            border-radius: 12px !important;
+            border: none !important;
 
             font-weight: 700 !important;
 
-            box-shadow:
-                0 6px 18px rgba(63, 166, 107, .18);
+            padding: .85rem 1.4rem !important;
 
-            transition: .2s ease;
+            box-shadow:
+                0 10px 20px rgba(15, 118, 110, .18);
         }
 
         [class*="PublishButton"]:hover,
@@ -285,6 +328,14 @@
             background: #2f8a58 !important;
 
             transform: translateY(-1px);
+        }
+
+        body[data-testid="loginPage"] {
+
+            background:
+                radial-gradient(circle at top right,
+                    #dff7f2,
+                    #f7f8f6) !important;
         }
     </style>
 </head>
