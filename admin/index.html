@@ -9,47 +9,45 @@
     <style>
         :root {
 
-            /* ==========================
-       NGAJIKEUN ADMIN SUITE V2
-    ========================== */
+            --bg: #f8fafc;
 
-            --bg: #f7f8f6;
+            --surface: #ffffff;
 
-            --sidebar: #ffffff;
-
-            --card: #ffffff;
+            --surface-soft: #f9fafb;
 
             --primary: #0f766e;
 
             --primary-hover: #115e59;
 
-            --primary-soft: #dff7f2;
-
             --gold: #c8a96b;
 
-            --gold-soft: #f7f0e1;
-
-            --border: #e5e7eb;
+            --gold-soft: #f8f1e3;
 
             --text: #111827;
 
             --muted: #6b7280;
 
+            --border: #e5e7eb;
+
+            --radius: 24px;
+
             --shadow-sm:
-                0 4px 12px rgba(15, 23, 42, .04);
+                0 4px 10px rgba(0, 0, 0, .04);
 
             --shadow-md:
-                0 10px 30px rgba(15, 23, 42, .08);
+                0 12px 30px rgba(0, 0, 0, .08);
 
-            --radius: 20px;
+            --shadow-lg:
+                0 25px 50px rgba(0, 0, 0, .10);
         }
 
-        /* ==================================================
-   APP LAYOUT
-   ================================================== */
-
         body {
-            background: var(--bg) !important;
+
+            background:
+                linear-gradient(180deg,
+                    #f8fafc 0%,
+                    #f1f5f9 100%) !important;
+
             color: var(--text) !important;
         }
 
@@ -92,15 +90,18 @@
         [class*="SidebarContainer"],
         [class*="Sidebar"] {
 
-            background: #ffffff !important;
+            background: white !important;
 
             border-right: 1px solid var(--border) !important;
         }
 
-        [class*="SidebarLink"] {
-            color: var(--text) !important;
-            font-weight: 500 !important;
-            transition: .2s ease;
+        [class*="SidebarLinkActive"] {
+
+            background: #ecfdf5 !important;
+
+            border-left: 4px solid var(--gold) !important;
+
+            color: var(--primary) !important;
         }
 
         [class*="SidebarLink"]:hover {
@@ -124,24 +125,22 @@
 
         [class*="ControlContainer"] {
 
-            background: #ffffff !important;
+            background: white !important;
 
             border: 1px solid var(--border) !important;
 
             border-radius: 24px !important;
 
-            padding: 1.75rem !important;
-
-            margin-bottom: 1.5rem !important;
-
             box-shadow: var(--shadow-sm);
+
+            padding: 2rem !important;
 
             transition: .25s ease;
         }
 
         [class*="ControlContainer"]:hover {
 
-            transform: translateY(-3px);
+            transform: translateY(-2px);
 
             box-shadow: var(--shadow-md);
         }
@@ -169,17 +168,13 @@
 
             color: var(--text) !important;
 
-            background: transparent !important;
+            font-size: .75rem !important;
 
-            border: none !important;
+            font-weight: 700 !important;
 
-            font-weight: 600 !important;
+            letter-spacing: 1px !important;
 
-            font-size: .9rem !important;
-
-            text-transform: none !important;
-
-            letter-spacing: 0 !important;
+            text-transform: uppercase !important;
         }
 
         /* ==================================================
@@ -190,27 +185,25 @@
         select,
         textarea {
 
-            background: #fafafa !important;
+            background: white !important;
 
             border: 1px solid var(--border) !important;
 
-            border-radius: 14px !important;
+            border-radius: 16px !important;
 
             padding: 1rem !important;
-
-            color: var(--text) !important;
 
             transition: .2s ease;
         }
 
         input:focus,
-        select:focus,
-        textarea:focus {
+        textarea:focus,
+        select:focus {
 
             border-color: var(--primary) !important;
 
             box-shadow:
-                0 0 0 4px rgba(15, 118, 110, .12) !important;
+                0 0 0 4px rgba(15, 118, 110, .10) !important;
         }
 
         /* ==================================================
@@ -337,6 +330,87 @@
                     #dff7f2,
                     #f7f8f6) !important;
         }
+
+        /* ===================================
+   LOGIN PAGE V2
+=================================== */
+
+        body {
+
+            min-height: 100vh;
+        }
+
+        img {
+
+            max-width: 220px !important;
+
+            border-radius: 24px;
+
+            box-shadow: var(--shadow-lg);
+        }
+
+        input[type="email"],
+        input[type="password"] {
+
+            height: 58px !important;
+
+            border-radius: 16px !important;
+
+            border: 1px solid var(--border) !important;
+
+            background: white !important;
+        }
+
+        button[type="submit"] {
+
+            width: 100% !important;
+
+            height: 58px !important;
+
+            border-radius: 16px !important;
+
+            background:
+                linear-gradient(135deg,
+                    var(--primary),
+                    var(--primary-hover)) !important;
+
+            color: white !important;
+
+            font-weight: 700 !important;
+
+            box-shadow:
+                0 12px 25px rgba(15, 118, 110, .18);
+        }
+
+        button[type="submit"]:hover {
+
+            transform: translateY(-2px);
+        }
+
+        h1,
+        h2,
+        h3 {
+
+            position: relative;
+        }
+
+        h1::after,
+        h2::after {
+
+            content: '';
+
+            display: block;
+
+            width: 60px;
+
+            height: 4px;
+
+            margin-top: 8px;
+
+            border-radius: 999px;
+
+            background: var(--gold);
+        }
     </style>
 </head>
 
@@ -353,9 +427,38 @@
                     const cleanLink = rawLink.replace('/analytics/us', '');
 
                     return h('div', { style: { padding: '20px', background: '#f1f5f9', minHeight: '100vh', fontFamily: 'sans-serif' } },
-                        h('div', { style: { background: '#059669', padding: '30px', borderRadius: '24px', color: 'white', marginBottom: '20px', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' } },
-                            h('h1', { style: { margin: '0', fontSize: '26px', fontWeight: '900' } }, welcomeMsg),
-                            h('p', { style: { opacity: '0.8', fontSize: '14px' } }, 'Ngajikeun.id Realtime Monitor Dashboard Statistik')
+                        h('div', {
+                            style: {
+                                background: '#ffffff',
+                                border: '1px solid #e5e7eb',
+                                boxShadow: '0 8px 25px rgba(0,0,0,.05)', padding: '30px', borderRadius: '24px', marginBottom: '20px', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                            h('div', {
+                                style: {
+                                    width: '60px',
+                                    height: '4px',
+                                    borderRadius: '999px',
+                                    background: '#c8a96b',
+                                    marginBottom: '16px'
+                                }
+                            }),
+                            h('h1', {
+                                style: {
+                                    margin: '0',
+                                    fontSize: '28px',
+                                    fontWeight: '800',
+                                    color: '#111827'
+                                }
+                            }, welcomeMsg),
+
+                            h('p', {
+                                style: {
+                                    color: '#6b7280',
+                                    fontSize: '14px',
+                                    marginTop: '8px'
+                                }
+                            }, 'Ngajikeun.id Realtime Monitor Dashboard Statistik')
                         ),
                         h('div', { style: { position: 'relative', background: 'white', padding: '10px', borderRadius: '24px', border: '1px solid #e2e8f0', minHeight: '600px', overflow: 'hidden', marginBottom: '20px' } },
                             h('a', {
