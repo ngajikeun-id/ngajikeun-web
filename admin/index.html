@@ -434,13 +434,13 @@
 
         img {
 
-            max-width: 220px !important;
+            display: block !important;
+
+            margin-left: auto !important;
+
+            margin-right: auto !important;
 
             margin-bottom: -15px !important;
-
-            position: relative;
-
-            z-index: 10;
         }
 
         a[href*="decap"] {
@@ -556,13 +556,15 @@
 
             setTimeout(() => {
 
-                const decapText = document.querySelector('a[href*="decap"]');
+                document.querySelectorAll('*').forEach(el => {
 
-                if (decapText) {
+                    if (el.textContent.trim() === 'Decap') {
 
-                    decapText.innerHTML = 'Powered by CiwAI™';
+                        el.textContent = 'CiwAI™';
 
-                }
+                    }
+
+                });
 
             }, 1500);
 
