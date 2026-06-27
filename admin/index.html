@@ -419,18 +419,12 @@
         form {
 
             background: white !important;
-
             margin-top: -10px !important;
-
             width: 420px;
-
             padding: 32px !important;
-
             border-radius: 28px !important;
-
             box-shadow:
                 0 20px 50px rgba(0, 0, 0, .08);
-
             border: 1px solid #e5e7eb !important;
 
             input {
@@ -440,11 +434,20 @@
 
         img {
 
-            margin-bottom: -20px !important;
+            max-width: 220px !important;
+
+            margin-bottom: -15px !important;
 
             position: relative;
 
             z-index: 10;
+        }
+
+        a[href*="decap"] {
+
+            color: #0f766e !important;
+
+            font-weight: 700 !important;
         }
     </style>
 </head>
@@ -545,6 +548,26 @@
                 }
             }));
         };
+    </script>
+
+    <script>
+
+        window.addEventListener('load', () => {
+
+            setTimeout(() => {
+
+                const decapText = document.querySelector('a[href*="decap"]');
+
+                if (decapText) {
+
+                    decapText.innerHTML = 'Powered by CiwAI™';
+
+                }
+
+            }, 1500);
+
+        });
+
     </script>
 </body>
 
