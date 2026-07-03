@@ -9,8 +9,7 @@ document
             await window.supabaseClient.auth.signInWithOtp({
                 email,
                 options: {
-                    emailRedirectTo:
-                        "http://localhost:8888/dashboard/"
+                    emailRedirectTo: `${window.location.origin}/dashboard/`
                 }
             });
 
