@@ -6,22 +6,17 @@
 
     if (!user) return;
 
-    document.getElementById("user-email").textContent =
-        user.email;
-
-    const { data, error } =
+    const { data } =
         await window.supabaseClient
             .from("profiles")
             .select("*")
             .eq("id", user.id)
             .single();
 
-    console.log("PROFILE:", data);
-    console.log("ERROR:", error);
+    document.getElementById("user-name").textContent =
+        data?.full_name || user.email;
 
-    if (data && document.getElementById("user-role")) {
-        document.getElementById("user-role").textContent =
-            data.role;
-    }
+    document.getElementById("user-role").textContent =
+        data?.role || "student";
 
 })();

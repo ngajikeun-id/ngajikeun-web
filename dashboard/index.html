@@ -16,19 +16,51 @@
 
         <div class="bg-slate-900 rounded-2xl p-6 shadow-lg border border-slate-800">
 
-            <h1 class="text-3xl font-bold">
-                Dashboard Ngajikeun
-            </h1>
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
 
-            <p class="mt-3 text-slate-300">
-                Assalamu'alaikum,
-                <span id="user-email">Loading...</span>
-            </p>
+                <div>
 
-            <p class="text-emerald-400">
-                Role:
-                <span id="user-role">Loading...</span>
-            </p>
+                    <div class="flex items-center gap-3">
+
+                        <img src="/images/logo/logo-ngk.png" alt="Ngajikeun" class="h-12 w-auto">
+
+                        <div>
+
+                            <h1 class="text-3xl font-bold">
+                                Dashboard Ngajikeun
+                            </h1>
+
+                        </div>
+
+                    </div>
+
+                    <p class="mt-4 text-slate-300">
+                        Assalamu'alaikum,
+                        <span id="user-email">Loading...</span>
+                        <span id="user-name">Loading...</span>
+                    </p>
+
+                    <p class="text-emerald-400">
+                        Role:
+                        <span id="user-role">Loading...</span>
+                    </p>
+
+                </div>
+
+                <div class="flex gap-2">
+
+                    <a href="https://wa.me/628XXXXXXXXXX" target="_blank"
+                        class="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg">
+                        Bantuan
+                    </a>
+
+                    <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg">
+                        Logout
+                    </button>
+
+                </div>
+
+            </div>
 
         </div>
 
