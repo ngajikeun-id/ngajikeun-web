@@ -9,7 +9,7 @@ document
             await window.supabaseClient.auth.signInWithOtp({
                 email,
                 options: {
-                    emailRedirectTo: `${window.location.origin}/dashboard/`
+                    emailRedirectTo: "https://ngajikeun.id/dashboard/"
                 }
             });
 
