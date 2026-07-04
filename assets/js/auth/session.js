@@ -1,8 +1,12 @@
-const {
-    data: { session }
-} = await window.supabaseClient.auth.getSession();
+(async () => {
 
-if (session) {
+    const {
+        data: { user }
+    } = await window.supabaseClient.auth.getUser();
+
+    if (!user) return;
+
     document.getElementById("user-email").textContent =
-        session.user.email;
-}
+        user.email;
+
+})();
