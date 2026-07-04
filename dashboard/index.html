@@ -1,33 +1,119 @@
-<h1>Dashboard Ngajikeun</h1>
+<!DOCTYPE html>
+<html lang="id">
 
-<p>
-    Assalamu'alaikum,
-    <span id="user-email">Loading...</span>
-</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<p>
-    Role:
-    <span id="user-role">Loading...</span>
-</p>
+    <title>Dashboard Ngajikeun</title>
 
-<button id="logoutBtn">
-    Logout
-</button>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<body class="bg-slate-950 text-white min-h-screen">
 
-<script src="/assets/js/auth/supabase.js"></script>
-<script src="/assets/js/auth/guard.js"></script>
-<script src="/assets/js/auth/session.js"></script>
+    <div class="max-w-5xl mx-auto p-6">
 
-<script>
-    document
-        .getElementById("logoutBtn")
-        .addEventListener("click", async () => {
+        <div class="bg-slate-900 rounded-2xl p-6 shadow-lg border border-slate-800">
 
-            await window.supabaseClient.auth.signOut();
+            <h1 class="text-3xl font-bold">
+                Dashboard Ngajikeun
+            </h1>
 
-            window.location.href = "/login/";
+            <p class="mt-3 text-slate-300">
+                Assalamu'alaikum,
+                <span id="user-email">Loading...</span>
+            </p>
 
-        });
-</script>
+            <p class="text-emerald-400">
+                Role:
+                <span id="user-role">Loading...</span>
+            </p>
+
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4 mt-6">
+
+            <a href="/dashboard/programs.html"
+                class="bg-slate-900 p-6 rounded-2xl border border-slate-800 hover:border-emerald-500 transition">
+
+                <h2 class="text-xl font-semibold">
+                    📖 Program Saya
+                </h2>
+
+                <p class="text-slate-400 mt-2">
+                    Lihat program yang sedang diikuti.
+                </p>
+
+            </a>
+
+            <a href="/dashboard/materials.html"
+                class="bg-slate-900 p-6 rounded-2xl border border-slate-800 hover:border-emerald-500 transition">
+
+                <h2 class="text-xl font-semibold">
+                    📚 Materi Saya
+                </h2>
+
+                <p class="text-slate-400 mt-2">
+                    Materi pembelajaran dan rekaman.
+                </p>
+
+            </a>
+
+            <a href="/dashboard/quizzes.html"
+                class="bg-slate-900 p-6 rounded-2xl border border-slate-800 hover:border-emerald-500 transition">
+
+                <h2 class="text-xl font-semibold">
+                    📝 Quiz Saya
+                </h2>
+
+                <p class="text-slate-400 mt-2">
+                    Kerjakan quiz dan evaluasi.
+                </p>
+
+            </a>
+
+            <a href="/dashboard/announcements.html"
+                class="bg-slate-900 p-6 rounded-2xl border border-slate-800 hover:border-emerald-500 transition">
+
+                <h2 class="text-xl font-semibold">
+                    📢 Pengumuman
+                </h2>
+
+                <p class="text-slate-400 mt-2">
+                    Informasi terbaru dari Ngajikeun.
+                </p>
+
+            </a>
+
+        </div>
+
+        <button id="logoutBtn" class="mt-6 bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg">
+
+            Logout
+
+        </button>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="/assets/js/auth/supabase.js"></script>
+    <script src="/assets/js/auth/guard.js"></script>
+    <script src="/assets/js/auth/session.js"></script>
+
+    <script>
+        document
+            .getElementById("logoutBtn")
+            .addEventListener("click", async () => {
+
+                await window.supabaseClient.auth.signOut();
+
+                window.location.href = "/login/";
+
+            });
+    </script>
+
+</body>
+
+</html>
