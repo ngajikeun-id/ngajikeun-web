@@ -1,1 +1,119 @@
-<h1>Coming Soon</h1>
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Saya</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-950 text-white min-h-screen">
+
+    <div class="max-w-5xl mx-auto p-6">
+
+        <div class="flex justify-between items-center mb-6">
+
+            <h1 class="text-3xl font-bold">
+                📖 Program Saya
+            </h1>
+
+            <a href="/dashboard/" class="bg-slate-800 px-4 py-2 rounded-lg">
+                Dashboard
+            </a>
+
+        </div>
+
+        <div id="program-list">
+
+            <div class="text-slate-400">
+                Loading...
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="/assets/js/auth/supabase.js"></script>
+    <script src="/assets/js/auth/guard.js"></script>
+
+    <script>
+
+        async function loadPrograms() {
+
+            const {
+                data: { user }
+            } = await window.supabaseClient.auth.getUser();
+
+            if (!user) return;
+
+            const { data, error } =
+                await window.supabaseClient
+                    .from("student_programs")
+                    .select("*")
+                    .eq("student_id", user.id);
+
+            const container =
+                document.getElementById("program-list");
+
+            if (error) {
+
+                container.innerHTML =
+                    "<p>Gagal memuat program.</p>";
+
+                return;
+            }
+
+            if (data.length === 0) {
+
+                container.innerHTML = `
+            <div class="bg-slate-900 p-6 rounded-xl">
+                Belum terdaftar program.
+            </div>
+        `;
+
+                return;
+            }
+
+            container.innerHTML = "";
+
+            for (const item of data) {
+
+                const res =
+                    await fetch(
+                        `/content/programs/${item.program_slug}.json`
+                    );
+
+                const program =
+                    await res.json();
+
+                container.innerHTML += `
+            <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 mb-4">
+
+                <h2 class="text-xl font-bold">
+                    ${program.title}
+                </h2>
+
+                <p class="text-slate-400 mt-2">
+                    ${program.description.substring(0, 150)}...
+                </p>
+
+                <span class="inline-block mt-4 px-3 py-1 rounded bg-emerald-600">
+                    ${item.status}
+                </span>
+
+            </div>
+        `;
+            }
+        }
+
+        loadPrograms();
+
+    </script>
+
+</body>
+
+</html>
