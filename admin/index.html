@@ -176,8 +176,11 @@
    INPUT
    ================================================== */
 
-        input,
-        select,
+        /* input,
+        select, */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
         textarea {
 
             background: white !important;
@@ -412,25 +415,15 @@
         }
 
         form {
-
             background: white !important;
-
             margin-top: -20px !important;
-
             width: 460px;
-
             padding: 36px !important;
-
             border-radius: 32px !important;
+        }
 
-            border: 1px solid var(--border) !important;
-
-            box-shadow: var(--shadow-lg);
-
-            form input {
-
-                height: 60px !important;
-            }
+        form input {
+            height: 60px !important;
         }
 
         img {
