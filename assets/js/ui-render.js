@@ -53,7 +53,11 @@
 
     function renderProgramCard(program) {
         const imageUrl = safeUrl(program.image, 'https://via.placeholder.com/600x400?text=Flyer+Program');
-        const slug = program.slug || program.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        const slug =
+            program.program_slug ||
+            program.slug ||
+            program.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-') ||
+            '';
 
         return `
     <div class="group bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-800 hover:shadow-2xl hover:shadow-emerald-950/30 transition-all duration-500">
