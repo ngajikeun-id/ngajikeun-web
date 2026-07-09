@@ -36,17 +36,27 @@
                         ${programBody && window.marked ? window.marked.parse(programBody) : renderSimpleMarkdown(programBody)}
                     </div>
 
-                    <a href="${safeUrl(program.registration_link)}" target="_blank" rel="noopener noreferrer"
-                       class="inline-block w-full sm:w-auto px-8 py-4 bg-emerald-600 border border-emerald-500 text-white text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-700 transition-all active:scale-95 shadow-lg shadow-emerald-950/50">
-                        Daftar Sekarang Lewat WA ⚡
-                    </a>
+                    ${program.registration_open ? `
+<a
+   href="/dashboard/daftar/?program=${encodeURIComponent(program.program_slug)}"
+   class="inline-block w-full sm:w-auto px-8 py-4 bg-emerald-600 border border-emerald-500 text-white text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-700 transition-all active:scale-95 shadow-lg shadow-emerald-950/50">
+   Daftar Sekarang 🚀
+</a>
+` : `
+<div class="inline-block px-8 py-4 bg-slate-800 border border-slate-700 text-slate-400 text-[11px] font-black uppercase tracking-widest rounded-xl">
+   Pendaftaran Ditutup
+</div>
+`}
                 </div>
             `;
     }
 
     function renderProgramCard(program) {
         const imageUrl = safeUrl(program.image, 'https://via.placeholder.com/600x400?text=Flyer+Program');
-        const slug = program.slug || program.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        const slug =
+            program.program_slug ||
+            program.slug ||
+            program.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
         return `
     <div class="group bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-800 hover:shadow-2xl hover:shadow-emerald-950/30 transition-all duration-500">
