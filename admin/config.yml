@@ -53,7 +53,11 @@ collections:
     format: "json"
     fields:
       - {label: "Title Program", name: "title", widget: "string"}
+      - {label: "Program Slug", name: "program_slug", widget: "string"}
+      - {label: "Jenis Program", name: "program_type", widget: "select", options: ["regular", "event", "internal"], default: "regular"}
+      - {label: "Buka Pendaftaran", name: "registration_open", widget: "boolean", default: true}
       - {label: "Deskripsi Program", name: "description", widget: "text"}
+      - {label: "Memerlukan Approval", name: "requires_approval", widget: "boolean", default: true}
       - {label: "Link Pendaftaran (WA/Form)", name: "registration_link", widget: "string"}
       - {label: "Image Program", name: "image", widget: "image", required: false}
       - {label: "Detail / Overview Program", name: "body", widget: "markdown", required: false}
