@@ -44,11 +44,11 @@ collections:
           - {label: "Visi", name: "vision", widget: "text"}
           - {label: "Misi", name: "missions", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
 
-  - label: "Galeri Foto"
-    name: "slides"
-    widget: "list"
-    fields:
-          - { label: "Gambar", name: "image", widget: "image" }
+          - label: "Galeri Foto"
+            name: "slides"
+            widget: "list"
+            field:
+             - { label: "Gambar", name: "image", widget: "image" }
 
   # --- 2. PROGRAM BELAJAR ---
   - name: "programs"
