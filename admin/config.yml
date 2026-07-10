@@ -47,7 +47,7 @@ collections:
           - label: "Galeri Foto"
             name: "slides"
             widget: "list"
-            field:
+            fields:
              - { label: "Gambar", name: "image", widget: "image" }
 
   # --- 2. PROGRAM BELAJAR ---
