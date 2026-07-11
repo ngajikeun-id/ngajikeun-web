@@ -679,6 +679,9 @@
         sliderEl.style.backgroundImage =
             `url('${data.slides[0].image}')`;
 
+        sliderEl.style.backgroundPosition = "center 70%";
+        sliderEl.style.backgroundSize = "cover";
+
         setInterval(() => {
             current = (current + 1) % data.slides.length;
 
