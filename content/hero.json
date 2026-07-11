@@ -1,15 +1,15 @@
 {
-    "title": "NGAJIKEUN.ID",
-    "subtitle": "Komunitas Belajar Online Al-Qur'an Khusus Muslimah",
-    "slides": [
-        {
-            "image": "/public/images/uploads/hero-1.webp"
-        },
-        {
-            "image": "/public/images/uploads/hero-2.webp"
-        },
-        {
-            "image": "/public/images/uploads/hero-3.webp"
-        }
-    ]
+  "title": "NGAJIKEUN.ID",
+  "subtitle": "Komunitas Belajar Online Al-Qur'an Khusus Muslimah",
+  "slides": [
+    {
+      "image": "/public/images/uploads/hero-1.webp"
+    },
+    {
+      "image": "/public/images/uploads/hero-3.webp"
+    },
+    {
+      "image": "/public/images/uploads/hero-2.webp"
+    }
+  ]
 }
