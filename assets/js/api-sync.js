@@ -116,6 +116,7 @@
         return {
             dashboard,
             site,
+            hero: site?.hero_settings || {},
             about: site?.about_details || {},
             programs: getCollection(site, 'programs'),
             mentors: getCollection(site, 'mentors'),

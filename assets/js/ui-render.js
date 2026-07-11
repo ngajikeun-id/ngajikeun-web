@@ -656,6 +656,43 @@
         document.body.style.overflow = '';
     }
 
+    function renderHero(data) {
+        if (!data) return;
+
+        const titleEl = document.getElementById("hero-title");
+        const subtitleEl = document.getElementById("hero-subtitle");
+        const sliderEl = document.getElementById("hero-slider");
+
+        if (titleEl) {
+            titleEl.textContent = data.title || "NGAJIKEUN.ID";
+        }
+
+        if (subtitleEl) {
+            subtitleEl.textContent = data.subtitle || "";
+        }
+
+        if (!sliderEl || !data.slides?.length) return;
+
+        let current = 0;
+
+        sliderEl.style.backgroundImage =
+            `url('${data.slides[0].image}')`;
+
+        setInterval(() => {
+            current = (current + 1) % data.slides.length;
+
+            sliderEl.style.opacity = "0";
+
+            setTimeout(() => {
+                sliderEl.style.backgroundImage =
+                    `url('${data.slides[current].image}')`;
+
+                sliderEl.style.opacity = "1";
+            }, 500);
+
+        }, 5000);
+    }
+
     // ===== PUBLIC API =====
 
     window.NgajikeunRender = {

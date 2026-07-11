@@ -33,6 +33,25 @@ collections:
           - {label: "Pusat Bantuan", name: "help", widget: "markdown", default: "Hubungi [CiwAI™ Support](https://wa.me/6285121380541)"}
 
   # --- 1. PROFIL (About) ---
+  - name: "hero"
+    label: "🎯 Hero Homepage"
+    files:
+      - file: "content/hero.json"
+        label: "Hero Utama"
+        name: "hero_settings"
+        fields:
+
+          - { label: "Judul", name: "title", widget: "string" }
+
+          - { label: "Sub Judul", name: "subtitle", widget: "text" }
+
+          - label: "Slider Hero"
+            name: "slides"
+            widget: "list"
+            fields:
+              - { label: "Gambar", name: "image", widget: "image" }
+  
+  # --- 1. PROFIL (About) ---
   - name: "about"
     label: "🏢 Tentang Kami"
     files:
