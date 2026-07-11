@@ -32,7 +32,7 @@ collections:
           - {label: "Pengaturan Running Text", name: "running_text", widget: "string", default: "Pendaftaran Gelombang Baru Profil Musyrifah Bersanad Telah Dibuka!", hint: "Teks berjalan untuk info/pengumuman."}
           - {label: "Pusat Bantuan", name: "help", widget: "markdown", default: "Hubungi [CiwAI™ Support](https://wa.me/6285121380541)"}
 
-  # --- 1. PROFIL (About) ---
+  # --- 0. PROFIL (About) ---
   - name: "hero"
     label: "🎯 Hero Homepage"
     files:
