@@ -362,6 +362,7 @@
 
     function renderSite(appData) {
         renderRunningText(appData.dashboard);
+        renderHero(appData.hero || {});
         renderAbout(appData.about || {});
         renderPrograms(appData.programs || []);
         renderMentors(appData.mentors || []);
