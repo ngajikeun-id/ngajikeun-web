@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-07-11T12:06:20.470Z",
+  "generated_at": "2026-07-11T16:24:55.866Z",
   "hero_settings": {
-    "title": "NGAJIKEUN.ID",
+    "title": "🚀 TEST CMS 12345 🚀",
     "subtitle": "Komunitas Belajar Online Al-Qur'an Khusus Muslimah",
     "slides": [
       {
         "image": "/public/images/uploads/hero-1.webp"
       },
       {
-        "image": "/public/images/uploads/hero-2.webp"
+        "image": "/public/images/uploads/hero-3.webp"
       },
       {
-        "image": "/public/images/uploads/hero-3.webp"
+        "image": "/public/images/uploads/hero-2.webp"
       }
     ]
   },
