@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-12T09:23:20.714Z",
+  "generated_at": "2026-07-12T09:24:11.463Z",
   "hero_settings": {
     "title": "NGAJIKEUN.ID",
     "subtitle": "Komunitas Belajar Online Al-Qur'an Khusus Muslimah",
@@ -100,7 +100,7 @@
       "registration_link": "-",
       "image": "/public/images/uploads/chatgpt-image-jul-9-2026-05_13_58-pm.webp",
       "program_slug": "sharing_session_live_quiz",
-      "registration_open": true,
+      "registration_open": false,
       "program_type": "event",
       "requires_approval": true
     },
