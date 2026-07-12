@@ -66,25 +66,56 @@
 </nav>
 
 <div
-    class="w-full bg-emerald-600 text-white py-2 overflow-hidden border-b border-emerald-700 text-xs font-semibold tracking-wide select-none">
-    <div class="whitespace-nowrap inline-block animate-marquee pl-[100%]">
-        <span id="navbar-running-text">Memuat informasi terbaru dari admin...</span>
+    class="w-full bg-gradient-to-r from-emerald-700 via-emerald-600 to-emerald-700 text-white overflow-hidden border-b border-emerald-500/30 select-none">
+
+    <div class="flex items-center h-10">
+
+        <!-- Label -->
+        <div
+            class="relative z-10 flex items-center gap-2 px-5 h-full bg-emerald-800/80 backdrop-blur-md font-black text-xs tracking-widest uppercase whitespace-nowrap">
+
+            <span class="animate-pulse">
+                🔔
+            </span>
+
+            Pengumuman
+
+        </div>
+
+
+        <!-- Running Text -->
+        <div class="overflow-hidden flex-1">
+
+            <div class="whitespace-nowrap inline-block animate-marquee pl-[100%] text-xs font-semibold tracking-wide">
+
+                <span id="navbar-running-text">
+                    Memuat informasi terbaru dari admin...
+                </span>
+
+            </div>
+
+        </div>
+
     </div>
+
 </div>
+
 
 <style>
     @keyframes marquee {
+
         0% {
-            transform: translate3d(0, 0, 0);
+            transform: translateX(0);
         }
 
         100% {
-            transform: translate3d(-100%, 0, 0);
+            transform: translateX(-100%);
         }
+
     }
 
     .animate-marquee {
-        animation: marquee 28s linear infinite;
+        animation: marquee 32s linear infinite;
     }
 
     .animate-marquee:hover {
