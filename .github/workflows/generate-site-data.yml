@@ -6,6 +6,7 @@ on:
     branches:
       - main
     paths:
+      - "content/**"
       - "content/about.json"
       - "content/articles/**"
       - "content/mentors/**"
