@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js";
+import { FIELD_DEFINITIONS } from "./field-definitions.js";
 
 const supabase = createClient(
     window.SUPABASE_URL,
@@ -6,7 +7,6 @@ const supabase = createClient(
 );
 
 const params = new URLSearchParams(window.location.search);
-
 const programSlug = params.get("program");
 
 let selectedProgram = null;
@@ -14,7 +14,6 @@ let selectedProgram = null;
 async function init() {
 
     const programsRes = await fetch("/content/data/programs.json");
-
     const programs = await programsRes.json();
 
     selectedProgram = programs.find(
@@ -22,16 +21,95 @@ async function init() {
     );
 
     if (!selectedProgram) {
-
         alert("Program tidak ditemukan");
-
         return;
     }
 
     document.getElementById("programTitle").value =
         selectedProgram.title;
 
-    loadBatches();
+    renderDynamicFields();
+
+    await loadBatches();
+}
+
+function renderDynamicFields() {
+
+    const container =
+        document.getElementById("dynamicFields");
+
+    container.innerHTML = "";
+
+    const fields =
+        selectedProgram.registration_fields || [];
+
+    fields.forEach(fieldKey => {
+
+        const field =
+            FIELD_DEFINITIONS[fieldKey];
+
+        if (!field) return;
+
+        container.insertAdjacentHTML(
+            "beforeend",
+            renderField(fieldKey, field)
+        );
+
+    });
+}
+
+function renderField(name, field) {
+
+    const required =
+        field.required ? "required" : "";
+
+    if (field.type === "textarea") {
+
+        return `
+            <div class="form-group">
+                <label>${field.label}</label>
+                <textarea
+                    id="${name}"
+                    name="${name}"
+                    ${required}></textarea>
+            </div>
+        `;
+    }
+
+    if (field.type === "select") {
+
+        const options =
+            field.options.map(opt => `
+                <option value="${opt.value}">
+                    ${opt.label}
+                </option>
+            `).join("");
+
+        return `
+            <div class="form-group">
+                <label>${field.label}</label>
+
+                <select
+                    id="${name}"
+                    name="${name}"
+                    ${required}>
+                    ${options}
+                </select>
+            </div>
+        `;
+    }
+
+    return `
+        <div class="form-group">
+            <label>${field.label}</label>
+
+            <input
+                type="${field.type}"
+                id="${name}"
+                name="${name}"
+                ${required}>
+        </div>
+    `;
 }
 
 async function loadBatches() {
@@ -43,28 +121,25 @@ async function loadBatches() {
         .eq("status", "open");
 
     if (error) {
-
         console.error(error);
-
         return;
     }
 
-    const select = document.getElementById("batchSelect");
+    const select =
+        document.getElementById("batchSelect");
 
     select.innerHTML = "";
 
     data.forEach(batch => {
 
-        const option = document.createElement("option");
+        const option =
+            document.createElement("option");
 
         option.value = batch.id;
-
         option.textContent = batch.batch_name;
 
         select.appendChild(option);
-
     });
-
 }
 
 document
@@ -74,62 +149,53 @@ document
         e.preventDefault();
 
         const payload = {
-
             batch_id:
                 document.getElementById("batchSelect").value,
 
             program_slug:
                 programSlug,
 
-            full_name:
-                document.getElementById("fullName").value,
-
-            email:
-                document.getElementById("email").value,
-
-            phone:
-                document.getElementById("phone").value,
-
-            age:
-                Number(document.getElementById("age").value) || null,
-
-            domicile:
-                document.getElementById("domicile").value,
-
-            profession:
-                document.getElementById("profession").value,
-
-            has_hafalan:
-                document.getElementById("hasHafalan").value === "true",
-
-            hafalan_juz:
-                Number(document.getElementById("hafalanJuz").value) || null,
-
-            target_juz:
-                document.getElementById("targetJuz").value,
-
-            source_info:
-                document.getElementById("sourceInfo").value,
-
-            motivation:
-                document.getElementById("motivation").value,
-
-            is_returning_student:
-                document.getElementById("returningStudent").value === "true",
-
             status: "pending"
         };
+
+        const fields =
+            selectedProgram.registration_fields || [];
+
+        fields.forEach(fieldKey => {
+
+            const element =
+                document.getElementById(fieldKey);
+
+            if (!element) return;
+
+            let value = element.value;
+
+            if (
+                fieldKey === "age" ||
+                fieldKey === "hafalan_juz"
+            ) {
+                value = value
+                    ? Number(value)
+                    : null;
+            }
+
+            if (
+                fieldKey === "has_hafalan" ||
+                fieldKey === "is_returning_student"
+            ) {
+                value = value === "true";
+            }
+
+            payload[fieldKey] = value;
+        });
 
         const { error } = await supabase
             .from("registrations")
             .insert([payload]);
 
         if (error) {
-
             console.error(error);
-
             alert(error.message);
-
             return;
         }
 
@@ -140,7 +206,6 @@ document
         document
             .getElementById("successBox")
             .classList.remove("hidden");
-
     });
 
 init();

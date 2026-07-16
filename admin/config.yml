@@ -80,11 +80,34 @@ collections:
       - {label: "Program Slug", name: "program_slug", widget: "string"}
       - {label: "Buka Pendaftaran", name: "registration_open", widget: "boolean", default: true}
       - {label: "Jenis Program", name: "program_type", widget: "select", options: ["regular", "event", "internal"], default: "regular"}
+      - label: "Aktifkan Form Internal"
+        name: "use_internal_registration"
+        widget: "boolean"
+        default: true
+      - label: "Field Pendaftaran"
+        name: "registration_fields"
+        widget: "select"
+        multiple: true
+        required: true
+        options:
+          - { label: "Nama Lengkap", value: "full_name" }
+          - { label: "Email", value: "email" }
+          - { label: "WhatsApp", value: "phone" }
+          - { label: "Usia", value: "age" }
+          - { label: "Domisili", value: "domicile" }
+          - { label: "Profesi", value: "profession" }
+          - { label: "Status Peserta", value: "participant_status" }
+          - { label: "Memiliki Hafalan", value: "has_hafalan" }
+          - { label: "Jumlah Juz Hafalan", value: "hafalan_juz" }
+          - { label: "Target Juz", value: "target_juz" }
+          - { label: "Pernah Mengikuti Program Ngajikeun?", value: "is_returning_student" }
+          - { label: "Sumber Informasi", value: "source_info" }
+          - { label: "Motivasi", value: "motivation" }
+      - {label: "Link Pendaftaran (WA/Form)", name: "registration_link", widget: "string", required: false}
       - {label: "────────────────────", name: "separator1", widget: "hidden", default: "" }
       - {label: "Title Program", name: "title", widget: "string"}
       - {label: "Memerlukan Approval", name: "requires_approval", widget: "boolean", default: true}
       - {label: "Deskripsi Program", name: "description", widget: "text"}
-      - {label: "Link Pendaftaran (WA/Form)", name: "registration_link", widget: "string"}
       - {label: "Image Program", name: "image", widget: "image", required: false}
       - {label: "Detail / Overview Program", name: "body", widget: "markdown", required: false}
 
