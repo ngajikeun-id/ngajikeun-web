@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-16T17:04:03.675Z",
+  "generated_at": "2026-07-16T17:08:10.203Z",
   "hero_settings": {
     "title": "NGAJIKEUN.ID",
     "subtitle": "Komunitas Belajar Online Al-Qur'an Khusus Muslimah",
@@ -45,14 +45,27 @@
   "programs": [
     {
       "slug": "exclusive-hifzh-bootcamp",
-      "title": "Exclusive Hifzh Bootcamp (Special Ramadhan)",
-      "description": "Khusus untuk Anda para akhwat pilihan, alumni terbaik, dan musyrifah NGAJIKEUN.ID, Exclusive Hifzh Qur’an Bootcamp Season 2 hadir sebagai wadah akselerasi hafalan berstandar sanad yang kuat dan terukur. Didukung oleh lingkungan yang suportif dan sistem bimbingan terbaik, program eksklusif ini siap menemani langkah Anda menjaga keistiqamahan bersama kalam Allah. ",
       "registration_link": "-",
-      "image": "/public/images/uploads/chatgpt-image-jul-9-2026-06_33_29-pm.webp",
+      "use_internal_registration": true,
       "program_slug": "exclusive_hifzh_bootcamp",
       "registration_open": false,
+      "requires_approval": true,
       "program_type": "regular",
-      "requires_approval": true
+      "title": "Exclusive Hifzh Bootcamp (Special Ramadhan)",
+      "image": "/public/images/uploads/chatgpt-image-jul-9-2026-06_33_29-pm.webp",
+      "description": "Khusus untuk Anda para akhwat pilihan, alumni terbaik, dan musyrifah NGAJIKEUN.ID, Exclusive Hifzh Qur’an Bootcamp Season 2 hadir sebagai wadah akselerasi hafalan berstandar sanad yang kuat dan terukur. Didukung oleh lingkungan yang suportif dan sistem bimbingan terbaik, program eksklusif ini siap menemani langkah Anda menjaga keistiqamahan bersama kalam Allah. ",
+      "registration_fields": [
+        "email",
+        "phone",
+        "age",
+        "full_name",
+        "domicile",
+        "profession",
+        "participant_status",
+        "has_hafalan",
+        "hafalan_juz",
+        "motivation"
+      ]
     },
     {
       "slug": "privat-quran-arab",
