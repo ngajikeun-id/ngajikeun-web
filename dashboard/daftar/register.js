@@ -10,29 +10,31 @@ let selectedProgram = null;
 
 async function init() {
 
-    const programsRes = await fetch("/content/data/site-data.json");
+    const siteRes =
+        await fetch("/content/data/site-data.json");
+
     const siteData =
         await siteRes.json();
 
-    const programs =
-        siteData.programs || [];
+    console.log(siteData);
 
-    selectedProgram = programs.find(
-        p => p.program_slug === programSlug
-    );
-
-    if (!selectedProgram) {
-        alert("Program tidak ditemukan");
-        return;
-    }
-
-    document.getElementById("programTitle").value =
-        selectedProgram.title;
-
-    renderDynamicFields();
-
-    await loadBatches();
 }
+
+selectedProgram = programs.find(
+    p => p.program_slug === programSlug
+);
+
+if (!selectedProgram) {
+    alert("Program tidak ditemukan");
+    return;
+}
+
+document.getElementById("programTitle").value =
+    selectedProgram.title;
+
+renderDynamicFields();
+
+await loadBatches();
 
 function renderDynamicFields() {
 
