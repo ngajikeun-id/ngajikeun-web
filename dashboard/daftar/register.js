@@ -18,23 +18,22 @@ async function init() {
 
     console.log(siteData);
 
+    selectedProgram = programs.find(
+        p => p.program_slug === programSlug
+    );
+
+    if (!selectedProgram) {
+        alert("Program tidak ditemukan");
+        return;
+    }
+
+    document.getElementById("programTitle").value =
+        selectedProgram.title;
+
+    renderDynamicFields();
+
+    await loadBatches();
 }
-
-selectedProgram = programs.find(
-    p => p.program_slug === programSlug
-);
-
-if (!selectedProgram) {
-    alert("Program tidak ditemukan");
-    return;
-}
-
-document.getElementById("programTitle").value =
-    selectedProgram.title;
-
-renderDynamicFields();
-
-await loadBatches();
 
 function renderDynamicFields() {
 
