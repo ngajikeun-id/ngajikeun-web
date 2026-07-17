@@ -10,8 +10,12 @@ let selectedProgram = null;
 
 async function init() {
 
-    const programsRes = await fetch("/content/data/programs.json");
-    const programs = await programsRes.json();
+    const programsRes = await fetch("/content/data/site-data.json");
+    const siteData =
+        await siteRes.json();
+
+    const programs =
+        siteData.programs || [];
 
     selectedProgram = programs.find(
         p => p.program_slug === programSlug
