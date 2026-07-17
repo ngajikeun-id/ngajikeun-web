@@ -1,10 +1,7 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js";
 import { FIELD_DEFINITIONS } from "./field-definitions.js";
 
-const supabase = createClient(
-    window.SUPABASE_URL,
-    window.SUPABASE_ANON_KEY
-);
+const supabase =
+    window.supabaseClient;
 
 const params = new URLSearchParams(window.location.search);
 const programSlug = params.get("program");
