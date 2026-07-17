@@ -24,6 +24,12 @@ async function init() {
         p => p.program_slug === programSlug
     );
 
+    console.log("SELECTED PROGRAM", selectedProgram);
+    console.log(
+        "REGISTRATION FIELDS",
+        selectedProgram?.registration_fields
+    );
+
     if (!selectedProgram) {
         alert("Program tidak ditemukan");
         return;
