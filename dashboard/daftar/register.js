@@ -18,6 +18,8 @@ async function init() {
 
     console.log(siteData);
 
+    const programs = siteData.programs || [];
+
     selectedProgram = programs.find(
         p => p.program_slug === programSlug
     );
