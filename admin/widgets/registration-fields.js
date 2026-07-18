@@ -36,3 +36,7 @@ const REGISTRATION_FIELDS = [
 ];
 
 console.log("✅ Registration Fields Widget Loaded");
+
+class RegistrationFieldsControl {
+
+}
