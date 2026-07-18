@@ -84,9 +84,9 @@ collections:
         name: "use_internal_registration"
         widget: "boolean"
         default: true
-      - label: "Field Pendaftaran"
-        name: "registration_fields"
-        widget: "select"
+      - label: Field Pendaftaran
+        name: registration_fields
+        widget: registration-fields
         multiple: true
         required: true
         options:
