@@ -38,12 +38,11 @@ async function init() {
     document.getElementById("programTitle").value =
         selectedProgram.title;
 
-    renderDynamicFields();
-
+    await renderDynamicFields();
     await loadBatches();
 }
 
-function renderDynamicFields() {
+async function renderDynamicFields() {
 
     const container =
         document.getElementById("dynamicFields");
@@ -53,19 +52,26 @@ function renderDynamicFields() {
     const fields =
         selectedProgram.registration_fields || [];
 
-    fields.forEach(fieldKey => {
+    for (const fieldKey of fields) {
 
         const field =
             FIELD_DEFINITIONS[fieldKey];
 
-        if (!field) return;
+        if (!field) continue;
 
         container.insertAdjacentHTML(
             "beforeend",
             renderField(fieldKey, field)
         );
 
-    });
+        if (field.type === "select" && field.loader) {
+
+            const element =
+                document.getElementById(fieldKey);
+
+            await field.loader(element);
+        }
+    }
 }
 
 function renderField(name, field) {
@@ -122,7 +128,7 @@ function renderField(name, field) {
     `;
 }
 
-async function loadBatches() {
+async function loadBatches(select) {
 
     const { data, error } = await supabase
         .from("program_batches")
@@ -134,9 +140,6 @@ async function loadBatches() {
         console.error(error);
         return;
     }
-
-    const select =
-        document.getElementById("batchSelect");
 
     select.innerHTML = "";
 

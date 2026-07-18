@@ -65,6 +65,12 @@ export const FIELD_DEFINITIONS = {
         type: "textarea"
     },
 
+    batch: {
+        label: "Batch",
+        type: "select",
+        loader: loadBatches
+    },
+
     is_returning_student: {
         label: "Pernah Mengikuti Program Ngajikeun?",
         type: "select",
