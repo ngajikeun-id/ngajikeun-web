@@ -40,3 +40,8 @@ console.log("✅ Registration Fields Widget Loaded");
 class RegistrationFieldsControl {
 
 }
+
+CMS.registerWidget(
+    "registration-fields",
+    RegistrationFieldsControl
+);
