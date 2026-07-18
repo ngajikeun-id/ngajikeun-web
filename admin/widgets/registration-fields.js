@@ -39,6 +39,15 @@ console.log("✅ Registration Fields Widget Loaded");
 
 class RegistrationFieldsControl {
 
+    render() {
+
+        const input = document.createElement("div");
+
+        input.textContent = "🚀 Registration Widget Working";
+
+        return input;
+    }
+
 }
 
 CMS.registerWidget(
