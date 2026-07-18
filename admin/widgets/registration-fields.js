@@ -37,11 +37,11 @@ const REGISTRATION_FIELDS = [
 
 console.log("✅ Registration Fields Widget Loaded");
 
-function RegistrationFieldsControl(props) {
+function RegistrationFieldsControl() {
 
-    return React.createElement(
+    return h(
         "div",
-        null,
+        {},
         "🚀 Registration Widget Working"
     );
 
