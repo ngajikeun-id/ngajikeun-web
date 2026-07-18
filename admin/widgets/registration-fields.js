@@ -41,8 +41,26 @@ function RegistrationFieldsControl() {
 
     return h(
         "div",
-        {},
-        "🚀 Registration Widget Working"
+        {
+            style: {
+                padding: "16px",
+                border: "1px solid #ddd",
+                borderRadius: "12px",
+                background: "#f8fafc"
+            }
+        },
+        [
+            h("h3", {}, "📋 Registration Fields"),
+            h("label", {}, [
+                h("input", { type: "checkbox" }),
+                " Nama Lengkap"
+            ]),
+            h("br"),
+            h("label", {}, [
+                h("input", { type: "checkbox" }),
+                " Email"
+            ])
+        ]
     );
 
 }
