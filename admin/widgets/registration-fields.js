@@ -66,3 +66,8 @@ function RegistrationFieldsControl(props) {
     );
 
 }
+
+CMS.registerWidget(
+    "registration-fields",
+    RegistrationFieldsControl
+);
