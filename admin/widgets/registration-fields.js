@@ -39,6 +39,8 @@ console.log("✅ Registration Fields Widget Loaded");
 
 function RegistrationFieldsControl() {
 
+    console.log("🚀 Widget Props:", props);
+
     return h(
         "div",
         {
