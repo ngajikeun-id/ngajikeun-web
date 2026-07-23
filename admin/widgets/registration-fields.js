@@ -37,7 +37,7 @@ const REGISTRATION_FIELDS = [
 
 console.log("✅ Registration Fields Widget Loaded");
 
-function RegistrationFieldsControl() {
+function RegistrationFieldsControl(props) {
 
     console.log("🚀 Widget Props:", props);
 
@@ -66,8 +66,3 @@ function RegistrationFieldsControl() {
     );
 
 }
-
-CMS.registerWidget(
-    "registration-fields",
-    RegistrationFieldsControl
-);
