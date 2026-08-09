@@ -1,6 +1,6 @@
 {
   "registration_link": "-",
-  "use_internal_registration": true,
+  "use_internal_registration": false,
   "program_slug": "exclusive_hifzh_bootcamp",
   "registration_open": false,
   "requires_approval": true,
