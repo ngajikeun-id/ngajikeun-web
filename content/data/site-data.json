@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-26T00:54:50.602Z",
+  "generated_at": "2026-08-09T06:59:30.342Z",
   "hero_settings": {
     "title": "NGAJIKEUN.ID",
     "subtitle": "Komunitas Belajar Online Al-Qur'an Khusus Muslimah",
@@ -46,7 +46,7 @@
     {
       "slug": "exclusive-hifzh-bootcamp",
       "registration_link": "-",
-      "use_internal_registration": true,
+      "use_internal_registration": false,
       "program_slug": "exclusive_hifzh_bootcamp",
       "registration_open": false,
       "requires_approval": true,
