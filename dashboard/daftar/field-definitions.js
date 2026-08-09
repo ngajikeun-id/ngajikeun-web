@@ -68,7 +68,8 @@ export const FIELD_DEFINITIONS = {
     batch: {
         label: "Batch",
         type: "select",
-        loader: loadBatches
+        required: true,
+        options: []
     },
 
     is_returning_student: {

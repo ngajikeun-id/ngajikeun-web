@@ -1,4 +1,5 @@
 (async function () {
+    let loadPromise = null;
 
     function renderLocalFileWarning() {
         document.body.innerHTML = `
@@ -94,6 +95,15 @@ python3 -m http.server 5500</code></pre>
     }
 
     async function loadComponents() {
+        if (loadPromise) {
+            return loadPromise;
+        }
+
+        loadPromise = loadComponentsOnce();
+        return loadPromise;
+    }
+
+    async function loadComponentsOnce() {
 
         if (window.location.protocol === 'file:') {
             renderLocalFileWarning();
@@ -114,7 +124,8 @@ python3 -m http.server 5500</code></pre>
     }
 
     window.NgajikeunComponents = {
-        loadComponents
+        loadComponents,
+        updateNavbarAuth
     };
 
     await loadComponents();

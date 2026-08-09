@@ -6,6 +6,13 @@
 
     if (!user) return;
 
+    const emailEl =
+        document.getElementById("user-email");
+
+    if (emailEl) {
+        emailEl.textContent = user.email || "";
+    }
+
     const { data } =
         await window.supabaseClient
             .from("profiles")
@@ -13,10 +20,20 @@
             .eq("id", user.id)
             .single();
 
-    document.getElementById("user-name").textContent =
-        data?.full_name || user.email;
+    const nameEl =
+        document.getElementById("user-name");
 
-    document.getElementById("user-role").textContent =
-        data?.role || "student";
+    if (nameEl) {
+        nameEl.textContent =
+            data?.full_name || user.email;
+    }
+
+    const roleEl =
+        document.getElementById("user-role");
+
+    if (roleEl) {
+        roleEl.textContent =
+            data?.role || "student";
+    }
 
 })();

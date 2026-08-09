@@ -9,6 +9,15 @@ const programSlug = params.get("program");
 let selectedProgram = null;
 
 async function init() {
+    if (!supabase) {
+        alert("Koneksi Supabase belum tersedia");
+        return;
+    }
+
+    if (!programSlug) {
+        alert("Program belum dipilih");
+        return;
+    }
 
     const siteRes =
         await fetch("/content/data/site-data.json");
@@ -16,18 +25,10 @@ async function init() {
     const siteData =
         await siteRes.json();
 
-    console.log(siteData);
-
     const programs = siteData.programs || [];
 
     selectedProgram = programs.find(
         p => p.program_slug === programSlug
-    );
-
-    console.log("SELECTED PROGRAM", selectedProgram);
-    console.log(
-        "REGISTRATION FIELDS",
-        selectedProgram?.registration_fields
     );
 
     if (!selectedProgram) {
@@ -39,7 +40,6 @@ async function init() {
         selectedProgram.title;
 
     await renderDynamicFields();
-    await loadBatches();
 }
 
 async function renderDynamicFields() {
@@ -50,7 +50,7 @@ async function renderDynamicFields() {
     container.innerHTML = "";
 
     const fields =
-        selectedProgram.registration_fields || [];
+        normalizeRegistrationFields(selectedProgram.registration_fields);
 
     for (const fieldKey of fields) {
 
@@ -64,14 +64,24 @@ async function renderDynamicFields() {
             renderField(fieldKey, field)
         );
 
-        if (field.type === "select" && field.loader) {
+        if (fieldKey === "batch") {
 
             const element =
                 document.getElementById(fieldKey);
 
-            await field.loader(element);
+            await loadBatches(element);
         }
     }
+}
+
+function normalizeRegistrationFields(fields) {
+    const configuredFields =
+        Array.isArray(fields) ? fields : [];
+
+    return [
+        "batch",
+        ...configuredFields.filter(fieldKey => fieldKey !== "batch")
+    ];
 }
 
 function renderField(name, field) {
@@ -95,11 +105,11 @@ function renderField(name, field) {
     if (field.type === "select") {
 
         const options =
-            field.options.map(opt => `
+            (field.options || []).map(opt => `
                 <option value="${opt.value}">
                     ${opt.label}
                 </option>
-            `).join("");
+            `).join("") || `<option value="">Memuat pilihan...</option>`;
 
         return `
             <div class="form-group">
@@ -129,6 +139,11 @@ function renderField(name, field) {
 }
 
 async function loadBatches(select) {
+    if (!select) return;
+
+    select.disabled = true;
+    select.innerHTML =
+        `<option value="">Memuat batch...</option>`;
 
     const { data, error } = await supabase
         .from("program_batches")
@@ -138,10 +153,18 @@ async function loadBatches(select) {
 
     if (error) {
         console.error(error);
+        select.innerHTML =
+            `<option value="">Batch gagal dimuat</option>`;
         return;
     }
 
     select.innerHTML = "";
+
+    if (!data?.length) {
+        select.innerHTML =
+            `<option value="">Belum ada batch terbuka</option>`;
+        return;
+    }
 
     data.forEach(batch => {
 
@@ -153,6 +176,8 @@ async function loadBatches(select) {
 
         select.appendChild(option);
     });
+
+    select.disabled = false;
 }
 
 document
@@ -161,9 +186,17 @@ document
 
         e.preventDefault();
 
+        const batchSelect =
+            document.getElementById("batch");
+
+        if (!batchSelect?.value) {
+            alert("Silakan pilih batch terlebih dahulu");
+            return;
+        }
+
         const payload = {
             batch_id:
-                document.getElementById("batchSelect").value,
+                batchSelect.value,
 
             program_slug:
                 programSlug,
@@ -172,9 +205,10 @@ document
         };
 
         const fields =
-            selectedProgram.registration_fields || [];
+            normalizeRegistrationFields(selectedProgram.registration_fields);
 
         fields.forEach(fieldKey => {
+            if (fieldKey === "batch") return;
 
             const element =
                 document.getElementById(fieldKey);
