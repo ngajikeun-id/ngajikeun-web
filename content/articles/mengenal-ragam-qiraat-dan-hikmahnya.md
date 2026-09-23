@@ -54,6 +54,8 @@ Mengenal qira'ah membuka mata kita bahwa Al-Qur'an hidup, dijaga secara lisan da
 
 **Referensi**
 
+Al-Khoqoniy, Abu Muzahim Musa. *Syarah Qashidah Raiyyah Al Khoqoniy.* Pensyarah: Abu Ahmad Al-Maidany.
+
 Al-Mujahid, Achmad Toha Husein. 2018. *Ilmu Tajwid: Pegangan Para Pengajar Al-Qur’an dan Aktifis Dakwah.* Cet. XI. Jakarta: Darus Sunnah.
 
 Al-Qatthan, Syaikh Manna’. 2026. *Dasar-dasar Ilmu Al-Qur’an.* Penerjemah: Umar Mujtahid. Cet. Ke-IX. Jakarta: Ummul Quro. Judul asli: *Mabahits fi UlumilQur’an.*
