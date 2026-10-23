@@ -1,6 +1,5 @@
 ---
-title: "Kemuliaan Berinteraksi dengan Al-Qur’an: Ketika Setiap Langkah Disambut
-  Rahmat-Nya"
+title: Kemuliaan Berinteraksi dengan Al-Qur’an
 ---
 Dalam menjalani hiruk-pikuk kehidupan sehari-hari—mengatur urusan rumah tangga, mengasuh anak, menuntaskan amanah pekerjaan, atau merampungkan tugas-tugas perkuliahan—pernahkah kita merasa lelah secara emosional dan spiritual? Di saat-saat seperti itu, hadir satu jembatan indah yang selalu siap menyambut kita tanpa syarat: Al-Qur’anul Karim.
 
@@ -70,15 +69,13 @@ Duduk di dalam majelis ilmu Al-Qur'an—baik secara langsung maupun melalui hala
 
 *"Tidaklah suatu kaum berkumpul dalam sebuah rumah dari rumah-rumah Allah, sedangkan mereka membaca kitab Allah dan mempelajarinya, kecuali ketenangan turun kepada mereka, rahmat menyelimuti mereka, para malaikat mengelilingi mereka, dan Allah menyebut-nyebut mereka pada orang-orang (penduduk langit) yang ada di sisi-Nya."* (HR. Muslim)
 
+**Ketika Setiap Langkah Disambut Rahmat-Nya**
+
 Membaca sederet keutamaan di atas terkadang melahirkan perasaan terharu sekaligus rasa tidak pantas. *"Apakah saya yang baru bisa membaca terbata-bata juga berhak mendapatkan kemuliaan sebesar ini?"*
 
 Jawabannya: Ya, tentu saja. Allah tidak hanya memandang hasil akhir, melainkan menilai setiap ketulusan niat, waktu yang kita sisihkan, dan peluh usaha kita dalam mengeja huruf demi huruf. Berinteraksi dengan Al-Qur'an bukanlah tentang menjadi yang paling cepat atau paling fasih sejak awal, melainkan tentang kesetiaan kita untuk terus kembali menyentuh lembaran-Nya setiap hari.
 
 Jadi, lepaskan keraguan itu. Buka kembali mushaf Anda, dan nikmati hidangan mahamulia dari Sang Pencipta.
-
-
-
-
 
 **Referensi**
 
